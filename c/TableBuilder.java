@@ -147,12 +147,12 @@ public class TableBuilder {
 	* it this way for now.
 	* type: 0-CO 1-CP 2-EO 3-EP 4-RCO 5-REO*/
 	public static int getCoord(Cube cube, int type) {
-		if(type == 0) {return CO.value(cube);}
-		else if(type == 1) {return CP.value(cube);}
-		else if(type == 2) {return EO.value(cube);}
-		else if(type == 3) {return EP.value(cube);}
-		else if(type == 4) {return RCO.value(cube);}
-		else {return REO.value(cube);}
+		if(type == 0) {return (new CO()).value(cube);}
+		else if(type == 1) {return (new CP()).value(cube);}
+		else if(type == 2) {return (new EO()).value(cube);}
+		else if(type == 3) {return (new EP()).value(cube);}
+		else if(type == 4) {return (new RCO()).value(cube);}
+		else {return (new REO()).value(cube);}
 	}
 	public static void moveCoord(Cube cube, int type, int move) {
 		if(type == 0) {cube.moveCO(move);}

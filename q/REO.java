@@ -4,7 +4,8 @@ import c.*;
 import java.util.ArrayList;
 
 public class REO {
-    public static String NAME = "REO";
+    public static String NAME;
+    static {NAME = "REO";}
 
     public REO() {}
     /* an edge can be in one of 3 slice layers:
@@ -48,7 +49,9 @@ public class REO {
             i --;
         }
         rtrn *= 2048;
-        rtrn += EO.value(cube);
+        rtrn += (new EO()).value(cube);
         return rtrn;
     }
+
+    public String name() {return NAME;}
 }

@@ -2,7 +2,8 @@ package q;
 import c.*;
 
 public class RCO {
-    public static String NAME = "RCO";
+    public static String NAME;
+    static {NAME = "RCO";}
 
     public RCO() {}
     /*rotational corner orientation and rotational edge orientation takes into account
@@ -14,7 +15,7 @@ public class RCO {
      * corner out of its slot will have differing orientation depending on rotation
      * correctly indexing all possible values of RCO requires using binomial coefficients, and
      * was altered from https://rosettacode.org/wiki/Evaluate_binomial_coefficients#Java*/
-    public static int value(Cube cube) {
+    public int value(Cube cube) {
         int[] co = cube.getCO();
         int[] cp = cube.getCP();
         int rtrn = 0;
@@ -30,7 +31,8 @@ public class RCO {
             i --;
         }
         rtrn *= 2187;
-        rtrn += CO.value(cube);
+        rtrn += (new CO()).value(cube);
         return rtrn;
     }
+    public String name() {return NAME;}
 }

@@ -4,10 +4,10 @@ import c.*;
 import java.util.ArrayList;
 
 public class EP implements Coordinate {
-    public static String NAME = "EP";
-
+    public static String NAME;
+    static {NAME = "EP";}
     public EP() {}
-    public static int value(Cube cube){
+    public int value(Cube cube){
         int[] ep = cube.getEP();
         ArrayList<Integer> eCheckList = new ArrayList<Integer>();
         for(int m = 0; m < 12; m ++) {eCheckList.add(m);}
@@ -22,5 +22,5 @@ public class EP implements Coordinate {
         }
         return rtrn;
     }
-
+    public String name() {return NAME;}
 }

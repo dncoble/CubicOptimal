@@ -26,7 +26,7 @@ public class Reseacher {
 //            allScrs.remove(0);
 //        }
         Coordinate k = new CO();
-        System.out.println(k.NAME);
+        System.out.println(k.name());
 // making big coordinates
 //        ByteHeuristic coH = new RawCoordHeuristic(1);
 //        ByteHeuristic cpH = new RawCoordHeuristic(2);

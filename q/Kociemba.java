@@ -4,7 +4,8 @@ import c.*;
  * the comment says that it doesn't work but i don't know how wrong it is
  */
 public class Kociemba {
-    public static String NAME = "Kociemba";
+    public static String NAME;
+    static {NAME = "Kociemba";}
 
     public Kociemba() {}
     /* this creates an int representation based on the Kociemba subset, just like the above subsets
@@ -18,8 +19,8 @@ public class Kociemba {
      * it could be fixed by using + Integer.MIN_VALUE, but that is not currently implemented, because of potential
      * problems in the Table Builder class */
 
-     public static int value(Cube cube) {
-        int rtrn = (CO.value(cube) * 2048 + EO.value(cube)) * 495;
+     public int value(Cube cube) {
+        int rtrn = ((new CO()).value(cube) * 2048 + (new EO()).value(cube)) * 495;
         int[] ep = cube.getEP();
         int intSlice = 0;
         int k = 3;
@@ -38,4 +39,5 @@ public class Kociemba {
         rtrn += intSlice;
         return rtrn;
     }
+    public String name() {return NAME;}
 }

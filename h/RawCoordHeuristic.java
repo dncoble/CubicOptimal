@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import c.*;
+import q.*;
 
 public class RawCoordHeuristic implements ByteHeuristic {
     private HashMap<Integer, Byte> rawTable;
@@ -39,14 +40,14 @@ public class RawCoordHeuristic implements ByteHeuristic {
     public RawCoordHeuristic() {rawTable = new HashMap<Integer, Byte>();}
 
     public byte h(Cube cube) {return rawTable.get(getCoord(cube));}
-
+    /* this will change when necessary, yatta yatta yatta */
     public int getCoord(Cube cube) {
-        if(type == 0) {return cube.coToInt();}
-        else if(type == 1) {return cube.cpToInt();}
-        else if(type == 2) {return cube.eoToInt();}
-        else if(type == 3) {return cube.epToInt();}
-        else if(type == 4) {return cube.rcoToInt();}
-        else {return cube.reoToInt();}
+        if(type == 0) {return (new CO()).value(cube);}
+        else if(type == 1) {return (new CP()).value(cube);}
+        else if(type == 2) {return (new EO()).value(cube);}
+        else if(type == 3) {return (new EP()).value(cube);}
+        else if(type == 4) {return (new RCO()).value(cube);}
+        else {return (new REO()).value(cube);}
     }
 
     public HashMap<Integer, Byte> getRawTable() {return rawTable;}

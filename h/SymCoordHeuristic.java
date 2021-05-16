@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import c.*;
+import q.*;
 
 public class SymCoordHeuristic implements ByteHeuristic {
     private HashMap<Integer, Byte> symTable;
@@ -52,14 +53,15 @@ public class SymCoordHeuristic implements ByteHeuristic {
     }
 
     public byte h(Cube cube) {return symTable.get(getSymCoord(cube));}
-
+    /* to be honest heursitic is going to see a lot of changes soon, so I don't feel that bad
+     * about this little workaround, which will probably be completely obsoleced*/
     public int getCoord(Cube cube) {
-        if(type == 0) {return cube.coToInt();}
-        else if(type == 1) {return cube.cpToInt();}
-        else if(type == 2) {return cube.eoToInt();}
-        else if(type == 3) {return cube.epToInt();}
-        else if(type == 4) {return cube.rcoToInt();}
-        else {return cube.reoToInt();}
+        if(type == 0) {return (new CO()).value(cube);}
+        else if(type == 1) {return (new CP()).value(cube);}
+        else if(type == 2) {return (new EO()).value(cube);}
+        else if(type == 3) {return (new EP()).value(cube);}
+        else if(type == 4) {return (new RCO()).value(cube);}
+        else {return (new REO()).value(cube);}
     }
     public int getSymCoord(Cube cube) {
         Cube testerCube = cube.clone();
@@ -76,12 +78,12 @@ public class SymCoordHeuristic implements ByteHeuristic {
     }
 
     public int getRawCoord(Cube cube) {
-        if(type == 0) {return cube.coToInt();}
-        else if(type == 1) {return cube.cpToInt();}
-        else if(type == 2) {return cube.eoToInt();}
-        else if(type == 3) {return cube.epToInt();}
-        else if(type == 4) {return cube.rcoToInt();}
-        else {return cube.reoToInt();}
+        if(type == 0) {return (new CO()).value(cube);}
+        else if(type == 1) {return (new CP()).value(cube);}
+        else if(type == 2) {return (new EO()).value(cube);}
+        else if(type == 3) {return (new EP()).value(cube);}
+        else if(type == 4) {return (new RCO()).value(cube);}
+        else {return (new REO()).value(cube);}
     }
 
     public void rotateCoord(Cube cube, int rotation) {

@@ -6,6 +6,6 @@ import c.*;
  * for now they're staying in the Cube class.
  */
 public interface Coordinate {
-    public static String NAME = "";
-    public static int value(Cube cube){return 0;};
+    public String name();
+    public int value(Cube cube);
 }
