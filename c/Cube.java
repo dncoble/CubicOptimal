@@ -326,26 +326,26 @@ public class Cube implements Cloneable{
 	 * this is basically done to split it into two chunks because one is larger than max long size
 	 * to intrinsically account for corner and edge parity, the final value in the list is not included
 	 * to account for swap parity, the pLong, the final two values of EP are not included. */
-	public long[] toLong() {
-		long oLong = ((long) (coToInt()) * 2048) + (long) (eoToInt());//we can actually calculate oLong in one line
-		long pLong = (long) cpToInt() * 12;
-		/* when calculating both edge and corner permutations at the same time, swap parity can be
-		 * considered to force the final two edge pieces, which means they do not have to be considered.
-		 * below is a modified version of the EPToInt method which doesn't consider the final two
-		 * edges rather than just the final edge. */ 
-		ArrayList<Integer> eCheckList = new ArrayList<Integer>();
-		for(int m = 0; m < 12; m ++) {eCheckList.add(m);}
-		int edge = ep[0];
-		pLong += edge;
-		eCheckList.remove((Integer) edge);
-		for(int n = 1; n < 10; n ++) {
-			pLong *= 12 - n; // may be 12
-			edge = ep[n];
-			pLong += eCheckList.indexOf(edge);
-			eCheckList.remove((Integer) edge);
-		}
-		return new long[] {oLong, pLong};
-	}
+//	public long[] toLong() {
+//		long oLong = ((long) (coToInt()) * 2048) + (long) (eoToInt());//we can actually calculate oLong in one line
+//		long pLong = (long) cpToInt() * 12;
+//		/* when calculating both edge and corner permutations at the same time, swap parity can be
+//		 * considered to force the final two edge pieces, which means they do not have to be considered.
+//		 * below is a modified version of the EPToInt method which doesn't consider the final two
+//		 * edges rather than just the final edge. */
+//		ArrayList<Integer> eCheckList = new ArrayList<Integer>();
+//		for(int m = 0; m < 12; m ++) {eCheckList.add(m);}
+//		int edge = ep[0];
+//		pLong += edge;
+//		eCheckList.remove((Integer) edge);
+//		for(int n = 1; n < 10; n ++) {
+//			pLong *= 12 - n; // may be 12
+//			edge = ep[n];
+//			pLong += eCheckList.indexOf(edge);
+//			eCheckList.remove((Integer) edge);
+//		}
+//		return new long[] {oLong, pLong};
+//	}
 	//effectively does the reverse of the toLong() method.
 	public void fromLong(long[] coord) {
 		long oCoord = coord[0];
