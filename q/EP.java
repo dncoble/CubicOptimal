@@ -4,7 +4,9 @@ import c.*;
 import java.util.ArrayList;
 
 public class EP implements Coordinate {
+    public static String NAME = "EP";
 
+    public EP() {}
     public static int value(Cube cube){
         int[] ep = cube.getEP();
         ArrayList<Integer> eCheckList = new ArrayList<Integer>();

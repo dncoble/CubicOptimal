@@ -6,8 +6,6 @@ import c.*;
  * for now they're staying in the Cube class.
  */
 public interface Coordinate {
-    // apparently static methods in interfaces must have a body. this will always be overwritten.
-    public static int value(Cube cube) {
-        return 0;
-    }
+    public static String NAME = "";
+    public static int value(Cube cube){return 0;};
 }

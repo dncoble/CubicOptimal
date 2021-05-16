@@ -4,6 +4,9 @@ import c.*;
 import java.util.ArrayList;
 
 public class REO {
+    public static String NAME = "REO";
+
+    public REO() {}
     /* an edge can be in one of 3 slice layers:
      * 1: UR, DR, DL, UL. 2: FR, FL, BL, BR. 3: FU, BU, BD, FD.
      * if an edge is in its own slice layer, it will be oriented the same from

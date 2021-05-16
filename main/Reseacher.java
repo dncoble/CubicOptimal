@@ -6,7 +6,7 @@ import h.RawCoordHeuristic;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import c.*; import h.*; import s.*;
+import c.*; import h.*; import s.*; import q.*;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
@@ -25,15 +25,18 @@ public class Reseacher {
 //            allScrs.append(new c.Scramble(stringAList.get(0)));
 //            allScrs.remove(0);
 //        }
-        ByteHeuristic coH = new RawCoordHeuristic(1);
-        ByteHeuristic cpH = new RawCoordHeuristic(2);
-        ByteHeuristic eoH = new RawCoordHeuristic(3);
-        MaxHeuristic smallH = new MaxHeuristic();
-        smallH.addHeuristic(coH);
-        smallH.addHeuristic(cpH);
-        smallH.addHeuristic(eoH);
-
-        TableBuilder.makeBigTable(3, smallH);
+        Coordinate k = new CO();
+        System.out.println(k.NAME);
+// making big coordinates
+//        ByteHeuristic coH = new RawCoordHeuristic(1);
+//        ByteHeuristic cpH = new RawCoordHeuristic(2);
+//        ByteHeuristic eoH = new RawCoordHeuristic(3);
+//        MaxHeuristic smallH = new MaxHeuristic();
+//        smallH.addHeuristic(coH);
+//        smallH.addHeuristic(cpH);
+//        smallH.addHeuristic(eoH);
+//
+//        TableBuilder.makeBigTable(3, smallH);
 
 //        int testDistance = 7;
 //        String[] scrs = fileLineByLine("bigSet" + testDistance + ".txt");

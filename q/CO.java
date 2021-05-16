@@ -2,6 +2,10 @@ package q;
 import c.*;
 
 public class CO implements Coordinate {
+    public static String NAME = "CO";
+
+    /* initialization doesn't do anything. I can't make things static though because of inheritance. */
+    public CO() {}
     /* the following methods turn each int[] coordinate int a single integer coordinate
      * which is useful is saving tables of scrambles to permutation, since a single integer
      * is much smaller than a list of integers.
