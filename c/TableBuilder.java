@@ -9,6 +9,7 @@ import h.ByteHeuristic;
 import h.MaxHeuristic;
 import h.RawCoordHeuristic;
 import s.IDAStar;
+import q.*;
 
 import java.util.Map;
 import java.io.*;
@@ -141,16 +142,17 @@ public class TableBuilder {
 		for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
 		writeMapToFile((Serializable) experimental.getRawTable(), getFile(type));
 	}
-	/* below are helper methods which allows a single method (above) to create multiple different tables for
-	 * different subsets by re-routing different get coordinate methods through it.
-	 * type: 0-CO 1-CP 2-EO 3-EP 4-RCO 5-REO */
+	/* the reason i made coordinates their own class that implements coordinate is so that I wouldn't have to do stuff
+	* like this anymore. but since this came from before that time, and TableBuilder is a weird class anyways, i'll keep
+	* it this way for now.
+	* type: 0-CO 1-CP 2-EO 3-EP 4-RCO 5-REO*/
 	public static int getCoord(Cube cube, int type) {
-		if(type == 0) {return cube.coToInt();}
-		else if(type == 1) {return cube.cpToInt();}
-		else if(type == 2) {return cube.eoToInt();}
-		else if(type == 3) {return cube.epToInt();}
-		else if(type == 4) {return cube.rcoToInt();}
-		else {return cube.reoToInt();}
+		if(type == 0) {return CO.value(cube);}
+		else if(type == 1) {return CP.value(cube);}
+		else if(type == 2) {return EO.value(cube);}
+		else if(type == 3) {return EP.value(cube);}
+		else if(type == 4) {return RCO.value(cube);}
+		else {return REO.value(cube);}
 	}
 	public static void moveCoord(Cube cube, int type, int move) {
 		if(type == 0) {cube.moveCO(move);}
