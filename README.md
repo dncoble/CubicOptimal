@@ -17,4 +17,4 @@ each have a single letter name. Here's what they are and what they contain:
 
 There are also /main and /defunct. main contains two classes, each with a main method. One, Solver, is for developing the optimal solver. The other, Researcher, is for doing experiments. /defunct contains code that at one point I was using, but now don't need. Now that I have this git and am doing proper version control, I probably won't need it for too much longer.
 
-By the way, my code contains a lot of comments, and not all of them are exactly professional. I've been making this over 2 years now (starting in high school) I think its funny, and rarely delete comments in case they say something important.
+Fair warning, my code contains a lot of comments, and not all of them are exactly professional. I've been making this over 2 years now (starting in high school) I think its funny, and rarely delete comments in case they say something important. Sometimes when code was moved to different classes I moved comments with them, and then they no longer make sense. 
