@@ -1,0 +1,96 @@
+package h;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import c.*;
+
+
+/* This interface acts as the heuristic function used by search algorithms. Determining the heuristics
+ * was done with all those tables and things.
+ * h.ByteHeuristic is implemented by h.RawCoordHeuristic, h.ByteHeuristic.SymCoordHeuristic, and h.MaxHeuristic. h.MaxHeuristic itself
+ * has a list of ByteHeuristics (the coord heuristics) that it takes the max value of for each cube.
+ * in the future I'll want to probably make types of heuristics that are not from coordinates, like ML or a
+ * statistical model. those will probably return a float value, and i'll make a new interface for them
+ */
+public interface ByteHeuristic {
+
+    public byte h(Cube cube);
+
+    class SymCoordHeuristic implements ByteHeuristic {
+        private HashMap<Integer, Byte> symTable;
+        private ArrayList<Integer> rtsTable; //should rtsTable be implemented as a primitive list?
+        private int type;
+        //type is indexed according to:
+        //CO		1
+        //CP		2
+        //EO		3
+        //EP		4
+        //RCO		5
+        //REO		6
+        public SymCoordHeuristic(int type) {
+            this.type = type;
+            File[] filesList = new File(".").listFiles();
+            boolean makeSymTable = true; boolean makeRTSTable = true;
+            String tableFile = TableBuilder.getSymFile(type - 1);
+            String rtsFile = TableBuilder.getRawToSymFile(type - 1);
+            for(File j : filesList) {
+                if(j.getName().equals(tableFile)) {
+                    makeSymTable = false;
+                }
+                if(j.getName().equals(rtsFile)) {
+                    makeRTSTable = false;
+                }
+            }
+            //I could use c.TableBuilder.getFile, etc. to tell the user which ones.
+            if(makeSymTable) {
+                System.out.println("A requested table has not been made. It will be made now. \n"
+                        + "This may take a while.");
+                TableBuilder.makeSymTable(type - 1);
+            }
+            if(makeRTSTable) {
+                System.out.println("A requested table has not been made. It will be made now. \n"
+                        + "This may take a while.");
+                TableBuilder.makeRawToSym(type - 1);
+            }
+            symTable = (HashMap<Integer, Byte>) TableBuilder.readMapFromFile(TableBuilder.getSymFile(type - 1));
+            rtsTable = (ArrayList<Integer>) TableBuilder.readMapFromFile(TableBuilder.getRawToSymFile(type - 1));
+
+        }
+        public byte h(Cube cube) {
+            return symTable.get(getSymCoord(cube));
+        }
+        public int getCoord(Cube cube) {
+            if(type == 0) {return cube.coToInt();}
+            else if(type == 1) {return cube.cpToInt();}
+            else if(type == 2) {return cube.eoToInt();}
+            else if(type == 3) {return cube.epToInt();}
+            else if(type == 4) {return cube.rcoToInt();}
+            else {return cube.reoToInt();}
+        }
+        /* code for this could be potentially optimized when considering the size of the
+         * RTS Table, if it is better to constantly check or made identity coord then find
+         * where it contains.*/
+        public int getSymCoord(Cube cube) {
+            Cube testerCube = cube.clone();
+            int sym = getCoord(testerCube);
+            for(int i = 1; i < 48; i ++) {
+                rotateCoord(testerCube, i);
+                int coord = getCoord(testerCube);
+                if(coord < sym) {
+                    sym = coord;
+                }
+                testerCube = cube.clone();
+            }
+            return rtsTable.indexOf(sym);
+        }
+        public void rotateCoord(Cube cube, int rotation) {
+            if(type == 0) {cube.rotateCO(rotation);}
+            else if(type == 1) {cube.rotateCP(rotation);}
+            else if(type == 2) {cube.rotateEO(rotation);}
+            else if(type == 3) {cube.rotateEP(rotation);}
+            else if(type == 4) {cube.rotateCO(rotation); cube.rotateCP(rotation);}
+            else {cube.rotateEO(rotation); cube.rotateEP(rotation);}
+        }
+    }
+}
