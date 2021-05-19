@@ -3,7 +3,7 @@ import c.*;
 /* I have no memory of making this code.
  * the comment says that it doesn't work but i don't know how wrong it is
  */
-public class Kociemba {
+public class Kociemba implements Coordinate, RawCoord {
     public static String NAME;
     static {NAME = "Kociemba";}
 
@@ -38,6 +38,13 @@ public class Kociemba {
         }
         rtrn += intSlice;
         return rtrn;
+    }
+    public int rotate(Cube cube, int rotation) {
+         cube.rotateCO(rotation);
+         cube.rotateEO(rotation);
+         cube.rotateCP(rotation);
+         cube.rotateEP(rotation);
+         return value(cube);
     }
     public String name() {return NAME;}
 }

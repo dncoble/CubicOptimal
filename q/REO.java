@@ -3,7 +3,7 @@ import c.*;
 
 import java.util.ArrayList;
 
-public class REO {
+public class REO implements Coordinate, RawCoord {
     public static String NAME;
     static {NAME = "REO";}
 
@@ -15,7 +15,7 @@ public class REO {
      * different orientations depending on rotation.
      * just as with RCO, REO requires binomial coefficients to correctly index,
      * but it is slightly more complicated since there are 3 different types of edges */
-    public static int value(Cube cube) {
+    public int value(Cube cube) {
         int[] eo = cube.getEO();
         int[] ep = cube.getEP();
         int rtrn = 0;
@@ -52,6 +52,10 @@ public class REO {
         rtrn += (new EO()).value(cube);
         return rtrn;
     }
-
+    public int rotate(Cube cube, int rotation) {
+        cube.rotateEO(rotation);
+        cube.rotateEP(rotation);
+        return value(cube);
+    }
     public String name() {return NAME;}
 }

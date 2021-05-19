@@ -1,7 +1,7 @@
 package q;
 import c.*;
 
-public class EO implements Coordinate {
+public class EO implements Coordinate, RawCoord {
     public static String NAME;
     static {NAME = "EO";}
     /* EO is calculated in much a similar way to CO, but each edge only has two possible
@@ -16,6 +16,10 @@ public class EO implements Coordinate {
             rtrn += eo[j];
         }
         return rtrn;
+    }
+    public int rotate(Cube cube, int rotation) {
+        cube.rotateEO(rotation);
+        return value(cube);
     }
     public String name() {return NAME;}
 }

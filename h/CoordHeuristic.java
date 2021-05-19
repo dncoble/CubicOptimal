@@ -1,5 +1,5 @@
 package h;
 /* */
-public interface CoordHeuristic {
+public class CoordHeuristic {]
 
 }

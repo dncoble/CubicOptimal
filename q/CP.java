@@ -3,7 +3,7 @@ import c.*;
 
 import java.util.ArrayList;
 
-public class CP implements Coordinate {
+public class CP implements Coordinate, RawCoord {
     private static String NAME;
     static {NAME = "CP";}
     public CP() {}
@@ -27,6 +27,10 @@ public class CP implements Coordinate {
             cCheckList.remove((Integer) corner);
         }
         return rtrn;
+    }
+    public int rotate(Cube cube, int rotation) {
+        cube.rotateCP(rotation);
+        return value(cube);
     }
     public String name() {return NAME;}
 }

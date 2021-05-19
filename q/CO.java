@@ -1,7 +1,7 @@
 package q;
 import c.*;
 
-public class CO implements Coordinate {
+public class CO implements Coordinate, RawCoord {
     private static String NAME;
     static{NAME = "CO";}
     public CO() {}
@@ -19,6 +19,10 @@ public class CO implements Coordinate {
             rtrn += co[i];
         }
         return rtrn;
+    }
+    public int rotate(Cube cube, int rotation) {
+        cube.rotateCO(rotation);
+        return value(cube);
     }
     public String name() {return NAME;}
 }
