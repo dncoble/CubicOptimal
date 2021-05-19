@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class REO implements Coordinate, RawCoord {
     public static String NAME;
-    static {NAME = "REO";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "REO";
+        MAX_SIZE = 70963199;
+    }
 
     public REO() {}
     /* an edge can be in one of 3 slice layers:
@@ -57,5 +61,7 @@ public class REO implements Coordinate, RawCoord {
         cube.rotateEP(rotation);
         return value(cube);
     }
+    public void setCoord(Cube cube, int value) {cube.reoFromInt(value);}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

@@ -3,7 +3,11 @@ import c.*;
 
 public class RCO implements Coordinate, RawCoord {
     public static String NAME;
-    static {NAME = "RCO";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "RCO";
+        MAX_SIZE = 153089;
+    }
 
     public RCO() {}
     /*rotational corner orientation and rotational edge orientation takes into account
@@ -39,5 +43,7 @@ public class RCO implements Coordinate, RawCoord {
         cube.rotateCP(rotation);
         return value(cube);
     }
+    public void setCoord(Cube cube, int value) {cube.rcoFromInt(value);}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

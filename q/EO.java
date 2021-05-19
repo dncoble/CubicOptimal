@@ -3,7 +3,11 @@ import c.*;
 
 public class EO implements Coordinate, RawCoord {
     public static String NAME;
-    static {NAME = "EO";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "EO";
+        MAX_SIZE = 2047;
+    }
     /* EO is calculated in much a similar way to CO, but each edge only has two possible
      * orientations, and there are 12 edges in total. with the final edge excluded because
      * of edge flip parity, it is an 11 digit base 2 number. */
@@ -21,5 +25,7 @@ public class EO implements Coordinate, RawCoord {
         cube.rotateEO(rotation);
         return value(cube);
     }
+    public void setCoord(Cube cube, int value) {cube.eoFromInt(value);}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

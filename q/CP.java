@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class CP implements Coordinate, RawCoord {
     private static String NAME;
-    static {NAME = "CP";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "CP";
+        MAX_SIZE = 40319;
+    }
     public CP() {}
     /*the concept of turning an int[] into an int with a base system is also used in
      * since for every index in the permutation, the options are reduced by one, it is effectively
@@ -33,4 +37,5 @@ public class CP implements Coordinate, RawCoord {
         return value(cube);
     }
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

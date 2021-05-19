@@ -3,7 +3,11 @@ import c.*;
 
 public class CO implements Coordinate, RawCoord {
     private static String NAME;
-    static{NAME = "CO";}
+    private static int MAX_SIZE;
+    static{
+        NAME = "CO";
+        MAX_SIZE = 2186;
+    }
     public CO() {}
     /* the following methods turn each int[] coordinate int a single integer coordinate
      * which is useful is saving tables of scrambles to permutation, since a single integer
@@ -24,5 +28,8 @@ public class CO implements Coordinate, RawCoord {
         cube.rotateCO(rotation);
         return value(cube);
     }
+
+    public void setCoord(Cube cube, int value) {cube.coFromInt(value);}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class EP implements Coordinate, RawCoord {
     public static String NAME;
-    static {NAME = "EP";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "EP";
+        MAX_SIZE = 479001599;
+    }
     public EP() {}
     public int value(Cube cube){
         int[] ep = cube.getEP();
@@ -26,5 +30,7 @@ public class EP implements Coordinate, RawCoord {
         cube.rotateEP(rotation);
         return value(cube);
     }
+    public void setCoord(Cube cube, int value) {cube.epFromInt(value);}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

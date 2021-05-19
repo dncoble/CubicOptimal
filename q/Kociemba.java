@@ -2,10 +2,16 @@ package q;
 import c.*;
 /* I have no memory of making this code.
  * the comment says that it doesn't work but i don't know how wrong it is
+ * i never made a fromInt method, which isn't necessary since you can't use Kociemba with symmetry anyways
  */
 public class Kociemba implements Coordinate, RawCoord {
     public static String NAME;
-    static {NAME = "Kociemba";}
+    private static int MAX_SIZE;
+    static {
+        NAME = "Kociemba";
+        //i don't know the size
+        MAX_SIZE = -1;
+    }
 
     public Kociemba() {}
     /* this creates an int representation based on the Kociemba subset, just like the above subsets
@@ -46,5 +52,7 @@ public class Kociemba implements Coordinate, RawCoord {
          cube.rotateEP(rotation);
          return value(cube);
     }
+    public void setCoord(Cube cube, int value) {/*this method has not been made*/;}
     public String name() {return NAME;}
+    public int size() {return MAX_SIZE;}
 }

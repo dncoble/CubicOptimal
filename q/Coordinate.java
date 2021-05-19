@@ -1,11 +1,14 @@
 package q;
 import c.*;
 /* interface for Coordinates. the static method .value takes a Cube and returns an int value.
- * CO, EO, CP, EP, REO, and RCO used exist within the Cube class. the Cube class also contained fromInt
- * methods that were the exact opposite. they weren't used in the solver so I don't know where to place them
- * for now they're staying in the Cube class.
+ * CO, EO, CP, EP, REO, and RCO used exist within the Cube class
  */
 public interface Coordinate {
     public String name();
     public int value(Cube cube);
+    /*returns one less than the actual size of the coordinate, which is the max value/max index
+     * these values have to be calculated by-hand. that will be a problem when i want to try to create coordinates
+     * in the machine. Help from Wolfgang Buchmaier in finding some values */
+    public int size();
+    //right now i'm just going to have this immediately call the fromInt methods in the Cube class
 }

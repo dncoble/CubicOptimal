@@ -11,4 +11,7 @@ public interface RawCoord {
     public int rotate(Cube cube, int rotation);
     public int value(Cube cube);
     public String name();
+    public int size();
+    //right now i'm just going to have this immediately call the fromInt methods in the Cube class
+    public void setCoord(Cube cube, int value);
 }
