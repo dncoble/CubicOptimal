@@ -1,7 +1,7 @@
 package q;
 import c.*;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ public class Sym implements Coordinate {
             System.out.println("A requested table has not been made.");
             makeRTS();
         }
-        rtsTable = (ArrayList<Integer>) TableBuilder.readMapFromFile(rtsFileName());
+        rtsTable = (ArrayList<Integer>) readMapFromFile(rtsFileName());
     }
 
     public int value(Cube cube) {
@@ -81,7 +81,7 @@ public class Sym implements Coordinate {
             table.add(iter.next());
         }
         System.out.println(table.size());
-        TableBuilder.writeMapToFile(table, rtsFileName());
+        writeMapToFile(table, rtsFileName());
     }
 
     //this method finds identity coord by rotating the cube 48 times and finding the smallest value.
@@ -99,6 +99,15 @@ public class Sym implements Coordinate {
         return sym;
     }
 
+    public static void setCoord(Cube cube, int type, int coord) {
+        if(type == 0) {cube.coFromInt(coord);}
+        else if(type == 1) {cube.cpFromInt(coord);}
+        else if(type == 2) {cube.eoFromInt(coord);}
+        else if(type == 3) {cube.epFromInt(coord);}
+        else if(type == 4) {cube.rcoFromInt(coord);}
+        else {cube.reoFromInt(coord);}
+    }
+
     private String rtsFileName() {
         return "RTS" + rawCoord.name() +"Table";
     }
@@ -106,4 +115,29 @@ public class Sym implements Coordinate {
     /* i should check on this. for whatever reason i made maxSize one less than actual (so it's max index actually)
      * the true values are 36, 4347, 106, 38345286, 16930, 3477981 */
     public int size() {return rtsTable.size() - 1;}
+    public static void writeMapToFile(Serializable table, String filePath) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(table);
+            objectOut.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    public static Object readMapFromFile(String filePath) {
+        try {
+            FileInputStream fileIn = new FileInputStream(filePath);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            Object rtrnMap = objectIn.readObject();
+            objectIn.close();
+            return rtrnMap;
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

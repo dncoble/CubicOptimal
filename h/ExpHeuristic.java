@@ -1,24 +1,20 @@
 package h;
+
 import c.Cube;
 import c.IntScramble;
 import c.Scramble;
-import q.*;
+import q.Coordinate;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/* this class handles all heuristics from coordinates as created in /q
-* at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
-* here. a coordinate is basically a subset all permutations of a cube. for each coordinate value, there are multiple
-* permutations it corresponds to. the table is a dictionary, (HashMap) that contains the heuristic, and then the distance
-* to solved for the best permutation that has that coordinate. alternatively, you can think of the coordinate as its own
-* puzzle. then the dictionary contains the distance to solved of that subpuzzle in that state. */
-public class CoordHeuristic {
+/* used for makeBigTable. .h returns 0 if the table does not contain a value. */
+public class ExpHeuristic implements ByteHeuristic {
     Coordinate q;
     private HashMap<Integer, Byte> table;
 
-    public CoordHeuristic(Coordinate q) {
+    public ExpHeuristic(Coordinate q) {
         this.q = q;
         File[] filesList = new File(".").listFiles();
         boolean makeRawTable = true;
@@ -32,12 +28,20 @@ public class CoordHeuristic {
         if(makeRawTable) {
             System.out.println("A requested table has not been made. It will be made now. \n"
                     + "This may take a while.");
-            makeTable();
+            makeTable(q);
         }
         table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
     }
-    public byte h(Cube cube) {return table.get(q.value(cube));}
-    public void makeTable() {
+
+    public void addToTable(int coord, byte h) {table.put(coord, h);}
+
+    public byte h(Cube cube) {
+        if(table.containsKey(q.value(cube))) {return table.get(q.value(cube));}
+        else {return 0;}
+    }
+    /* right now this is the same makeTable as is in CoordHeuristic. eventually though i want to make optimizations
+     * for making big tables.*/
+    public void makeTable(Coordinate q) {
         int maxSize = q.size();
         Map<Integer, Byte> table = new HashMap<Integer, Byte>();
         table.put(0,(byte) 0);

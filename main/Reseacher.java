@@ -2,7 +2,6 @@ package main;
 
 import h.ByteHeuristic;
 import h.MaxHeuristic;
-import h.RawCoordHeuristic;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
