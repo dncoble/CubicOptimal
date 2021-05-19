@@ -43,7 +43,7 @@ public class SymCoordHeuristic implements ByteHeuristic {
             TableBuilder.makeSymTable(type - 1);
         }
         symTable = (HashMap<Integer, Byte>) TableBuilder.readMapFromFile(TableBuilder.getFile(type - 1));
-        rtsTable = (ArrayList<Integer>) TableBuilder.readMapFromFile(TableBuilder.getFile(type -1));
+        rtsTable = (ArrayList<Integer>) TableBuilder.readMapFromFile(TableBuilder.getRawToSymFile(type -1));
     }
 
     /* makeBigTable stuff, although it only works on RawCoordHeuristic I think*/
