@@ -104,7 +104,6 @@ public class CoordHeuristic {
             Object rtrnMap = objectIn.readObject();
             objectIn.close();
             return rtrnMap;
-
         }
         catch (Exception ex) {
             ex.printStackTrace();
