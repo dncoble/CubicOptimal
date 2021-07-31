@@ -25,7 +25,7 @@ public class EO implements Coordinate, RawCoord {
         cube.rotateEO(rotation);
         return value(cube);
     }
-    public void setCoord(Cube cube, int value) {cube.eoFromInt(value);}
+    public Cube setCoord(Cube cube, int value) {cube.eoFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

@@ -99,9 +99,9 @@ public class Sym implements Coordinate {
         return sym;
     }
     /* sets the cube to the identity coord */
-    public void setCoord(Cube cube, int value) {
+    public Cube setCoord(Cube cube, int value) {
         int rawValue = rtsTable.get(value);
-        rawCoord.setCoord(cube, rawValue);
+        return rawCoord.setCoord(cube, rawValue);
     }
 
     private String rtsFileName() {

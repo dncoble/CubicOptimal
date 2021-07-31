@@ -13,5 +13,5 @@ public interface RawCoord {
     public String name();
     public int size();
     //right now i'm just going to have this immediately call the fromInt methods in the Cube class
-    public void setCoord(Cube cube, int value);
+    public Cube setCoord(Cube cube, int value);
 }

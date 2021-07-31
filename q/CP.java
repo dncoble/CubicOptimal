@@ -36,6 +36,7 @@ public class CP implements Coordinate, RawCoord {
         cube.rotateCP(rotation);
         return value(cube);
     }
+    public Cube setCoord(Cube cube, int value) {cube.cpFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

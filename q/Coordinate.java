@@ -11,5 +11,5 @@ public interface Coordinate {
      * in the machine. Help from Wolfgang Buchmaier in finding some values */
     public int size();
     /*calls the fromInt methods in the Cube class for Raw Values. */
-    public void setCoord(Cube cube, int value);
+    public Cube setCoord(Cube cube, int value);
 }

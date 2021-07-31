@@ -43,7 +43,7 @@ public class RCO implements Coordinate, RawCoord {
         cube.rotateCP(rotation);
         return value(cube);
     }
-    public void setCoord(Cube cube, int value) {cube.rcoFromInt(value);}
+    public Cube setCoord(Cube cube, int value) {cube.rcoFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

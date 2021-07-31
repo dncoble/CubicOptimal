@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import h.*; import c.*; import s.*;
+import h.*; import c.*; import s.*; import q.*;
 
 public class Solver {
     public static ArrayList<HashMap<Integer, Short>> rawTables;
@@ -75,14 +75,25 @@ public class Solver {
         ArrayList<Scramble> solvedScrambles = new ArrayList<Scramble>();
         MaxHeuristic h = new MaxHeuristic();
         for(int j : tablesUsed) {
-            if(j < 7) {
-                ByteHeuristic nextHeuristic = new RawCoordHeuristic(j);
-                h.addHeuristic(nextHeuristic);
+            ByteHeuristic nextHeuristic;
+            Coordinate q;
+            switch(j) {
+                case 1: q = new CO(); break;
+                case 2: q = new CP(); break;
+                case 3: q = new EO(); break;
+                case 4: q = new EP(); break;
+                case 5: q = new RCO(); break;
+                case 6: q = new REO(); break;
+                case 7: q = new Sym(new CO()); break;
+                case 8: q = new Sym(new CP()); break;
+                case 9: q = new Sym(new EO()); break;
+                case 10: q = new Sym(new EP()); break;
+                case 11: q = new Sym(new RCO()); break;
+                case 12: q = new Sym(new REO()); break;
+                default: q = null; break;
             }
-            else {
-                ByteHeuristic nextHeuristic = new SymCoordHeuristic(j);
-                h.addHeuristic(nextHeuristic);
-            }
+            nextHeuristic = new CoordHeuristic(q);
+            h.addHeuristic(nextHeuristic);
         }
         for(String j : rawListScrambles) {
             Scramble identityScr = new Scramble(j);

@@ -52,7 +52,7 @@ public class Kociemba implements Coordinate, RawCoord {
          cube.rotateEP(rotation);
          return value(cube);
     }
-    public void setCoord(Cube cube, int value) {/*this method has not been made*/;}
+    public Cube setCoord(Cube cube, int value) {/*this method has not been made*/; return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

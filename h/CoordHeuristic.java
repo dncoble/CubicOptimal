@@ -8,6 +8,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 /* this class handles all heuristics from coordinates as created in /q
 * at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 * permutations it corresponds to. the table is a dictionary, (HashMap) that contains the heuristic, and then the distance
 * to solved for the best permutation that has that coordinate. alternatively, you can think of the coordinate as its own
 * puzzle. then the dictionary contains the distance to solved of that subpuzzle in that state. */
-public class CoordHeuristic {
+public class CoordHeuristic implements ByteHeuristic {
     Coordinate q;
     private HashMap<Integer, Byte> table;
 
@@ -33,37 +35,93 @@ public class CoordHeuristic {
         if(makeRawTable) {
             System.out.println("A requested table has not been made. It will be made now. \n"
                     + "This may take a while.");
-            makeTable();
+            makeTable(true);
         }
         table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
     }
     public byte h(Cube cube) {return table.get(q.value(cube));}
-    public void makeTable() {
-        int maxSize = q.size();
-        Map<Integer, Byte> table = new HashMap<Integer, Byte>();
-        ArrayList<Integer> lastValues = new ArrayList<Integer>();
-        table.put(0,(byte) 0);
-        lastValues.add(0);
-        int length = 1;
-        int[] data = new int[21];
-        while(!lastValues.isEmpty()) {
-            ArrayList<Integer> currentValues = new ArrayList<Integer>();
-            for(int value : lastValues) {
+    /* The below algorithm generates the table in what I believe to be the most efficient algorithm. in experimenting
+     * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
+     * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
+    public void makeTable(boolean useSetCoord) {
+        if(useSetCoord) {
+            int maxSize = q.size();
+            Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+            Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
+            table.put(0,(byte) 0); int tableSize = 1;
+            unexpandedQ.add(0);
+            int[] data = new int[21];
+            while(!unexpandedQ.isEmpty()) {
+                int currentQ = unexpandedQ.poll(); unexpandedSize --;
+                Cube cube = q.setCoord(new Cube(), currentQ);
+                int length = table.get(currentQ);
                 Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
-                Cube cube = new Cube();
-                q.setCoord(cube, value);
                 cube.move(scr);
-                if(table.containsKey(q.value(cube))) { //if table contains q.value(cube), that value must be length - 1
-                    table.put(value, (byte) (length));
-                    currentValues.add(value);
-                    data[length] ++;
+                if(!table.containsKey(q.value(cube))) {
+                    table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                    unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                    data[length + 1] ++;
                 }
-                //loop, and remember about 18/15 problems
+                else {} // with queue, if it is already in the table, it must have length less or equal to
+                for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                    cube.move(scr.iterate());
+                    if(!table.containsKey(q.value(cube))) {
+                        table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                        unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                        data[length +1] ++;
+                    }
+                }
+                if (tableSize % 10000 == 0) {
+                    System.out.println("table size: " + tableSize);
+                    System.out.println("% complete: " + ((double) tableSize / (maxSize + 1)) * 100);
+                    System.out.println("length: " + length);
+                    System.out.println("unexpanded nodes: " + unexpandedSize);
+                }
             }
-            lastValues = currentValues;
+            for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
+            writeMapToFile((Serializable) table, q.name() + "Table");
         }
-        for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
-        writeMapToFile((Serializable) table, q.name() + "Table");
+        else {
+            int maxSize = q.size();
+            Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+            Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
+            Queue<Cube> unexpandedC = new LinkedList<Cube>();
+            table.put(0,(byte) 0); int tableSize = 1;
+            unexpandedQ.add(0);
+            unexpandedC.add(new Cube());
+            int[] data = new int[21];
+            while(!unexpandedQ.isEmpty()) {
+                int currentQ = unexpandedQ.poll(); unexpandedSize --;
+                Cube cube = unexpandedC.poll();
+                int length = table.get(currentQ);
+                Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+                cube.move(scr);
+                if(!table.containsKey(q.value(cube))) {
+                    table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                    unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                    unexpandedC.add(cube.clone());
+                    data[length + 1] ++;
+                }
+                else {} // with queue, if it is already in the table, it must have length less or equal to
+                for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                    cube.move(scr.iterate());
+                    if(!table.containsKey(q.value(cube))) {
+                        table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                        unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                        unexpandedC.add(cube.clone());
+                        data[length +1] ++;
+                    }
+                }
+                if (tableSize % 10000 == 0) {
+                    System.out.println("table size: " + tableSize);
+                    System.out.println("% complete: " + ((double) tableSize / (maxSize + 1)) * 100);
+                    System.out.println("length: " + length);
+                    System.out.println("unexpanded nodes: " + unexpandedSize);
+                }
+            }
+            for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
+            writeMapToFile((Serializable) table, q.name() + "Table");
+        }
     }
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from

@@ -9,8 +9,11 @@ change everything possible from int, short -> byte
 	cubes
 	nodes
 
-super large tables (REO, rotated EP) will require fancy stuff to crunch. something like using the partially built table as the heuristic while it builds itself.
-check that cube rotations work properly.
+makeTable right now either requires setCoord or to save cubes, but i think it can be done better by using fancy search stuff
+
+experiment with garbage management, does that speed up performance?
+
+are object files supposed to be saved as json?
 
 clean up code
 	can we do implements, inherits?
