@@ -1,9 +1,5 @@
 Notes:
 
-post refactor:
-	SymCoordHeuristic has gone missing
-	the reason the smart table generation won't work is because the smallH searches for its solved
-
 implement SMA*
 	make all search algorithms inherit
 

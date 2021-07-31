@@ -98,14 +98,10 @@ public class Sym implements Coordinate {
         }
         return sym;
     }
-
-    public static void setCoord(Cube cube, int type, int coord) {
-        if(type == 0) {cube.coFromInt(coord);}
-        else if(type == 1) {cube.cpFromInt(coord);}
-        else if(type == 2) {cube.eoFromInt(coord);}
-        else if(type == 3) {cube.epFromInt(coord);}
-        else if(type == 4) {cube.rcoFromInt(coord);}
-        else {cube.reoFromInt(coord);}
+    /* sets the cube to the identity coord */
+    public void setCoord(Cube cube, int value) {
+        int rawValue = rtsTable.get(value);
+        rawCoord.setCoord(cube, rawValue);
     }
 
     private String rtsFileName() {

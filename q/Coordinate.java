@@ -10,5 +10,6 @@ public interface Coordinate {
      * these values have to be calculated by-hand. that will be a problem when i want to try to create coordinates
      * in the machine. Help from Wolfgang Buchmaier in finding some values */
     public int size();
-    //right now i'm just going to have this immediately call the fromInt methods in the Cube class
+    /*calls the fromInt methods in the Cube class for Raw Values. */
+    public void setCoord(Cube cube, int value);
 }

@@ -7,6 +7,7 @@ import q.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 /* this class handles all heuristics from coordinates as created in /q
 * at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
@@ -40,44 +41,26 @@ public class CoordHeuristic {
     public void makeTable() {
         int maxSize = q.size();
         Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+        ArrayList<Integer> lastValues = new ArrayList<Integer>();
         table.put(0,(byte) 0);
-        int tableSize = 1;
-        Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
-        Cube cube = new Cube(scr);
-        IntScramble current = new IntScramble(new int[] {Integer.MIN_VALUE});
+        lastValues.add(0);
         int length = 1;
         int[] data = new int[21];
-        for(int m = 0; m < 21; m ++) {data[m] = 0;}
-        complete:
-        while(tableSize <= maxSize) {
-            boolean finishedLength = false;
-            while(!finishedLength) {
-                if(!table.containsKey(q.value(cube))) {
-                    table.put(q.value(cube), (byte) scr.getLength());
-                    tableSize ++;
-                    data[scr.getLength()] ++;
-                    if(tableSize % 10000 == 0) {
-                        System.out.println("table size: " + tableSize);
-                        System.out.println("% complete: " + ((double) tableSize / (maxSize + 1)) * 100);
-                        System.out.println("length: " + length);
-                        System.out.println(q.value(cube));
-                        int[] j = scr.toInt();
-                        for(int k : j) {System.out.print(k + " ");}
-                        System.out.println(scr.toString());
-                        System.out.println();
-                    }
-                    if(tableSize > maxSize) {break complete;}
+        while(!lastValues.isEmpty()) {
+            ArrayList<Integer> currentValues = new ArrayList<Integer>();
+            for(int value : lastValues) {
+                Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+                Cube cube = new Cube();
+                q.setCoord(cube, value);
+                cube.move(scr);
+                if(table.containsKey(q.value(cube))) { //if table contains q.value(cube), that value must be length - 1
+                    table.put(value, (byte) (length));
+                    currentValues.add(value);
+                    data[length] ++;
                 }
-                //some efficiency could be gained if i made it only move the coords that are relevant
-                cube.move(scr.iterate());
-                if(current.iterate(length)) {finishedLength = true;}
+                //loop, and remember about 18/15 problems
             }
-            length ++;
-            int[] intScr = new int[(length - 1) / 8 + 1];
-            for(int i = 0; i < intScr.length; i ++) {intScr[i] = Integer.MIN_VALUE;}
-            current = new IntScramble(intScr);
-            scr = new Scramble(Integer.MIN_VALUE, length); //this works
-            cube = new Cube(scr);
+            lastValues = currentValues;
         }
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
         writeMapToFile((Serializable) table, q.name() + "Table");
