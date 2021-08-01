@@ -1,4 +1,7 @@
-Notes:
+right now i am:
+    improving makeTable and making sym tables to get those up and working
+
+future work and notes:
 
 implement SMA*
 	make all search algorithms inherit
