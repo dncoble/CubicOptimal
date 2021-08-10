@@ -1,19 +1,22 @@
 package q;
-import c.*;
+
+import c.Cube;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
 
 /* all Sym coords go through this class, unlike raw coords */
-public class Sym implements Coordinate {
+/* i want sym coords to work through hash maps, but i can't right now because .setCoord requires a value -> key.
+ * there would be a lot of ways around that, including removing any necessity for .setCoord, which I wanted to do
+ * anyways. for now this is gonna hang out here, and replace Sym when I can. */
+public class SymHashMap implements Coordinate {
 
     RawCoord rawCoord;
-    ArrayList<Integer> rtsTable;
+    HashMap<Integer, Integer> rtsTable;
 
-    public Sym(RawCoord rawCoord) {
+    public SymHashMap(RawCoord rawCoord) {
         this.rawCoord = rawCoord;
         File[] filesList = new File(".").listFiles();
         boolean makeRTS = true;
@@ -28,7 +31,7 @@ public class Sym implements Coordinate {
             System.out.println("A requested table has not been made.");
             makeRTS();
         }
-        rtsTable = (ArrayList<Integer>) readMapFromFile(rtsFileName());
+        rtsTable = (HashMap<Integer, Integer>) readMapFromFile(rtsFileName());
     }
 
     public int value(Cube cube) {
@@ -42,7 +45,7 @@ public class Sym implements Coordinate {
             }
             testerCube = cube.clone();
         }
-        return rtsTable.indexOf(sym);
+        return rtsTable.get(sym);
     }
 
     /* the RTS (Raw-To-Sym) table converts a raw coordinate to its sym-coordinate in the following way:
@@ -56,7 +59,7 @@ public class Sym implements Coordinate {
         int max = rawCoord.size();
         int size = 0;
         int sinceLast = 0;
-        ArrayList<Integer> table = new ArrayList<Integer>();
+        HashMap<Integer, Integer> table = new HashMap<Integer, Integer>();
         TreeSet<Integer> set = new TreeSet<Integer>();
         while(coord <= max) {
             Cube cube = new Cube();
@@ -77,8 +80,9 @@ public class Sym implements Coordinate {
 			}
         }
         Iterator<Integer> iter = set.iterator();
+        int count = 0;
         while(iter.hasNext()) {
-            table.add(iter.next());
+            table.put(iter.next(), count); count ++;
         }
         System.out.println(table.size());
         writeMapToFile(table, rtsFileName());

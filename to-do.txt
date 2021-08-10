@@ -14,6 +14,8 @@ change everything possible from int, short -> byte
 
 makeTable right now either requires setCoord or to save cubes, but i think it can be done better by using fancy search stuff
 
+test rotate works by rotating an identity cube, making sure it is still identity afterward.
+
 experiment with garbage management, does that speed up performance?
 
 are object files supposed to be saved as json?

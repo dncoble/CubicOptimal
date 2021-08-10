@@ -44,7 +44,7 @@ public class CoordHeuristic implements ByteHeuristic {
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
     public void makeTable(boolean useSetCoord) {
-        TableBuilder.makeTable(q, 0);
+        TableBuilder.makeTable(q, 3);
     }
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from
