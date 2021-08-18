@@ -24,8 +24,31 @@ public class Reseacher {
 //            allScrs.append(new c.Scramble(stringAList.get(0)));
 //            allScrs.remove(0);
 //        }
-        Coordinate k = new CO();
-        System.out.println(k.name());
+        Scramble fMove = new Scramble("F");
+        Scramble f_Move = new Scramble("F'");
+        Scramble rMove = new Scramble("R");
+        Scramble f2Move = new Scramble("F2");
+        Cube f = new Cube(fMove);
+        Cube f_ = new Cube(f_Move);
+        Cube r = new Cube(rMove);
+        Cube f2 = new Cube(f2Move);
+        Coordinate sym = new Sym(new REO());
+        System.out.println("F: " + sym.value(f));
+        System.out.println("F': " + sym.value(f_));
+        System.out.println("R: " + sym.value(r));
+        System.out.println("F2: " + sym.value(f2));
+
+        f.rotate(1);
+        f_.rotate(11);
+        r.rotate(21);
+        f2.rotate(32);
+
+        System.out.println("F: " + sym.value(f));
+        System.out.println("F': " + sym.value(f_));
+        System.out.println("R: " + sym.value(r));
+        System.out.println("F2: " + sym.value(f2));
+
+
 // making big coordinates
 //        ByteHeuristic coH = new RawCoordHeuristic(1);
 //        ByteHeuristic cpH = new RawCoordHeuristic(2);

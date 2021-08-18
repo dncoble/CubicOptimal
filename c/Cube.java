@@ -551,6 +551,12 @@ public class Cube implements Cloneable{
 	 * x / z move: 0 - nothing, 1 - z, 2 - z' 3 - x, 4 - x', 5 - x2
 	 * y move: 0 - nothing, 1 - y, 2 - y2, 3 - y'
 	 * there's probably a better way to do this, at least reduce the amount of lines */
+	public void rotate(int rotation) {
+		rotateCO(rotation);
+		rotateCP(rotation);
+		rotateEO(rotation);
+		rotateEP(rotation);
+	}
 	public void rotateCO(int rotation) {
 		int[] current = getRCO();
 		int firstRot = rotation % 6;

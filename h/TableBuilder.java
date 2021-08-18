@@ -152,7 +152,7 @@ public class TableBuilder {
             Cube cube = new Cube();
             Scramble scr = new Scramble();
             Node iterQ = currentQ;
-            while(currentQ.hasParent()) {
+            while(iterQ.hasParent()) {
                 scr.addFirst((int) currentQ.move);
                 iterQ = iterQ.parent;
             }
