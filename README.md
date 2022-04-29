@@ -24,9 +24,11 @@ Plan for versions:
 
 0.2.1: Complete structure of how packages c, s, h, and q interact.
 
-0.2.2: Create big tables and effective use of sym coordinates to reach ~14-15 depth.
+0.2.2: Restructure Cube class with permutations. Work towards flexibility for arbitrary coordinates. Add lexicographic ordering heuristic. ~12-13 depth.
 
-0.2.3: Create architecture required for complex heuristic/coordinates that use math operators (coordinates) and all heuristic abstractions (heuristics)
+0.2.3: Create big tables and effective use of sym coordinates to reach ~14-15 depth.
+
+0.2.4: Create architecture required for complex coordinates with math operators and all heuristic abstractions (heuristics)
 
 0.2.x: machine learning to generate heuristics
 
