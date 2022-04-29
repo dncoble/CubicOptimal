@@ -39,11 +39,13 @@ remove incorrect tables --rotated CO and EO
 UI
 
 and if you do all that, you can look for optimizations
-----------------
-COTable 33 kb
-CPTable 591 kb
-EOTable  31 kb
-----------------
+| Table | Size |
+|---|---|
+| COTable | 33 kb |
+| CPTable | 591 kb |
+| EOTable | 31 kb |
+
+
 ML generated coordinates:
 what I want is something that iterates to produce more complecated coordinates each time. then it can make multiple at each iteration and choose the best based on some criterion function.
 my ideal: a function is created from the coordinate basis. the values returned by the function are stored in a map to the distance values. the function is made more complicated. there are two problems with this:
