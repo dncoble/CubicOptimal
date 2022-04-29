@@ -30,6 +30,6 @@ Plan for versions:
 
 0.2.x: machine learning to generate heuristics
 
-See to-do.txt for an unorganized list of things I plan on doing.
+See to-do.md for an unorganized list of things I plan on doing.
 
 1.0.0 released when it's able to optimally solve cubes up to length 20. Current ability: 11.
