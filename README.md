@@ -19,18 +19,30 @@ There are also /main and /defunct. main contains two classes, each with a main m
 
 Fair warning, my code contains a lot of comments, and not all of them are exactly professional. I've been making this over 2 years now (starting in high school) I think its funny, and rarely delete comments in case they say something important. Sometimes when code was moved to different classes I moved comments with them, and then they no longer make sense.
 
-# Current version: 0.2.1
-Working coordinates
 
-| Coordinates | Raw | Sym | Raw Size |
-|---|---|---|---|
-| CO |Yes|Can't|2187|
-| CP |Yes|   |40320|
-| EO |Yes|Can't|2048|
-| EP |Too big|   |479001599|
-|RCO |  |   |153090|
-|REO |  |   |70963199|
+# Working coordinates
+
+The four coordinates most commonly used to describe a cube are orientation and permutation of the corner and edge pieces. CO and EO can't be rotated, however, so rotatble corner orientation and rotatable edge orientation contain added information from the permutation so that the coordinates can be rotated into sym coordinates.
+
+CO: corner orientation \
+CP: corner permutation \
+EO: edge orientation \
+EP: edge permutation \
+RCO: rotatable corner orientation \
+REO: rotatable edge orientation \
+Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
+
+| Coordinates | Raw | Sym | Raw Size | Sym Size |
+|---|---|---|---|---|
+| CO |Yes| - |2187| |
+| CP |Yes|Yes|40320|984| 
+| EO |Yes| - |2048| |
+| EP |Too big|   |479001599| |
+|RCO |Yes|   |153090| |
+|REO |Too big|   |70963199| |
 | Kociemba| not even close
+
+# Current version: 0.2.1
 
 Plan for versions:
 
