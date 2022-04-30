@@ -1,8 +1,9 @@
-package h;/* a heuristic is also complete if it takes the maximum of multiple complete heuristics.
- * this class is set up for byte heuristics */
-
-import h.ByteHeuristic;
-import c.Cube;
+package h;
+/* 
+ * a heuristic is also complete if it takes the maximum of multiple complete heuristics.
+ * this class is set up for byte heuristics
+ */
+import c.*;
 import java.util.ArrayList;
 
 public class MaxHeuristic implements ByteHeuristic {

@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import c.*; import h.*; import s.*; import q.*;
+import java.util.Arrays;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
@@ -24,29 +25,55 @@ public class Reseacher {
 //            allScrs.append(new c.Scramble(stringAList.get(0)));
 //            allScrs.remove(0);
 //        }
-        Scramble fMove = new Scramble("F");
-        Scramble f_Move = new Scramble("F'");
-        Scramble rMove = new Scramble("R");
-        Scramble f2Move = new Scramble("F2");
-        Cube f = new Cube(fMove);
-        Cube f_ = new Cube(f_Move);
-        Cube r = new Cube(rMove);
-        Cube f2 = new Cube(f2Move);
-        Coordinate sym = new Sym(new REO());
-        System.out.println("F: " + sym.value(f));
-        System.out.println("F': " + sym.value(f_));
-        System.out.println("R: " + sym.value(r));
-        System.out.println("F2: " + sym.value(f2));
 
-        f.rotate(1);
-        f_.rotate(11);
-        r.rotate(21);
-        f2.rotate(32);
+        Cube cube = new Cube();
+        Cube testerCube = cube.clone();
 
-        System.out.println("F: " + sym.value(f));
-        System.out.println("F': " + sym.value(f_));
-        System.out.println("R: " + sym.value(r));
-        System.out.println("F2: " + sym.value(f2));
+        RawCoord rawCoord = new EP();
+
+        for(int i = 1; i < 48; i ++) {
+            rawCoord.rotate(testerCube, i);
+            int coord = rawCoord.value(testerCube);
+            System.out.println(i + ": " + coord);
+            testerCube = cube.clone();
+        }
+        
+        testerCube = cube.clone();
+        testerCube.moveCP(0);
+        int[] cp = testerCube.getCP();
+        for(int i = 0; i < cp.length; i ++) {
+            System.out.println(cp[i]);
+        }
+        System.out.println("rotated: ");
+        rawCoord.rotate(testerCube, 7);
+        cp = testerCube.getCP();
+        for(int i = 0; i < cp.length; i ++) {
+            System.out.println(cp[i]);
+        }
+        
+//        Scramble fMove = new Scramble("F");
+//        Scramble f_Move = new Scramble("F'");
+//        Scramble rMove = new Scramble("R");
+//        Scramble f2Move = new Scramble("F2");
+//        Cube f = new Cube(fMove);
+//        Cube f_ = new Cube(f_Move);
+//        Cube r = new Cube(rMove);
+//        Cube f2 = new Cube(f2Move);
+//        Coordinate sym = new Sym(new REO());
+//        System.out.println("F: " + sym.value(f));
+//        System.out.println("F': " + sym.value(f_));
+//        System.out.println("R: " + sym.value(r));
+//        System.out.println("F2: " + sym.value(f2));
+//
+//        f.rotate(1);
+//        f_.rotate(11);
+//        r.rotate(21);
+//        f2.rotate(32);
+//
+//        System.out.println("F: " + sym.value(f));
+//        System.out.println("F': " + sym.value(f_));
+//        System.out.println("R: " + sym.value(r));
+//        System.out.println("F2: " + sym.value(f2));
 
 
 // making big coordinates

@@ -1,17 +1,12 @@
 package h;
-import c.Cube;
-import c.IntScramble;
-import c.Scramble;
 import q.*;
+import c.*;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Queue;
-import java.util.LinkedList;
 
-/* this class handles all heuristics from coordinates as created in /q
+/*
+* this class handles all heuristics from coordinates as created in /q
 * at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
 * here. a coordinate is basically a subset all permutations of a cube. for each coordinate value, there are multiple
 * permutations it corresponds to. the table is a dictionary, (HashMap) that contains the heuristic, and then the distance
@@ -43,9 +38,7 @@ public class CoordHeuristic implements ByteHeuristic {
     /* The below algorithm generates the table in what I believe to be the most efficient algorithm. in experimenting
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
-    public void makeTable(boolean useSetCoord) {
-        TableBuilder.makeTable(q, 3);
-    }
+    public void makeTable(boolean useSetCoord) {TableBuilder.makeTable(q, 2);}
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from
      * https://examples.javacodegeeks.com/core-java/io/fileoutputstream/how-to-write-an-object-to-file-in-java/

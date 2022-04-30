@@ -20,6 +20,18 @@ There are also /main and /defunct. main contains two classes, each with a main m
 Fair warning, my code contains a lot of comments, and not all of them are exactly professional. I've been making this over 2 years now (starting in high school) I think its funny, and rarely delete comments in case they say something important. Sometimes when code was moved to different classes I moved comments with them, and then they no longer make sense.
 
 # Current version: 0.2.1
+Working coordinates
+
+| Coordinates | Raw | Sym | Raw Size |
+|---|---|---|---|
+| CO |Yes|Can't|2187|
+| CP |Yes|   |40320|
+| EO |Yes|Can't|2048|
+| EP |Too big|   |479001599|
+|RCO |  |   |153090|
+|REO |  |   |70963199|
+| Kociemba| not even close
+
 Plan for versions:
 
 0.2.1: Complete structure of how packages c, s, h, and q interact.

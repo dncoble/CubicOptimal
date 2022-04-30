@@ -1,7 +1,6 @@
 package q;
 
-import c.Cube;
-
+import c.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;

@@ -47,9 +47,7 @@ public class Cube implements Cloneable{
 		this.eo = eo;
 		this.ep = ep;
 	}
-	public Cube clone() {
-		return new Cube(co.clone(), cp.clone(), eo.clone(), ep.clone());
-	}
+	public Cube clone() {return new Cube(co.clone(), cp.clone(), eo.clone(), ep.clone());}
 	public boolean equals(Cube other) {
 		if(Arrays.equals(other.getCO(), co) && Arrays.equals(other.getEO(), eo) && 
 				Arrays.equals(other.getEP(), ep) && Arrays.equals(other.getCP(), cp)) {
@@ -625,21 +623,21 @@ public class Cube implements Cloneable{
 		rotation /= 6;
 		int[] firstTable = new int[][]{{0,1,2,3,4,5,6,7},{4,7,6,5,2,1,0,3},{6,5,4,7,0,3,2,1},{6,4,7,5,2,0,3,1},{5,7,4,6,1,3,0,2},{3,2,1,0,7,6,5,4}}[firstRot];
 		int secRot = rotation % 4;
+		rotation /= 4;
 		int[] secTable = new int[][]{{0,1,2,3,4,5,6,7},{5,4,6,7,0,1,3,2},{1,0,3,2,5,4,7,6},{4,5,7,6,1,0,2,3}}[secRot];
+		int[] thirdTable = new int[][]{{0,1,2,3,4,5,6,7},{4,5,6,7,0,1,2,3}}[rotation];
 		int[] table = new int[8];
 		for(int i = 0; i < 8; i ++) {
-			table[i] = firstTable[secTable[i]];
+			table[i] = thirdTable[secTable[firstTable[i]]]; // prev. had this in reverse order. hopefully this is correct
 		}
 		int[] copyCP = cp.clone();
-		for(int j = 0; j < 8; j ++) {
-			cp[table[j]] = copyCP[j];
-		}
+		for(int j = 0; j < 8; j ++) {cp[table[j]] = copyCP[j];}
 		for(int k = 0; k < 8; k ++) {cp[k] = table[cp[k]];}
-		if(rotation == 1) {
-			copyCP = cp.clone();
-			cp[0]=copyCP[4];cp[1]=copyCP[5];cp[2]=copyCP[6];cp[3]=copyCP[7];
-			cp[4]=copyCP[0];cp[5]=copyCP[1];cp[6]=copyCP[2];cp[7]=copyCP[3];
-		}
+//		if(rotation == 1) {
+//			copyCP = cp.clone();
+//			cp[0]=copyCP[4];cp[1]=copyCP[5];cp[2]=copyCP[6];cp[3]=copyCP[7];
+//			cp[4]=copyCP[0];cp[5]=copyCP[1];cp[6]=copyCP[2];cp[7]=copyCP[3];
+//		}
 	}
 	public void rotateEO(int rotation) {
 		int[] current = getREO();
@@ -726,21 +724,21 @@ public class Cube implements Cloneable{
 			{1,2,3,0,11,8,9,10,4,7,6,5},{4,7,6,5,1,2,3,0,11,8,9,10},{7,4,6,5,0,3,2,1,9,10,11,8},
 			{1,0,3,2,7,6,5,4,10,11,8,9}}[firstRot];
 		int secRot = rotation % 4;
+		rotation /= 4;
 		int[] secTable = new int[][]{{0,1,2,3,4,5,6,7,8,9,10,11},{9,10,11,8,7,4,5,6,0,3,2,1},
 			{3,2,1,0,6,7,4,5,9,8,11,10},{8,11,10,9,5,6,7,4,3,0,1,2}}[secRot];
+		int[] thirdTable = new int[][] {{0,1,2,3,4,5,6,7,8,9,10,11},{3,2,1,0,5,4,7,6,8,9,10,11}}[rotation];
 		int[] table = new int[12];
 		for(int i = 0; i < 12; i ++) {
-			table[i] = firstTable[secTable[i]];
+			table[i] = thirdTable[secTable[firstTable[i]]]; // prev. had this in reverse order. hopefully this is correct
 		}
 		int[] copyEP = ep.clone();
-		for(int j = 0; j < 12; j ++) {
-			ep[table[j]] = copyEP[j];
-		}
+		for(int j = 0; j < 12; j ++) {ep[table[j]] = copyEP[j];}
 		for(int k = 0; k < 12; k ++) {ep[k] = table[ep[k]];}
-		if(rotation == 1) {
-			copyEP = ep.clone();
-			ep[0]=copyEP[3];ep[1]=copyEP[2];ep[2]=copyEP[1];ep[3]=copyEP[0];
-			ep[4]=copyEP[5];ep[5]=copyEP[4];ep[6]=copyEP[7];ep[7]=copyEP[6];
-		}
+//		if(rotation == 1) {
+//			copyEP = ep.clone();
+//			ep[0]=copyEP[3];ep[1]=copyEP[2];ep[2]=copyEP[1];ep[3]=copyEP[0];
+//			ep[4]=copyEP[5];ep[5]=copyEP[4];ep[6]=copyEP[7];ep[7]=copyEP[6];
+//		}
 	}
 }

@@ -1,7 +1,11 @@
 right now i am:
-    improving makeTable and making sym tables to get those up and working
+* improving makeTable and making sym tables to get those up and working
+* creating a better Cube class with permutation 
 
 future work and notes:
+
+make another cube class with simple boolean matrices 
+and boolean multiplication. it has the potential to be faster.
 
 implement SMA*
 	make all search algorithms inherit
@@ -26,11 +30,6 @@ clean up code
 	make Node classes private within their respective search algorithm
 
 look up Simulated Annealling
-
-
-transform cube to matrix movement or equivalents. not only can you make matrices for all moves, but ones for common algs, like iteration algs (like FR)
-	transform to cube-cube multiplication. create static methods to call each move.
-
 
 do statistical analysis for tree nodes with heuristic to guess distance. if h(p) = n, how many h(c_k)=n+1, n-1, n? What does that tell you about true distance? What about at different depths of analysis?
 

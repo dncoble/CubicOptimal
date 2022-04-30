@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import c.*;
 
-
-/* This interface acts as the heuristic function used by search algorithms. Determining the heuristics
+/*
+ * This interface acts as the heuristic function used by search algorithms. Determining the heuristics
  * was done with all those tables and things.
  * h.ByteHeuristic is implemented by h.RawCoordHeuristic, h.SymCoordHeuristic, and h.MaxHeuristic. h.MaxHeuristic itself
  * has a list of ByteHeuristics (the coord heuristics) that it takes the max value of for each cube.

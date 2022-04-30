@@ -139,12 +139,13 @@ public class TableBuilder {
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
         writeMapToFile((Serializable) table, q.name() + "Table");
     }
+    // this doesn't work. do i need it?
     public static void makeTable3(Coordinate q) {
         int maxSize = q.size();
         Map<Integer, Byte> table = new HashMap<Integer, Byte>();
         Queue<Node> unexpandedQ = new LinkedList<Node>(); int unexpandedSize = 0;
         table.put(0,(byte) 0); int tableSize = 1;
-         unexpandedQ.add(new Node(0, (byte) -1, null)); //coord and move will be accessed
+        unexpandedQ.add(new Node(0, (byte) -1, null)); //coord and move will be accessed
         int[] data = new int[21];
         while(!unexpandedQ.isEmpty()) {
             Node currentQ = unexpandedQ.poll(); unexpandedSize --;
