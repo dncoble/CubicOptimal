@@ -10,7 +10,7 @@ public class RCO implements Coordinate, RawCoord {
     }
 
     public RCO() {}
-    /*rotational corner orientation and rotational edge orientation takes into account
+    /* rotatable corner orientation and rotatable edge orientation takes into account
      * if the pieces is oriented from all angles. this is actually determined by the piece's
      * permutation in ways described in their respective methods.
      * RCO: a corner can be in one of two pemutation types:

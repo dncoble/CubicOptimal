@@ -20,6 +20,7 @@ public class TableBuilder {
         switch(flavor) {
             case 0: makeTable0(q); break;
             case 1: makeTable1(q); break;
+            case 2: makeTable2(q); break;
             case 3: makeTable3(q); break;
         }
     }
@@ -29,7 +30,7 @@ public class TableBuilder {
         Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
         table.put(0,(byte) 0); int tableSize = 1;
         unexpandedQ.add(0);
-        int[] data = new int[21];
+        int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
             int currentQ = unexpandedQ.poll(); unexpandedSize --;
             Cube cube = q.setCoord(new Cube(), currentQ);
@@ -68,7 +69,7 @@ public class TableBuilder {
         table.put(0,(byte) 0); int tableSize = 1;
         unexpandedQ.add(0);
         unexpandedC.add(new Cube());
-        int[] data = new int[21];
+        int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
             int currentQ = unexpandedQ.poll(); unexpandedSize --;
             Cube cube = unexpandedC.poll();
@@ -108,7 +109,7 @@ public class TableBuilder {
         Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
         table.put(0,(byte) 0); int tableSize = 1;
         unexpandedQ.add(0);
-        int[] data = new int[21];
+        int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
             int currentQ = unexpandedQ.poll(); unexpandedSize --;
             Cube cube = q.setCoord(new Cube(), currentQ);
@@ -146,7 +147,7 @@ public class TableBuilder {
         Queue<Node> unexpandedQ = new LinkedList<Node>(); int unexpandedSize = 0;
         table.put(0,(byte) 0); int tableSize = 1;
         unexpandedQ.add(new Node(0, (byte) -1, null)); //coord and move will be accessed
-        int[] data = new int[21];
+        int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
             Node currentQ = unexpandedQ.poll(); unexpandedSize --;
             int length = table.get(currentQ.coord);

@@ -257,13 +257,30 @@ public class Cube implements Cloneable{
 			moveEP(iter.next());
 		}
 	}
+	/* to help with the transition to the permutation-based cube */
+	public int[] getPermutation() {
+		int[] p = new int[48];
+		for(int i = 0; i < 24; i+=3) {
+			int r = cp[i/3] * 3 + co[i/3];
+			p[i] = r;
+			p[i+1] = ((r-r/3*3+1)%3)+r/3*3;
+			p[i+2] = ((r-r/3*3+2)%3)+r/3*3;
+		}
+		for(int i = 24; i < 48; i +=2) {
+			int r = eo[(i-24)/2]*2 + ep[(i-24)/2];
+			p[i] = r + 24;
+			p[i+1] = (r-r/2*2+1)%2 + r/2*2 + 24;
+		}
+		return p;
+	}
+	
 	//work in progress
 	public String toString() {
 		return "Work in progress";
 	}
 	//work in progress
 	public void printOut() {
-		
+		System.out.println(toString());
 	}
 	/* retriever methods, except RCO & REO, which must be calculated.
 	 * RCO & REO are defined in the following ways: for corners, it can be in

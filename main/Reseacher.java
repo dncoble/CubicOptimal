@@ -2,10 +2,15 @@ package main;
 
 import h.ByteHeuristic;
 import h.MaxHeuristic;
+
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import c.*; import h.*; import s.*; import q.*;
+
+import javax.swing.*;
+import javax.swing.JFrame;
 import java.util.Arrays;
 
 public class Reseacher {
@@ -25,31 +30,66 @@ public class Reseacher {
 //            allScrs.append(new c.Scramble(stringAList.get(0)));
 //            allScrs.remove(0);
 //        }
-
+        
         Cube cube = new Cube();
         Cube testerCube = cube.clone();
-
-        RawCoord rawCoord = new EP();
-
-        for(int i = 1; i < 48; i ++) {
-            rawCoord.rotate(testerCube, i);
-            int coord = rawCoord.value(testerCube);
-            System.out.println(i + ": " + coord);
-            testerCube = cube.clone();
-        }
+//        
+//        testerCube.move(new Scramble("F"));
+//
+//        int[] co = testerCube.getCO();
+//        for(int i = 0; i < co.length; i ++) {
+//            System.out.println(co[i]);
+//        }
+//        
+//        testerCube.rotate(0);
+//        System.out.println("rotated; ");
+//        co = testerCube.getCO();
+//        for(int i = 0; i < co.length; i ++) {
+//            System.out.println(co[i]);
+//        }
         
-        testerCube = cube.clone();
-        testerCube.moveCP(0);
-        int[] cp = testerCube.getCP();
-        for(int i = 0; i < cp.length; i ++) {
-            System.out.println(cp[i]);
-        }
-        System.out.println("rotated: ");
-        rawCoord.rotate(testerCube, 7);
-        cp = testerCube.getCP();
-        for(int i = 0; i < cp.length; i ++) {
-            System.out.println(cp[i]);
-        }
+//        int[][] xwise = {{4,37,23},{31,29},{14,35,7},{3,30,12,13,34,8,6,28,21},{42,40,41,47,46,44},{15,24,0,2,32,19,18,26,9},
+//                {1,33,20},{25,27},{17,39,10},{16,38,11},{43,45},{5,36,22}};
+//        int[][] ywise = {{3,42,15},{30,24},{12,40,0},{4,31,14,13,41,2,1,25,17,16,43,5},{37,35,34,32,33,39,38,36},
+//                {23,29,7,8,47,19,20,27,10,11,45,22},{6,46,18},{28,26},{21,44,9}};
+//        
+//
+//        int[] xpositions = new int[48];
+//        int[] ypositions = new int[48];
+//        
+//        for(int i = 0; i < 48; i ++) {
+//            int x = -1;
+//            int y = -1;
+//            for(int j = 0; j < xwise.length; j++) {
+//                for(int k = 0; k < xwise[j].length; k++) {
+//                    if(xwise[j][k] == i) {
+//                        x = j;
+//                    }
+//                }
+//            }
+//            for(int j = 0; j < ywise.length; j++) {
+//                for(int k = 0; k < ywise[j].length; k++) {
+//                    if(ywise[j][k] == i) {
+//                        y = j;
+//                    }
+//                }
+//            }
+//            xpositions[i] = x;
+//            ypositions[i] = y;
+//        }
+//        System.out.print("\n{");
+//        for(int i = 0; i < 48; i ++){
+//            System.out.print(xpositions[i] + ",");
+//        }
+//        System.out.println('}');
+//        System.out.print('{');
+//        for(int i = 0; i < 48; i ++){
+//            System.out.print(ypositions[i] + ",");
+//        }
+//        System.out.print('}');
+        cube = testerCube.clone();
+        visualize(cube);
+        
         
 //        Scramble fMove = new Scramble("F");
 //        Scramble f_Move = new Scramble("F'");
@@ -123,6 +163,59 @@ public class Reseacher {
 //        System.out.println(count);
 //        writer.close();
     }
+    /* eventually this will have it's own class */
+    public static void visualize(Cube cube) {
+        class Facelet extends JPanel {
+            private int x;
+            private int y;
+            private int color;
+            /* indices 0-47 (weird pattern). 
+             * color order is green (F), white (U), red (R), blue (B), yellow (D), orange (L)*/
+            public Facelet(int slot, int piece){
+                x = getx(slot);
+                y = gety(slot);
+                color = pieceColors(piece);
+            }
+            public Facelet(int x, int y, int color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+            public void paint(Graphics g) {
+                g.setColor(getColor(color));
+                g.fillRect(x*55 + 20, y*55 + 20, 50, 50);
+            }
+            private int getx(int slot) {
+                return new int[] {5,6,5,3,0,11,3,2,3,5,8,9,3,3,2,5,9,8,5,5,6,3,11,0,5,7,5,
+                        7,3,1,3,1,5,6,3,2,11,0,9,8,4,4,4,10,4,10,4,4}[slot];
+            }
+            private int gety(int slot) {
+                return new int[] {2,3,3,0,3,3,6,5,5,8,5,5,2,3,3,0,3,3,6,5,5,8,5,5,1,3,7,5,
+                        7,5,1,3,4,4,4,4,4,4,4,4,2,3,0,3,8,5,6,5}[slot];
+            }
+            private Color getColor(int color) {
+                return new Color[] {Color.GREEN, Color.WHITE, Color.RED, Color.BLUE, Color.YELLOW, Color.ORANGE}[color];
+            }
+            //better as a static variable but java doesn't allow it until this is not a inner class
+            private int pieceColors (int piece) {
+                return new int[] {1,2,0,1,5,3,4,5,0,4,2,3,1,0,5,1,3,2,4,0,2,4,3,5,1,2,4,2,4,5,1
+                        ,5,0,2,0,5,3,5,3,2,1,0,1,3,4,3,4,0}[piece];
+            }
+        }
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(700, 700);
+        int[] p = cube.getPermutation();
+        for(int i = 0; i < 48; i ++) {
+            frame.add(new Facelet(i, p[i]));
+            System.out.println(i + " " + p[i]);
+        }
+        frame.add(new Facelet(3, p[3], 0));
+        frame.add(new Facelet(4, p[4], 0));
+        frame.setVisible(true);
+        return;
+    }
+    
 
     /*this code just takes a text file and reads it into a String[]
      * it was taken and modified from journaldev.com */

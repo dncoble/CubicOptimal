@@ -34,11 +34,19 @@ public class CoordHeuristic implements ByteHeuristic {
         }
         table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
     }
-    public byte h(Cube cube) {return table.get(q.value(cube));}
+    public byte h(Cube cube) {
+        try {
+            return table.get(q.value(cube));
+        }
+        catch (NullPointerException e){
+            System.out.println("Cannot find value " + q.value(cube) + " in table.");
+            throw e;
+        }
+    }
     /* The below algorithm generates the table in what I believe to be the most efficient algorithm. in experimenting
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
-    public void makeTable(boolean useSetCoord) {TableBuilder.makeTable(q, 2);}
+    public void makeTable(boolean useSetCoord) {TableBuilder.makeTable(q, 1);}
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from
      * https://examples.javacodegeeks.com/core-java/io/fileoutputstream/how-to-write-an-object-to-file-in-java/
