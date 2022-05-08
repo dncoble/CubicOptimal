@@ -261,13 +261,17 @@ public class Cube implements Cloneable{
 	public int[] getPermutation() {
 		int[] p = new int[48];
 		for(int i = 0; i < 24; i+=3) {
-			int r = cp[i/3] * 3 + co[i/3];
+			int k = co[i/3];
+			if(k == 0) {}
+			else if(k == 1) {k=2;}
+			else {k=1;}
+			int r = cp[i/3] * 3 + k;
 			p[i] = r;
 			p[i+1] = ((r-r/3*3+1)%3)+r/3*3;
 			p[i+2] = ((r-r/3*3+2)%3)+r/3*3;
 		}
 		for(int i = 24; i < 48; i +=2) {
-			int r = eo[(i-24)/2]*2 + ep[(i-24)/2];
+			int r = ep[(i-24)/2]*2 + eo[(i-24)/2];
 			p[i] = r + 24;
 			p[i+1] = (r-r/2*2+1)%2 + r/2*2 + 24;
 		}

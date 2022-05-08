@@ -48,15 +48,15 @@ public class Reseacher {
 //            System.out.println(co[i]);
 //        }
         
-//        int[][] xwise = {{4,37,23},{31,29},{14,35,7},{3,30,12,13,34,8,6,28,21},{42,40,41,47,46,44},{15,24,0,2,32,19,18,26,9},
-//                {1,33,20},{25,27},{17,39,10},{16,38,11},{43,45},{5,36,22}};
-//        int[][] ywise = {{3,42,15},{30,24},{12,40,0},{4,31,14,13,41,2,1,25,17,16,43,5},{37,35,34,32,33,39,38,36},
-//                {23,29,7,8,47,19,20,27,10,11,45,22},{6,46,18},{28,26},{21,44,9}};
-//        
+//        int[][] xwise = {{4,36,23},{31,28},{14,34,7},{3,31,12,13,35,8,6,29,21},{42,40,41,47,46,44},{15,25,0,2,33,19,18,27,9},
+//                {1,32,20},{24,26},{17,38,10},{16,39,11},{43,45},{5,37,22}};
+//        int[][] ywise = {{3,42,15},{31,25},{12,40,0},{4,30,14,13,41,2,1,24,17,16,43,5},{36,34,35,33,32,38,39,37},
+//                {23,28,7,8,47,19,20,26,10,11,45,22},{6,46,18},{29,27},{21,44,9}};
+//
 //
 //        int[] xpositions = new int[48];
 //        int[] ypositions = new int[48];
-//        
+//
 //        for(int i = 0; i < 48; i ++) {
 //            int x = -1;
 //            int y = -1;
@@ -87,8 +87,11 @@ public class Reseacher {
 //            System.out.print(ypositions[i] + ",");
 //        }
 //        System.out.print('}');
-        cube = testerCube.clone();
-        visualize(cube);
+        testerCube = cube.clone();
+        testerCube.move(new Scramble("F"));
+        testerCube.rotate(6);
+
+        visualize(testerCube);
         
         
 //        Scramble fMove = new Scramble("F");
@@ -165,7 +168,7 @@ public class Reseacher {
     }
     /* eventually this will have it's own class */
     public static void visualize(Cube cube) {
-        class Facelet extends JPanel {
+        class Facelet extends JComponent {
             private int x;
             private int y;
             private int color;
@@ -175,6 +178,9 @@ public class Reseacher {
                 x = getx(slot);
                 y = gety(slot);
                 color = pieceColors(piece);
+//                setSize(50,50);
+//                setLocation(x,y);
+//                setOpaque(false);
             }
             public Facelet(int x, int y, int color) {
                 this.x = x;
@@ -186,20 +192,20 @@ public class Reseacher {
                 g.fillRect(x*55 + 20, y*55 + 20, 50, 50);
             }
             private int getx(int slot) {
-                return new int[] {5,6,5,3,0,11,3,2,3,5,8,9,3,3,2,5,9,8,5,5,6,3,11,0,5,7,5,
-                        7,3,1,3,1,5,6,3,2,11,0,9,8,4,4,4,10,4,10,4,4}[slot];
+                return new int[] {5,6,5,3,0,11,3,2,3,5,8,9,3,3,2,5,9,8,5,5,6,3,11,
+                        0,7,5,7,5,1,3,1,3,6,5,2,3,0,11,8,9,4,4,4,10,4,10,4,4}[slot];
             }
             private int gety(int slot) {
-                return new int[] {2,3,3,0,3,3,6,5,5,8,5,5,2,3,3,0,3,3,6,5,5,8,5,5,1,3,7,5,
-                        7,5,1,3,4,4,4,4,4,4,4,4,2,3,0,3,8,5,6,5}[slot];
+                return new int[] {2,3,3,0,3,3,6,5,5,8,5,5,2,3,3,0,3,3,6,5,5,
+                        8,5,5,3,1,5,7,5,7,3,1,4,4,4,4,4,4,4,4,2,3,0,3,8,5,6,5,}[slot];
             }
             private Color getColor(int color) {
                 return new Color[] {Color.GREEN, Color.WHITE, Color.RED, Color.BLUE, Color.YELLOW, Color.ORANGE}[color];
             }
             //better as a static variable but java doesn't allow it until this is not a inner class
             private int pieceColors (int piece) {
-                return new int[] {1,2,0,1,5,3,4,5,0,4,2,3,1,0,5,1,3,2,4,0,2,4,3,5,1,2,4,2,4,5,1
-                        ,5,0,2,0,5,3,5,3,2,1,0,1,3,4,3,4,0}[piece];
+                return new int[] {1,2,0,1,5,3,4,5,0,4,2,3,1,0,5,1,3,2,4,0,2,4,3,5, 
+                        2,1,2,4,5,4,5,1,2,0,5,0,5,3,2,3,1,0,1,3,4,3,4,0}[piece];
             }
         }
         JFrame frame = new JFrame();
@@ -208,11 +214,22 @@ public class Reseacher {
         int[] p = cube.getPermutation();
         for(int i = 0; i < 48; i ++) {
             frame.add(new Facelet(i, p[i]));
-            System.out.println(i + " " + p[i]);
+            frame.setVisible(true);
         }
-        frame.add(new Facelet(3, p[3], 0));
-        frame.add(new Facelet(4, p[4], 0));
+        //center pieces
+        frame.add(new Facelet(4,4,0));
         frame.setVisible(true);
+        frame.add(new Facelet(4,1,1));
+        frame.setVisible(true);
+        frame.add(new Facelet(7,4,2));
+        frame.setVisible(true);
+        frame.add(new Facelet(10,4,3));
+        frame.setVisible(true);
+        frame.add(new Facelet(4,7,4));
+        frame.setVisible(true);
+        frame.add(new Facelet(1,4,5));
+        frame.setVisible(true);
+        
         return;
     }
     
