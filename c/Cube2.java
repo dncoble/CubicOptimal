@@ -1,7 +1,6 @@
 package c;
 
 import java.util.ListIterator;
-
 /*
  * stores a permutation, and is interfaced with for both moves and rotations/symmetries
  * a permutation is a set of four coordinates:
@@ -17,15 +16,19 @@ public class Cube2 implements Cloneable {
     
     public Cube2(Scramble scramble) {
         p = new Permutation(48);
-        
+        move(scramble);
     }
     
-    public Cube2() {
-        p = new Permutation(48);
+    public Cube2(Permutation p) {this.p = p;}
+    
+    public Cube2() {p = new Permutation(48);}
+    
+    public Cube2 clone() {
+        return new Cube2(p.clone());
     }
     /* move method for performing a single move */
     public void singleMove(int move) {
-        
+        p.multiplyIP(MoveTables.getMove(move));
     }
     /* move method for performing a single move. differentiated from
      * singleMove because it will also take an int definition of a c.Scramble */
@@ -40,93 +43,35 @@ public class Cube2 implements Cloneable {
         }
     }
     
+    public int[] getCO() {
+        int[] co = new int[8];
+        for(int i =0; i < 8; i++) {
+            co[i] = p.getPermutation()[i*3]%3;
+        }
+        return co;
+    }
+
+    public int[] getCP() {
+        int[] cp = new int[8];
+        for(int i =0; i < 8; i++) {
+            cp[i] = p.getPermutation()[i*3]/3;
+        }
+        return cp;
+    }
     
-    /*
-     * The permutation class represents cube states and moves. Effectively, each Permutation object acts as a
-     * permutation matrix. Row index is slot and column index is piece. Moves on a state are represented by a left
-     * multiplication by a move matrix (or another state). Storing an entire matrix of boolean values is inefficient and
-     * expensive, so we represent the permutation as a vector with indices representing slots and values the pieces.
-     * Multiplication becomes fast if we also create a 'right' vector for multiplication to the right which has pieces
-     * as indices and vals as slots.
-     * Then again, just representing a boolean matrix may be faster. This implementation scales faster but for n = 48
-     * it's 48^2 'and' checks.
-     */
-    private class Permutation {
-        
-        private boolean propagateRight;
-        private byte[] p;
-        private byte[] pR; // right
-        
-        public Permutation(byte[] p) {
-            this.p = p;
-            this.propagateRight = false;
+    public int[] getEO() {
+        int[] eo = new int[12];
+        for(int i =0; i < 12; i++) {
+            eo[i] = p.getPermutation()[24+i*2]%2;
         }
-        public Permutation(byte[] p, byte[] pL) {
-            this.p = p;
-            this.pR = pL;
-            this.propagateRight = true;
+        return eo;
+    }
+    
+    public int[] getEP() {
+        int[] ep = new int[12];
+        for(int i =0; i < 12; i++) {
+            ep[i] = p.getPermutation()[24+i*2]/2;
         }
-        
-        /* identity permutation */
-        public Permutation(int size) {
-            propagateRight = true;
-            p = new byte[size];
-            for(byte i = 0; i < size; i++) {
-                p[i] = i;
-            }
-        }
-        
-        public byte[] getPermutation() {return p;}
-        public byte[] getRightPermutation() {return pR;}
-        public boolean isPropagateLeft() {return propagateRight;}
-        
-        /* left multiply by other, create new permutation */
-        public Permutation multiply(Permutation other) {
-            byte[] pNew = new byte[p.length];
-            for(byte i = 0; i < p.length; i ++) {
-                pNew[other.pR[i]] = p[i];
-            }
-            if(!propagateRight) {
-                return new Permutation(pNew);
-            }
-            else {
-                byte[] pRNew = new byte[p.length];
-                for(byte i = 0; i < p.length; i ++) {
-                    pRNew[pR[i]] = other.p[i];
-                }
-                return new Permutation(pNew, pRNew);
-            }
-        }
-        
-        /* left and right multiply by other in place. the jury's out on if this is any better */
-        public void multiplyIP(Permutation other) {
-            byte[] pNew = new byte[p.length];
-            for(byte i = 0; i < p.length; i ++) {
-                pNew[other.pR[i]] = p[i];
-            }
-            p = pNew;
-            if(propagateRight) {
-                byte[] pRNew = new byte[p.length];
-                for(byte i = 0; i < p.length; i ++) {
-                    pRNew[pR[i]] = other.p[i];
-                }
-                pR = pRNew;
-            }
-        }
-        
-        public void rightMultiplyIP(Permutation other) {
-            byte[] pNew = new byte[p.length];
-            for (byte i = 0; i < p.length; i++) {
-                pNew[pR[i]] = other.p[i];
-            }
-            if (propagateRight) {
-                byte[] pRNew = new byte[p.length];
-                for (byte i = 0; i < p.length; i++) {
-                    pRNew[other.pR[i]] = p[i];
-                }
-                pR = pRNew;
-            }
-            p = pNew;
-        }
+        return ep;
     }
 }

@@ -15,6 +15,8 @@ import java.util.Arrays;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
+        generatePermutationMoves();
+        
 //        ArrayList<String> stringAList = new ArrayList<String>();
 //        try {
 //            Scanner scanner = new Scanner(new File("useless10"));
@@ -31,10 +33,13 @@ public class Reseacher {
 //            allScrs.remove(0);
 //        }
         
-        Cube cube = new Cube();
-        Cube testerCube = cube.clone();
+//        Cube cube = new Cube();
+//        Cube testerCube = cube.clone();
+//
+//        testerCube.move(new Scramble("D"));
 //        
-//        testerCube.move(new Scramble("F"));
+//        testerCube.rotate(24);
+//        visualize(testerCube);
 //
 //        int[] co = testerCube.getCO();
 //        for(int i = 0; i < co.length; i ++) {
@@ -87,11 +92,11 @@ public class Reseacher {
 //            System.out.print(ypositions[i] + ",");
 //        }
 //        System.out.print('}');
-        testerCube = cube.clone();
-        testerCube.move(new Scramble("F"));
-        testerCube.rotate(6);
-
-        visualize(testerCube);
+//        testerCube = cube.clone();
+//        testerCube.move(new Scramble("F"));
+//        testerCube.rotate(1);
+//
+//        visualize(testerCube);
         
         
 //        Scramble fMove = new Scramble("F");
@@ -295,6 +300,30 @@ public class Reseacher {
         }
         writer.close();
         System.out.println(scr);
+    }
+    // use old cube class to generate permutations for new cube class
+    public static void generatePermutationMoves() {
+        
+        Cube cube = new Cube();
+        Cube testerCube = cube.clone();
+        Scramble scr = new Scramble("F");
+        testerCube.move(scr);
+        for(int i=0; i < 17; i ++) {
+            System.out.print('{');
+            int[] p = testerCube.getPermutation();
+            for(int j = 0; j < p.length; j ++){
+                System.out.print(p[j] + ",");
+            }
+            System.out.println('}');
+            testerCube.move(scr.iterate());
+        }
+        
+    }
+    
+    public static void generatePermutationRotations() {
+
+        Cube cube = new Cube();
+        Cube testerCube = cube.clone();
     }
 //    public static ArrayList<c.Scramble> delFakeUseless (ArrayList<c.Scramble>) {
 //

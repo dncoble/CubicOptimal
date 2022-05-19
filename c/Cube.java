@@ -257,6 +257,7 @@ public class Cube implements Cloneable{
 			moveEP(iter.next());
 		}
 	}
+	
 	/* to help with the transition to the permutation-based cube */
 	public int[] getPermutation() {
 		int[] p = new int[48];
