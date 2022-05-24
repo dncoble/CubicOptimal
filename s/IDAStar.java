@@ -1,4 +1,5 @@
-package s;/* implements the IDA* search algorithm */
+package s;
+/* implements the IDA* search algorithm */
 
 import h.ByteHeuristic;
 import java.util.Stack;
@@ -16,7 +17,7 @@ public class IDAStar {
     }
 
     /* this was so much easier compared to SMA*
-    * ngl i don't understand this completely; i just wrote out the pseudocode from wikipedia*/
+    * ngl i don't understand this completely; i just wrote out the pseudocode from Wikipedia */
     public Scramble search() {
         Cube test = cube.clone();
 

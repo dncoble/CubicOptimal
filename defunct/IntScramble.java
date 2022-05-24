@@ -1,5 +1,7 @@
-package c;
+package defunct;
 /* can this be made a private class of Scramble? */
+import c.*;
+
 import java.util.Arrays;
 
 public class IntScramble {

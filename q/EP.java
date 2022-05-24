@@ -26,11 +26,7 @@ public class EP implements Coordinate, RawCoord {
         }
         return rtrn;
     }
-    public int rotate(Cube cube, int rotation) {
-        cube.rotateEP(rotation);
-        return value(cube);
-    }
-    public Cube setCoord(Cube cube, int value) {cube.epFromInt(value); return cube;}
+//    public Cube setCoord(Cube cube, int value) {cube.epFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

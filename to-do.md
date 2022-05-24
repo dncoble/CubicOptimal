@@ -1,11 +1,11 @@
 right now i am:
-* improving makeTable and making sym tables to get those up and working
-* creating a better Cube class with permutation 
+* creating a better Cube class with permutation
+* editing makeTable to remove setCoord, create RTS table
 
 future work and notes:
 
 make another cube class with simple boolean matrices 
-and boolean multiplication. it has the potential to be faster.
+and boolean multiplication, it may be faster.
 
 implement SMA*
 	make all search algorithms inherit
@@ -16,18 +16,9 @@ change everything possible from int, short -> byte
 	cubes
 	nodes
 
-makeTable right now either requires setCoord or to save cubes, but i think it can be done better by using fancy search stuff
-
-test rotate works by rotating an identity cube, making sure it is still identity afterward.
-
 experiment with garbage management, does that speed up performance?
 
 are object files supposed to be saved as json?
-
-clean up code
-	can we do implements, inherits?
-	rename all those badly named classes
-	make Node classes private within their respective search algorithm
 
 look up Simulated Annealling
 
@@ -37,7 +28,7 @@ remove incorrect tables --rotated CO and EO
 
 UI
 
-and if you do all that, you can look for optimizations
+
 | Table | Size |
 |---|---|
 | COTable | 33 kb |

@@ -36,10 +36,10 @@ public class Scramble {
 	}
 	// a helper method of convertString, may be optimizable
 	public int convertMove (String move) {
-		int rtnInt = 3 * "FURBDL".indexOf(move.charAt(0));
-		if(move.length() == 1) {return rtnInt;}
-		else if(move.charAt(1) == '2') {return rtnInt + 1;}
-		else {return rtnInt + 2;}
+		byte rtrn = (byte) (3 * "FURBDL".indexOf(move.charAt(0)));
+		if(move.length() == 1) {return rtrn;}
+		else if(move.charAt(1) == '2') {return (byte) (rtrn + 1);}
+		else {return (byte) (rtrn + 2);}
 	}
 	/* a scramble can also be represented as a single integer, so as methods exist for converting
 	 * between this integer and the list interpretation of a scramble. the int representation is made
@@ -47,8 +47,8 @@ public class Scramble {
 	 * digits are base 15. when the scramble is > 8 in size, it can no longer fit in a single java int,
 	 * which is 2 ^ 32 in size. then it is represented as an int[], with each int representing up to 8 moves
 	 * to double the size one int can store, we add Integer.MIN_VALUE, giving us access to the negative numbers
-	 * this code may want to be updated in the future to use s.SMAStar.CubeNode.c.IntScramble objects, but it's fine for now.*/
-	public void fromInt (int[] intScramble, int length) {
+	 * this code may want to be updated in the future to use s.SMAStar.CubeNode.defunct.IntScramble objects, but it's fine for now.*/
+	public void fromInt(int[] intScramble, int length) {
 		for(int i = 0; i < intScramble.length; i ++) {
 			Scramble part = new Scramble();
 			int partLength = length;

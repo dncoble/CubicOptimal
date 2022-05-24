@@ -15,7 +15,10 @@ import java.util.Arrays;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
-        generatePermutationMoves();
+//        generatePermutationMoves();
+        
+        
+//        generatePermutationRotations();
         
 //        ArrayList<String> stringAList = new ArrayList<String>();
 //        try {
@@ -216,7 +219,7 @@ public class Reseacher {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 700);
-        int[] p = cube.getPermutation();
+        byte[] p = cube.getPermutation();
         for(int i = 0; i < 48; i ++) {
             frame.add(new Facelet(i, p[i]));
             frame.setVisible(true);
@@ -303,29 +306,140 @@ public class Reseacher {
     }
     // use old cube class to generate permutations for new cube class
     public static void generatePermutationMoves() {
-        
-        Cube cube = new Cube();
-        Cube testerCube = cube.clone();
+
+        OldCube cube = new OldCube();
+        OldCube testerCube = cube.clone();
         Scramble scr = new Scramble("F");
         testerCube.move(scr);
         for(int i=0; i < 17; i ++) {
             System.out.print('{');
-            int[] p = testerCube.getPermutation();
-            for(int j = 0; j < p.length; j ++){
+            byte[] p = testerCube.getPermutation();
+            for (int j = 0; j < p.length; j++) {
                 System.out.print(p[j] + ",");
             }
             System.out.println('}');
             testerCube.move(scr.iterate());
         }
+        byte[] p = testerCube.getPermutation();
+        for (int j = 0; j < p.length; j++) {
+            System.out.print(p[j] + ",");
+        }
+        System.out.println('}');
         
     }
-    
-    public static void generatePermutationRotations() {
-
-        Cube cube = new Cube();
-        Cube testerCube = cube.clone();
-    }
-//    public static ArrayList<c.Scramble> delFakeUseless (ArrayList<c.Scramble>) {
+//    
+//    public static void generatePermutationRotations() {
 //
+//        Cube cube = new Cube();
+//        Cube testerCube = cube.clone();
+//
+//        testerCube.move(new Scramble("L R'"));
+//
+//        int[] co = testerCube.getCO();
+//        int[] cp = testerCube.getCP();
+//        int[] eo = testerCube.getEO();
+//        int[] ep = testerCube.getEP();
+//
+//        ep[8] = 9; ep[9] = 10; ep[10] = 11; ep[11] = 8;
+//        eo[8] = 1; eo[9] = 1; eo[10] = 1; eo[11] = 1;
+//
+//        Cube testerCube1 = new Cube(co, cp, eo, ep);
+//
+//        Permutation x = new Permutation(testerCube1.getPermutation());
+//        Permutation x2 = x.multiply(x);
+//        Permutation xPrime = x2.multiply(x);
+//
+//        testerCube = cube.clone();
+//
+//        testerCube.move(new Scramble("U' D"));
+//
+//        co = testerCube.getCO();
+//        cp = testerCube.getCP();
+//        eo = testerCube.getEO();
+//        ep = testerCube.getEP();
+//
+//        ep[4] = 5; ep[5] = 6; ep[6] = 7; ep[7] = 4;
+//        eo[4] = 1; eo[5] = 1; eo[6] = 1; eo[7] = 1;
+//
+//        Cube testerCube2 = new Cube(co, cp, eo, ep);
+//
+//        Permutation y = new Permutation(testerCube2.getPermutation());
+//        Permutation y2 = y.multiply(y);
+//        Permutation yPrime= y2.multiply(y);
+//
+//        testerCube = cube.clone();
+//
+//        testerCube.move(new Scramble("F' B"));
+//
+//        co = testerCube.getCO();
+//        cp = testerCube.getCP();
+//        eo = testerCube.getEO();
+//        ep = testerCube.getEP();
+//
+//        ep[0] = 1; ep[1] = 2; ep[2] = 3; ep[3] = 0;
+//        eo[0] = 1; eo[1] = 1; eo[2] = 1; eo[3] = 1;
+//
+//        Cube testerCube3 = new Cube(co, cp, eo, ep);
+//
+//        Permutation z = new Permutation (testerCube3.getPermutation());
+//        Permutation zPrime = z.multiply(z.multiply(z));
+//
+//        byte[] mirList = {12,14,13,15,17,16,18,20,19,21,23,22,0,2,1,3,5,4,6,8,7,9,11,10,30,31,28,29,26,27,24,25,34,35,32,33,38,39,36,37,40,41,42,43,44,45,46,47};
+//
+//        Permutation mirror = new Permutation(mirList);
+//
+//        Permutation identity = new Permutation(48);
+//
+//        Permutation[] firstRotList = {identity, z, zPrime, x, xPrime, x2};
+//        Permutation[] secondRotList = {identity, y, y2, yPrime};
+//        Permutation[] thirdRotList = {identity, mirror};
+//
+//        for(int rotation = 0; rotation < 48; rotation ++) {
+//            int rotCopy = rotation;
+//            Permutation firstRot = firstRotList[rotCopy % 6];
+//            rotCopy /= 6;
+//            Permutation secRot = secondRotList[rotCopy % 4];
+//            rotCopy /= 4;
+//            Permutation thirdRot = thirdRotList[rotCopy];
+//
+//            Permutation rot = firstRot.multiply(secRot).multiply(thirdRot);
+//
+//            System.out.print("{");
+//            for(int i = 0; i < 48; i ++){
+//                System.out.print(rot.getPermutation()[i] + ",");
+//            }
+//            System.out.println("},");
+//        }
+//    }
+//    public static void searchRotationInverse() {
+//        Permutation[] allRotations = MoveTables.rotations;
+//        Permutation[] allInverses = new Permutation[48];
+//        for(int i = 0; i < 48; i ++) {
+//            allInverses[i] = allRotations[i].invert();
+//            if (i == 47) {
+//                System.out.println(allInverses[i]);
+//            }
+//        }
+//        int[] inverseIndices = new int[48];
+//        for(int i = 0; i < 48; i ++) {inverseIndices[i] = -1;}
+//        for(int i = 0; i < 48; i ++) { // iterate across rotations
+//            for(int j = 0; j < 48; j ++) { //iterate across inverses
+//                boolean areSame = true;
+//                for(int k = 0; k < 48; k ++) {
+//                    if(allRotations[i].getPermutation()[k] != allInverses[j].getPermutation()[k]) {
+//                        areSame = false;
+//                    }
+//                }
+//                if(areSame) {
+//                    inverseIndices[i] = j;
+//                }
+//            }
+//        }
+//        System.out.print("{");
+//        for(int i = 0; i < 48; i ++){
+//            System.out.print(inverseIndices[i] + ",");
+//        }
+//        System.out.println("}");
 //    }
 }
+

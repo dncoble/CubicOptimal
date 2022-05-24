@@ -56,12 +56,12 @@ public class REO implements Coordinate, RawCoord {
         rtrn += (new EO()).value(cube);
         return rtrn;
     }
-    public int rotate(Cube cube, int rotation) {
-        cube.rotateEO(rotation);
-        cube.rotateEP(rotation);
-        return value(cube);
-    }
-    public Cube setCoord(Cube cube, int value) {cube.reoFromInt(value); return cube;}
+//    public int rotate(Cube cube, int rotation) {
+//        cube.rotateEO(rotation);
+//        cube.rotateEP(rotation);
+//        return value(cube);
+//    }
+//    public Cube setCoord(Cube cube, int value) {cube.reoFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

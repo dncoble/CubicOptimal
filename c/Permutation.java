@@ -9,7 +9,7 @@ package c;
  * Then again, just representing a boolean matrix may be faster. This implementation scales faster but for n = 48
  * it's 48^2 'and' checks.
  */
-class Permutation implements Cloneable {
+public class Permutation implements Cloneable {
 
     private boolean propagateRight;
     private byte[] p;
@@ -30,14 +30,16 @@ class Permutation implements Cloneable {
         this.p = p;
         this.propagateRight = propagateRight;
         if(propagateRight) {
-            this.pR = getPR();
+            pR = new byte[p.length];
+            for(byte i = 0; i < p.length; i++) {
+                pR[p[i]] = i;
+            }
         }
     }
     
-    
     /* identity permutation */
     public Permutation(int size) {
-        propagateRight = true;
+        propagateRight = false;
         p = new byte[size];
         for(byte i = 0; i < size; i++) {
             p[i] = i;
@@ -62,7 +64,16 @@ class Permutation implements Cloneable {
         return pR;
     }
     public boolean isPropagateLeft() {return propagateRight;}
-
+    
+    public String toString() {
+        String rtrn = "{";
+        for(int i = 0; i < p.length; i++) {
+            rtrn += p[i] + ", ";
+        }
+        rtrn += "}";
+        return rtrn;
+    }
+        
     /* left multiply by other, create new permutation */
     public Permutation multiply(Permutation other) {
         byte[] pNew = new byte[p.length];
@@ -112,7 +123,15 @@ class Permutation implements Cloneable {
         p = pNew;
     }
     /* inverts the permutation (same as transpose) */
-    public void invert() {
+    public Permutation invert() {
+        if(!propagateRight) {
+            return new Permutation(getPR());
+        }
+        // else
+        return new Permutation(getPR(), p);
+    }
+    /* inverts in place */
+    public void invertIP() {
         if(!propagateRight) {
             p = getPR();
         }

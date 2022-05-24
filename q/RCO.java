@@ -38,12 +38,12 @@ public class RCO implements Coordinate, RawCoord {
         rtrn += (new CO()).value(cube);
         return rtrn;
     }
-    public int rotate(Cube cube, int rotation) {
-        cube.rotateCO(rotation);
-        cube.rotateCP(rotation);
-        return value(cube);
-    }
-    public Cube setCoord(Cube cube, int value) {cube.rcoFromInt(value); return cube;}
+//    public int rotate(Cube cube, int rotation) {
+//        cube.rotateCO(rotation);
+//        cube.rotateCP(rotation);
+//        return value(cube);
+//    }
+//    public Cube setCoord(Cube cube, int value) {cube.rcoFromInt(value); return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
 }

@@ -45,13 +45,13 @@ public class Kociemba implements Coordinate, RawCoord {
         rtrn += intSlice;
         return rtrn;
     }
-    public int rotate(Cube cube, int rotation) {
-         cube.rotateCO(rotation);
-         cube.rotateEO(rotation);
-         cube.rotateCP(rotation);
-         cube.rotateEP(rotation);
-         return value(cube);
-    }
+//    public int rotate(Cube cube, int rotation) {
+//         cube.rotateCO(rotation);
+//         cube.rotateEO(rotation);
+//         cube.rotateCP(rotation);
+//         cube.rotateEP(rotation);
+//         return value(cube);
+//    }
     public Cube setCoord(Cube cube, int value) {/*this method has not been made*/; return cube;}
     public String name() {return NAME;}
     public int size() {return MAX_SIZE;}
