@@ -35,7 +35,7 @@ Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 | Coordinates | Raw | Sym | Raw Size | Sym Size |
 |---|---|---|---|---|
 | CO |Yes| - |2187| |
-| CP |Yes|Yes|40320|984| 
+| CP |Yes|Yes|40320|| 
 | EO |Yes| - |2048| |
 | EP |Too big|   |479001599| |
 |RCO |Yes|   |153090| |
@@ -48,13 +48,17 @@ Plan for versions:
 
 0.2.1: Complete structure of how packages c, s, h, and q interact.
 
-0.2.2: Restructure Cube class with permutations. Work towards flexibility for arbitrary coordinates. Add lexicographic ordering heuristic. ~12-13 depth.
+0.3.0: Restructure Cube class with permutations. Rotations x96 work.
 
-0.2.3: Create big tables and effective use of sym coordinates to reach ~14-15 depth.
+0.3.1: Create big tables and use sym coordinates to reach ~14-15 depth.
 
-0.2.4: Create architecture required for complex coordinates with math operators and all heuristic abstractions (heuristics)
+0.3.2: Create power and lexicographic heuristics.
 
-0.2.x: machine learning to generate heuristics
+0.3.3: Implement SMA* search.
+
+0.4.0: Coordinate class able to receive permutation input and perform operations on it.
+
+0.5.0: Machine learning to generate heuristics.
 
 See to-do.md for an unorganized list of things I plan on doing.
 
