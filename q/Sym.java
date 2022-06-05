@@ -75,7 +75,9 @@ public class Sym implements Coordinate {
 //        writeMapToFile(table, rtsFileName());
 //    }
 
-    //this method finds identity coord by rotating the cube 48 times and finding the smallest value.
+    /* this method finds identity coord by rotating the cube 48 times and finding the smallest value.
+     * getting this to work with 
+     */
     private int makeIdentityCoord(Cube cube) {
         Cube testerCube = cube.clone();
         int sym = rawCoord.value(testerCube);

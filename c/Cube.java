@@ -11,21 +11,22 @@ public class Cube implements Cloneable {
 	private Permutation p;
 
 	public Cube(Scramble scramble) {
-		p = new Permutation(48);
+		p = new Permutation(48, true);
 		move(scramble);
 	}
 
 	public Cube(Permutation p) {this.p = p;}
 
-	public Cube() {p = new Permutation(48);}
-
+	public Cube() {p = new Permutation(48, true);}
+	
+	@Override
 	public Cube clone() {return new Cube(p.clone());}
 	
 	public boolean equals(Cube other) {
 		return Arrays.equals(p.getPermutation(), other.getPermutation());
 	}
 	
-	public void reset() {p = new Permutation(48);}
+	public void reset() {p = new Permutation(48, true);}
 	
 	/* returns the byte[] permutation */
 	public byte[] getPermutation() {return p.getPermutation();}
@@ -47,8 +48,16 @@ public class Cube implements Cloneable {
 		}
 	}
 	public void rotate(int rotation) {
-		p.rightMultiplyIP(MoveTables.getInverseRotation(rotation));
-		p.multiplyIP(MoveTables.getRotation(rotation));
+		if(rotation < 48) {
+			p.rightMultiplyIP(MoveTables.getInverseRotation(rotation));
+			p.multiplyIP(MoveTables.getRotation(rotation));
+		}
+		else {
+			invert();
+			int r = rotation - 48;
+			p.rightMultiplyIP(MoveTables.getInverseRotation(r));
+			p.multiplyIP(MoveTables.getRotation(r));
+		}
 	}
 
 	public void invert() {

@@ -15,7 +15,7 @@ public class IDAStar {
         this.h = h;
         solved = new Cube();
     }
-
+    
     /* this was so much easier compared to SMA*
     * ngl i don't understand this completely; i just wrote out the pseudocode from Wikipedia */
     public Scramble search() {
@@ -43,7 +43,6 @@ public class IDAStar {
             threshold = t;
             System.out.println("Threshold expanded: " + threshold);
         }
-
     }
     /* helper method for search(). -1 means return success.
      * passing it root is sloppy but eh */

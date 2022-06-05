@@ -20,9 +20,9 @@ There are also /main and /defunct. main contains two classes, each with a main m
 Fair warning, my code contains a lot of comments, and not all of them are exactly professional. I've been making this over 2 years now (starting in high school) I think its funny, and rarely delete comments in case they say something important. Sometimes when code was moved to different classes I moved comments with them, and then they no longer make sense.
 
 
-# Working coordinates
+# Working coordinates and heuristics
 
-The four coordinates most commonly used to describe a cube are orientation and permutation of the corner and edge pieces. CO and EO can't be rotated, however, so rotatble corner orientation and rotatable edge orientation contain added information from the permutation so that the coordinates can be rotated into sym coordinates.
+The four coordinates most commonly used to describe a cube are orientation and permutation of the corner and edge pieces. CO and EO can't be rotated, however, so rotatable corner orientation and rotatable edge orientation contain added information from the permutation so that the coordinates can be rotated into sym coordinates.
 
 CO: corner orientation \
 CP: corner permutation \
@@ -41,6 +41,8 @@ Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 |RCO |Yes|   |153090| |
 |REO |Too big|   |70963199| |
 | Kociemba| not even close
+
+See more in Coordinates Heuristics.md
 
 # Current version: 0.2.1
 

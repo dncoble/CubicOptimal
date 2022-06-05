@@ -1,7 +1,3 @@
-right now i am:
-* creating a better Cube class with permutation
-* editing makeTable to remove setCoord, create RTS table
-
 future work and notes:
 
 make another cube class with simple boolean matrices 

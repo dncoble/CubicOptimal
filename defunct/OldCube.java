@@ -1,4 +1,4 @@
-package c;
+package defunct;
 /*
  * stores a permutation, and is interfaced with for both moves and rotations/symmetries
  * a permutation is a set of four coordinates:
@@ -6,6 +6,8 @@ package c;
  * how each coordinate is defined is elaborated in their move methods.
  * all definitions are similar to those created by Kociemba in his solver
  */
+import c.Scramble;
+
 import java.util.*;
 
 public class OldCube implements Cloneable{

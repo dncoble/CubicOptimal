@@ -7,7 +7,7 @@ package c;
  * Multiplication becomes fast if we also create a 'right' vector for multiplication to the right which has pieces
  * as indices and vals as slots.
  * Then again, just representing a boolean matrix may be faster. This implementation scales faster but for n = 48
- * it's 48^2 'and' checks.
+ * it's 48^3 'and' checks.
  */
 public class Permutation implements Cloneable {
 
@@ -38,7 +38,7 @@ public class Permutation implements Cloneable {
     }
     
     /* identity permutation */
-    public Permutation(int size) {
+    public Permutation(int size, boolean propagateRight) {
         propagateRight = false;
         p = new byte[size];
         for(byte i = 0; i < size; i++) {
