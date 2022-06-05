@@ -3,10 +3,8 @@ import c.*;
 
 public class EO implements Coordinate, RawCoord {
     public static String NAME;
-    private static int MAX_SIZE;
     static {
         NAME = "EO";
-        MAX_SIZE = 2047;
     }
     /* EO is calculated in much a similar way to CO, but each edge only has two possible
      * orientations, and there are 12 edges in total. with the final edge excluded because
@@ -21,7 +19,5 @@ public class EO implements Coordinate, RawCoord {
         }
         return rtrn;
     }
-//    public Cube setCoord(Cube cube, int value) {cube.eoFromInt(value); return cube;}
     public String name() {return NAME;}
-    public int size() {return MAX_SIZE;}
 }

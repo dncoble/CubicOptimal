@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 public class CP implements Coordinate, RawCoord {
     private static String NAME;
-    private static int MAX_SIZE;
     static {
         NAME = "CP";
-        MAX_SIZE = 40319;
     }
     public CP() {}
     /*the concept of turning an int[] into an int with a base system is also used in
@@ -32,7 +30,5 @@ public class CP implements Coordinate, RawCoord {
         }
         return rtrn;
     }
-//    public Cube setCoord(Cube cube, int value) {cube.cpFromInt(value); return cube;}
     public String name() {return NAME;}
-    public int size() {return MAX_SIZE;}
 }

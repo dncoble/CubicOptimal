@@ -67,8 +67,7 @@ public class Cube implements Cloneable {
 	/* corner orientation is defined relative to white/yellow / up/down.
 	 * a corner can be either oriented (0), clockwise (1), or counterclockwise (2)
 	 * the coordinate is a trinary number of the 8 corners stringed together in order
-	 * FUR BUL FDL BDR FUL BUR FDR BDL
-	 * there's a good chance all of these movers can be optimizable. */
+	 * FUR BUL FDL BDR FUL BUR FDR BDL. */
 	public int[] getCO() {
 		int[] co = new int[8];
 		for(int i =0; i < 8; i++) {
@@ -98,8 +97,8 @@ public class Cube implements Cloneable {
 
 	public int[] getEP() {
 		int[] ep = new int[12];
-		for(int i =0; i < 12; i++) {
-			ep[i] = p.getPermutation()[24+i*2]/2;
+		for(int i = 0; i < 12; i++) {
+			ep[i] = (p.getPermutation()[24+i*2]-24)/2;
 		}
 		return ep;
 	}

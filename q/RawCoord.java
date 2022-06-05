@@ -6,7 +6,4 @@ import c.*;
 public interface RawCoord {
     public int value(Cube cube);
     public String name();
-    public int size();
-    //right now i'm just going to have this immediately call the fromInt methods in the Cube class
-//    public Cube setCoord(Cube cube, int value);
 }

@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 public class REO implements Coordinate, RawCoord {
     public static String NAME;
-    private static int MAX_SIZE;
     static {
         NAME = "REO";
-        MAX_SIZE = 70963199;
     }
 
     public REO() {}
@@ -20,7 +18,6 @@ public class REO implements Coordinate, RawCoord {
      * just as with RCO, REO requires binomial coefficients to correctly index,
      * but it is slightly more complicated since there are 3 different types of edges */
     public int value(Cube cube) {
-        int[] eo = cube.getEO();
         int[] ep = cube.getEP();
         int rtrn = 0;
         int i = 11;
@@ -56,12 +53,5 @@ public class REO implements Coordinate, RawCoord {
         rtrn += (new EO()).value(cube);
         return rtrn;
     }
-//    public int rotate(Cube cube, int rotation) {
-//        cube.rotateEO(rotation);
-//        cube.rotateEP(rotation);
-//        return value(cube);
-//    }
-//    public Cube setCoord(Cube cube, int value) {cube.reoFromInt(value); return cube;}
     public String name() {return NAME;}
-    public int size() {return MAX_SIZE;}
 }

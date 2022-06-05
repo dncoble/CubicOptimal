@@ -16,7 +16,21 @@ import javax.swing.JFrame;
 public class Reseacher {
     public static void main(String[] args) throws IOException {
 //        generatePermutationMoves();
-        Cube cube = new Cube(new Scramble("F"));
+        Scramble scr = new Scramble("F");
+        Cube cube = new Cube(scr);
+        
+        int[] ep = cube.getEP();
+        Coordinate c = new EP();
+        System.out.println(c.value(cube));
+        for(int i = 1; i < 18; i ++) {
+            cube.move(scr.iterate());
+            System.out.println(c.value(cube));
+        }
+        
+        for(int i = 0; i < 12; i ++){
+            System.out.println(ep[i]);
+        }
+        
         
         cube.rotate(48);
 //        cube.rotate(35);
@@ -41,6 +55,7 @@ public class Reseacher {
 //        }
         
 //        Cube cube = new Cube();
+//      
 //        Cube testerCube = cube.clone();
 //
 //        testerCube.move(new Scramble("D"));

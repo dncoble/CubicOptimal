@@ -76,7 +76,7 @@ public class TableBuilder {
             int length = table.get(currentQ);
             Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
             cube.move(scr);
-            if(!table.containsKey(q.value(cube))) {
+            if(!table.containsKey(q.value(cube))) { //does run faster with table(q.value)==null?
                 table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
                 unexpandedQ.add(q.value(cube)); unexpandedSize ++;
                 unexpandedC.add(cube.clone());
