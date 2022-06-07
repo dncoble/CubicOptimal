@@ -16,25 +16,13 @@ import javax.swing.JFrame;
 public class Reseacher {
     public static void main(String[] args) throws IOException {
 //        generatePermutationMoves();
-        Scramble scr = new Scramble("F");
-        Cube cube = new Cube(scr);
         
-        int[] ep = cube.getEP();
-        Coordinate c = new EP();
-        System.out.println(c.value(cube));
-        for(int i = 1; i < 18; i ++) {
-            cube.move(scr.iterate());
-            System.out.println(c.value(cube));
-        }
-        
-        for(int i = 0; i < 12; i ++){
-            System.out.println(ep[i]);
-        }
-        
-        
-        cube.rotate(48);
-//        cube.rotate(35);
-        visualize(cube);
+        System.out.println("CO timing: " + testCoordinateTiming(new CO()));
+        System.out.println("CP timing: " + testCoordinateTiming(new CP()));
+        System.out.println("EO timing: " + testCoordinateTiming(new EO()));
+        System.out.println("EP timing: " + testCoordinateTiming(new EP()));
+        System.out.println("RCO timing: " + testCoordinateTiming(new RCO()));
+        System.out.println("REO timing: " + testCoordinateTiming(new REO()));
         
 //        generatePermutationRotations();
         
@@ -265,6 +253,21 @@ public class Reseacher {
         frame.setVisible(true);
 
         return;
+    }
+    
+    public static float testCoordinateTiming(Coordinate c) {
+        long elapsedTime = 0;
+        Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
+        Cube cube = new Cube();
+        int n = 25000000;
+        for(int i = 0; i < n; i ++) {
+            cube.move(scr.iterate());
+            long startTime = System.nanoTime();
+            int j = c.value(cube);
+            long stopTime = System.nanoTime();
+            elapsedTime += stopTime - startTime;
+        }
+        return (float) elapsedTime/n;
     }
 
     /*this code just takes a text file and reads it into a String[]

@@ -1,13 +1,16 @@
 package q;
 import c.*;
 
-public class RCO implements Coordinate, RawCoord {
+public class RCO implements Coordinate {
     public static String NAME;
+    private Coordinate co;
     static {
         NAME = "RCO";
     }
 
-    public RCO() {}
+    public RCO() {
+        co = new CO();
+    }
     /* rotatable corner orientation and rotatable edge orientation takes into account
      * if the pieces is oriented from all angles. this is actually determined by the piece's
      * permutation in ways described in their respective methods.
@@ -18,7 +21,6 @@ public class RCO implements Coordinate, RawCoord {
      * correctly indexing all possible values of RCO requires using binomial coefficients, and
      * was altered from https://rosettacode.org/wiki/Evaluate_binomial_coefficients#Java*/
     public int value(Cube cube) {
-        int[] co = cube.getCO();
         int[] cp = cube.getCP();
         int rtrn = 0;
         int i = 7;
@@ -33,7 +35,7 @@ public class RCO implements Coordinate, RawCoord {
             i --;
         }
         rtrn *= 2187;
-        rtrn += (new CO()).value(cube);
+        rtrn += co.value(cube);
         return rtrn;
     }
     public String name() {return NAME;}

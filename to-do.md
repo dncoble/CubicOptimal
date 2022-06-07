@@ -1,10 +1,14 @@
+working on:
+1. add ability to time:
+   1. cost of a node expansion.
+   2. cost of moves and rotations.
+2. Clean TableBuilder (don't remove it yet)
+3. optimize coordinates, allow longs and heuristics/tables to accept longs
+
 current bugs:
-1. EP does not work with raw coords
-2. related to above, REO only returns EO val.
-3. invert does not work, must add invert + move to TableBuilder?
+1. invert does not work, must add invert + move to TableBuilder?
 
 after 0.3.0:
-1. remove all code for setCoord, maxSize
 2. Clean TableBuilder (don't remove it yet)
 3. optimize: CP and EP use ArrayList.indexOf and .add -- probably what is slowing this down a lot.
 

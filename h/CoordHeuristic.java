@@ -4,6 +4,7 @@ import c.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /*
 * this class handles all heuristics from coordinates as created in /q
@@ -47,6 +48,14 @@ public class CoordHeuristic implements ByteHeuristic {
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
     public void makeTable(boolean useSetCoord) {TableBuilder.makeTable(q, 1);}
+    
+    /* the distribution of elements at each distance */
+    public int[] getDistribution() {
+        int[] rtrn = new int[21];
+        Iterator<Byte> iter = table.values().iterator();
+        while(iter.hasNext()) {rtrn[iter.next()] ++;}
+        return rtrn;
+    }
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from
      * https://examples.javacodegeeks.com/core-java/io/fileoutputstream/how-to-write-an-object-to-file-in-java/

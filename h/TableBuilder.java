@@ -69,8 +69,10 @@ public class TableBuilder {
         table.put(0,(byte) 0); int tableSize = 1;
         unexpandedQ.add(0);
         unexpandedC.add(new Cube());
+        int nodesExpanded = 0; // only for controlling printing
         int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
+            nodesExpanded ++;
             int currentQ = unexpandedQ.poll(); unexpandedSize --;
             Cube cube = unexpandedC.poll();
             int length = table.get(currentQ);
@@ -92,7 +94,8 @@ public class TableBuilder {
                     data[length +1] ++;
                 }
             }
-            if (tableSize % 10000 == 0) {
+            if (nodesExpanded % 10000 == 0) {
+                System.out.println("nodes expanded: " + nodesExpanded);
                 System.out.println("table size: " + tableSize);
                 System.out.println("length: " + length);
                 System.out.println("unexpanded nodes: " + unexpandedSize);

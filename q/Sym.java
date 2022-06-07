@@ -1,16 +1,13 @@
 package q;
 
 import c.*;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeSet;
+import defunct.RawCoord;
 
 /* all Sym coords go through this class */
 public class Sym implements Coordinate {
-    RawCoord rawCoord;
+    Coordinate rawCoord;
 
-    public Sym(RawCoord rawCoord) {
+    public Sym(Coordinate rawCoord) {
         this.rawCoord = rawCoord;
     }
 

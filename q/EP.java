@@ -3,7 +3,7 @@ import c.*;
 
 import java.util.ArrayList;
 
-public class EP implements Coordinate, RawCoord {
+public class EP implements Coordinate {
     public static String NAME;
     static {
         NAME = "EP";

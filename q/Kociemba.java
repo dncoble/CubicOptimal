@@ -1,10 +1,11 @@
 package q;
 import c.*;
+
 /* I have no memory of making this code.
  * the comment says that it doesn't work but i don't know how wrong it is
  * i never made a fromInt method, which isn't necessary since you can't use Kociemba with symmetry anyways
  */
-public class Kociemba implements Coordinate, RawCoord {
+public class Kociemba implements Coordinate {
     public static String NAME;
     static {
         NAME = "Kociemba";

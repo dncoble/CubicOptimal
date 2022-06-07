@@ -1,7 +1,7 @@
 package q;
 import c.*;
 
-public class CO implements Coordinate, RawCoord {
+public class CO implements Coordinate {
     private static String NAME;
     static{
         NAME = "CO";
