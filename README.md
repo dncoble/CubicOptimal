@@ -54,7 +54,7 @@ Plan for versions:
 
 0.3.1: Rotations x96 work.
 
-0.3.2: Implement ways to measure timing costs for expansion. 
+0.3.2: Implement ways to measure timing costs for expansion. Coordinates can retreive information about their distribution.
 
 0.3.3: Create big tables and use sym coordinates to reach ~14-15 depth.
 
