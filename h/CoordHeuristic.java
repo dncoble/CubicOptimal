@@ -57,6 +57,8 @@ public class CoordHeuristic implements ByteHeuristic {
             TableBuilder.makeTable(q, 4);
         }
     }
+    /* size of the coordinate set */
+    public int size() {return table.size();}
     
     /* the distribution of elements at each distance */
     public int[] getDistribution() {
@@ -65,6 +67,16 @@ public class CoordHeuristic implements ByteHeuristic {
         while(iter.hasNext()) {rtrn[iter.next()] ++;}
         return rtrn;
     }
+    
+    public double avgPredPower() {
+        long sum = 0;
+        int[] distribution = getDistribution();
+        for(int i = 0; i < 21; i ++) {
+            sum += i*distribution[i];
+        }
+        return (double) sum / size();
+    }
+    
     /* code for writeObjectToFile and readObjectFrom File
      * has been copied and modified to fit my purposes from
      * https://examples.javacodegeeks.com/core-java/io/fileoutputstream/how-to-write-an-object-to-file-in-java/

@@ -17,12 +17,42 @@ import java.util.LinkedList;
 public class Reseacher {
     public static void main(String[] args) throws IOException {
 //        generatePermutationMoves();
-        System.out.println("CO timing: " + testCoordinateTiming(new CO()));
-        System.out.println("CP timing: " + testCoordinateTiming(new CP()));
-        System.out.println("EO timing: " + testCoordinateTiming(new EO()));
-        System.out.println("EP timing: " + testCoordinateTiming(new EP()));
-        System.out.println("RCO timing: " + testCoordinateTiming(new RCO()));
-        System.out.println("REO timing: " + testCoordinateTiming(new REO()));
+//        System.out.println("CO timing: " + testCoordinateTiming(new CO()));
+//        System.out.println("CP timing: " + testCoordinateTiming(new CP()));
+//        System.out.println("EO timing: " + testCoordinateTiming(new EO()));
+//        System.out.println("EP timing: " + testCoordinateTiming(new EP()));
+//        System.out.println("RCO timing: " + testCoordinateTiming(new RCO()));
+//        System.out.println("REO timing: " + testCoordinateTiming(new REO()));
+        
+//        System.out.println("Scramble iteration timing: " + testScrambleIteration());
+//        System.out.println("Cube iteration timing: " + testCubeTiming());
+//        System.out.println("Total iteration timing: " + testIterationTiming());
+        
+        int coord = 12;
+        Coordinate q;
+        boolean isSym;
+        switch(coord) {
+            case 1: q = new CO(); isSym = false; break;
+            case 2: q = new CP(); isSym = false; break;
+            case 3: q = new EO(); isSym = false; break;
+            case 4: q = new EP(); isSym = false; break;
+            case 5: q = new RCO(); isSym = false; break;
+            case 6: q = new REO(); isSym = false; break;
+//                case 7: q = new Sym(new CO()); isSym = true; break;
+            case 8: q = new Sym(new CP()); isSym = true; break;
+//                case 9: q = new Sym(new EO()); isSym = true; break;
+            case 10: q = new Sym(new EP()); isSym = true; break;
+            case 11: q = new Sym(new RCO()); isSym = true; break;
+            case 12: q = new Sym(new REO()); isSym = true; break;
+            default: q = null; isSym = false; break;
+        }
+        CoordHeuristic h = new CoordHeuristic(q, isSym);
+//        int[] data = h.getDistribution();
+//        for(int o = 0; o < 21; o++) {System.out.println("|" + o + "|" + data[o] + "|");}
+//        System.out.println("size: " + h.size());
+//        System.out.println("avg. PP: " + h.avgPredPower());
+        
+        System.out.println("Heuristic timing: " + testHeuristicTiming(h));
         
 //        generatePermutationRotations();
         
@@ -182,7 +212,7 @@ public class Reseacher {
 //        writer.close();
     }
 
-    public static float testScrambleIteration() {
+    public static double testScrambleIteration() {
         Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
         long startTime = System.nanoTime();
         int n = 25000000;
@@ -190,10 +220,10 @@ public class Reseacher {
             scr.iterate();
         }
         long stopTime = System.nanoTime();
-        return (float) (stopTime - startTime) / n;
+        return (double) (stopTime - startTime) / n;
     }
     //an iteration is basically 2 moves.
-    public static float testCubeTiming() {
+    public static double testCubeTiming() {
         long elapsedTime = 0;
         Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
         Cube cube = new Cube();
@@ -205,10 +235,24 @@ public class Reseacher {
             long stopTime = System.nanoTime();
             elapsedTime += stopTime - startTime;
         }
-        return (float) elapsedTime/n;
+        return (double) elapsedTime/n;
     }
     
-    public static float testCoordinateTiming(Coordinate c) {
+    public static double testIterationTiming() {
+        long elapsedTime = 0;
+        Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
+        Cube cube = new Cube();
+        int n = 25000000;
+        for(int i = 0; i < n; i ++) {
+            long startTime = System.nanoTime();
+            cube.move(scr.iterate());
+            long stopTime = System.nanoTime();
+            elapsedTime += stopTime - startTime;
+        }
+        return (double) elapsedTime/n;
+    }
+    
+    public static double testCoordinateTiming(Coordinate c) {
         long elapsedTime = 0;
         Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
         Cube cube = new Cube();
@@ -220,14 +264,14 @@ public class Reseacher {
             long stopTime = System.nanoTime();
             elapsedTime += stopTime - startTime;
         }
-        return (float) elapsedTime/n;
+        return (double) elapsedTime/n;
     }
     // must subtract coord timing to get lookup timing
-    public static float testHeuristicTiming(ByteHeuristic h) {
+    public static double testHeuristicTiming(ByteHeuristic h) {
         long elapsedTime = 0;
         Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
         Cube cube = new Cube();
-        int n = 25000000;
+        int n = 250000;
         for(int i = 0; i < n; i ++) {
             cube.move(scr.iterate());
             long startTime = System.nanoTime();
@@ -235,7 +279,7 @@ public class Reseacher {
             long stopTime = System.nanoTime();
             elapsedTime += stopTime - startTime;
         }
-        return (float) elapsedTime/n;
+        return (double) elapsedTime/n;
     }
     
     /*this code just takes a text file and reads it into a String[]

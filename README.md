@@ -28,19 +28,21 @@ CO: corner orientation \
 CP: corner permutation \
 EO: edge orientation \
 EP: edge permutation \
-RCO: rotatable corner orientation \
-REO: rotatable edge orientation \
+RCO: rotatable corner orientation \REO: rotatable edge orientation \
 Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 
-| Coordinates | Raw | Sym | Raw Size | Sym Size |
-|---|---|---|---|---|
-| CO |Yes| - |2187| |
-| CP |Yes|Yes|40320|| 
-| EO |Yes| - |2048| |
+PP = Predictive power
+
+| Coordinates | Raw | Sym | Raw Size | Sym Size | avg. PP | max PP |
+|----|---|---|----|---|---|---|
+| CO |Yes| - |2187| - | 4.459 | 6 |
+| CP |Yes|Yes|40321| 984 | 4.723 | 7 |
+| EO |Yes| - |2048| - | 4.609 | 7 |
 | EP |Too big|   |479001599| |
-|RCO |Yes|   |153090| |
-|REO |Too big|   |70963199| |
+|RCO |Yes| Yes |153090|3393| 6.430 | 9 |
+|REO |Too big|Yes|70963199|1482170| 8.247 | 11 |
 | Kociemba| not even close
+** avg. PP is for raw if available, else sym
 
 See more in Coordinates Heuristics.md
 
@@ -53,13 +55,11 @@ Plan for versions:
 
 0.3.1: Rotations x96 work.
 
-0.3.2: Restructure coordinate calculations to be faster.
+0.3.2: Restructure coordinate calculations to be faster, including breaking 0 = solved.
 
-0.3.3: Create big tables and use sym coordinates to reach ~14-15 depth.
+0.3.3: Create power and lexicographic heuristics.
 
-0.3.4: Create power and lexicographic heuristics.
-
-0.3.5: Implement SMA* search.
+0.3.4: Implement SMA* search.
 
 0.4.0: Coordinate class able to receive permutation input and perform operations on it.
 
