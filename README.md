@@ -44,8 +44,7 @@ Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 
 See more in Coordinates Heuristics.md
 
-# Current version: 0.3.0
-
+# Current version: 0.3.1
 Plan for versions:
 
 0.2.1: Complete structure of how packages c, s, h, and q interact.
@@ -54,7 +53,7 @@ Plan for versions:
 
 0.3.1: Rotations x96 work.
 
-0.3.2: Implement ways to measure timing costs for expansion. Coordinates can retreive information about their distribution.
+0.3.2: Restructure coordinate calculations to be faster.
 
 0.3.3: Create big tables and use sym coordinates to reach ~14-15 depth.
 

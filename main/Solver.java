@@ -31,9 +31,9 @@ public class Solver {
         String[] rawListScrambles = rawScrambles.split(",");
         System.out.println("Enter what tables you wish to use. \n"
                 + "		Raw:	Sym: \n"
-                + "CO		1		7 \n"
+                + "CO		1		- \n"
                 + "CP		2		8 \n"
-                + "EO		3		9 \n"
+                + "EO		3		- \n"
                 + "EP		4		10 \n"
                 + "RCO		5		11 \n"
                 + "REO		6 		12 \n"
@@ -48,9 +48,9 @@ public class Solver {
                 tablesUsed.add(nextTable);
                 System.out.println("Enter what tables you wish to use. \n"
                         + "		Raw:	Sym: \n"
-                        + "CO		1		7 \n"
+                        + "CO		1		- \n"
                         + "CP		2		8 \n"
-                        + "EO		3		9 \n"
+                        + "EO		3		- \n"
                         + "EP		4		10 \n"
                         + "RCO		5		11 \n"
                         + "REO		6 		12 \n"
@@ -61,9 +61,9 @@ public class Solver {
             catch(NumberFormatException e) {
                 System.out.println("Invalid number entered \n"
                         + "		Raw:	Sym: \n"
-                        + "CO		1		7 \n"
+                        + "CO		1		- \n"
                         + "CP		2		8 \n"
-                        + "EO		3		9 \n"
+                        + "EO		3		- \n"
                         + "EP		4		10 \n"
                         + "RCO		5		11 \n"
                         + "REO		6 		12 \n"
@@ -77,23 +77,26 @@ public class Solver {
         for(int j : tablesUsed) {
             ByteHeuristic nextHeuristic;
             Coordinate q;
+            boolean isSym;
             switch(j) {
-                case 1: q = new CO(); break;
-                case 2: q = new CP(); break;
-                case 3: q = new EO(); break;
-                case 4: q = new EP(); break;
-                case 5: q = new RCO(); break;
-                case 6: q = new REO(); break;
-                case 7: q = new Sym(new CO()); break;
-                case 8: q = new Sym(new CP()); break;
-                case 9: q = new Sym(new EO()); break;
-                case 10: q = new Sym(new EP()); break;
-                case 11: q = new Sym(new RCO()); break;
-                case 12: q = new Sym(new REO()); break;
-                default: q = null; break;
+                case 1: q = new CO(); isSym = false; break;
+                case 2: q = new CP(); isSym = false; break;
+                case 3: q = new EO(); isSym = false; break;
+                case 4: q = new EP(); isSym = false; break;
+                case 5: q = new RCO(); isSym = false; break;
+                case 6: q = new REO(); isSym = false; break;
+//                case 7: q = new Sym(new CO()); isSym = true; break;
+                case 8: q = new Sym(new CP()); isSym = true; break;
+//                case 9: q = new Sym(new EO()); isSym = true; break;
+                case 10: q = new Sym(new EP()); isSym = true; break;
+                case 11: q = new Sym(new RCO()); isSym = true; break;
+                case 12: q = new Sym(new REO()); isSym = true; break;
+                default: q = null; isSym = false; break;
             }
-            nextHeuristic = new CoordHeuristic(q);
-            h.addHeuristic(nextHeuristic);
+            if(!(q==null)) {
+                nextHeuristic = new CoordHeuristic(q, isSym);
+                h.addHeuristic(nextHeuristic);
+            }
         }
         for(String j : rawListScrambles) {
             Scramble identityScr = new Scramble(j);

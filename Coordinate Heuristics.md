@@ -12,7 +12,7 @@ PP = Predictive power
 
 Distributions for each coordinate heuristics:
 
-CO:
+CO: 
 
 | dist. | # raw |
 |-------|-------|

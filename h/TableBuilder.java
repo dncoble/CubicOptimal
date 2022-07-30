@@ -16,6 +16,7 @@ public class TableBuilder {
      *             saved, which means that it requires too much space to be used with big tables
      * flavor = 2: coordinate expansion without using setCoord, saves the scramble tree to regenerate cubes.
      *             not yet implemented.
+     * flavor = 4: used with x96 expansion.
      */
     public static void makeTable(Coordinate q, int flavor) {
         switch(flavor) {
@@ -23,6 +24,7 @@ public class TableBuilder {
             case 1: makeTable1(q); break;
 //            case 2: makeTable2(q); break;
 //            case 3: makeTable3(q); break;
+            case 4: makeTable4(q); break;
         }
     }
 //    public static void makeTable0(Coordinate q) {
@@ -189,7 +191,69 @@ public class TableBuilder {
 //        for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
 //        writeMapToFile((Serializable) table, q.name() + "Table");
 //    }
-
+    
+    public static void makeTable4(Coordinate q) {
+        Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+        Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
+        Queue<Cube> unexpandedC = new LinkedList<Cube>();
+        table.put(0,(byte) 0); int tableSize = 1;
+        unexpandedQ.add(0);
+        unexpandedC.add(new Cube());
+        int nodesExpanded = 0; // only for controlling printing
+        int[] data = new int[21]; data[0] = 1;
+        while(!unexpandedQ.isEmpty()) {
+            nodesExpanded ++;
+            int currentQ = unexpandedQ.poll(); unexpandedSize --;
+            Cube cube = unexpandedC.poll();
+            Cube cubeinv = cube.clone();
+            cubeinv.invert();
+            int length = table.get(currentQ);
+            Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+            cube.move(scr);
+            if(!table.containsKey(q.value(cube))) { //does run faster with table(q.value)==null?
+                table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                unexpandedC.add(cube.clone());
+                data[length + 1] ++;
+            }
+            else {} // with queue, if it is already in the table, it must have length less or equal to
+            for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                cube.move(scr.iterate());
+                if(!table.containsKey(q.value(cube))) {
+                    table.put(q.value(cube), (byte) (length + 1)); tableSize ++;
+                    unexpandedQ.add(q.value(cube)); unexpandedSize ++;
+                    unexpandedC.add(cube.clone());
+                    data[length +1] ++;
+                }
+            }
+            scr = new Scramble(Integer.MIN_VALUE, 1); //just copying code for inverse section.
+            cubeinv.move(scr);
+            if(!table.containsKey(q.value(cubeinv))) { //does run faster with table(q.value)==null?
+                table.put(q.value(cubeinv), (byte) (length + 1)); tableSize ++;
+                unexpandedQ.add(q.value(cubeinv)); unexpandedSize ++;
+                unexpandedC.add(cubeinv.clone());
+                data[length + 1] ++;
+            }
+            else {} // with queue, if it is already in the table, it must have length less or equal to
+            for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                cubeinv.move(scr.iterate());
+                if(!table.containsKey(q.value(cubeinv))) {
+                    table.put(q.value(cubeinv), (byte) (length + 1)); tableSize ++;
+                    unexpandedQ.add(q.value(cubeinv)); unexpandedSize ++;
+                    unexpandedC.add(cubeinv.clone());
+                    data[length +1] ++;
+                }
+            }
+            if (nodesExpanded % 2000 == 0) {
+                System.out.println("nodes expanded: " + nodesExpanded);
+                System.out.println("table size: " + tableSize);
+                System.out.println("length: " + length);
+                System.out.println("unexpanded nodes: " + unexpandedSize);
+            }
+        }
+        for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
+        writeMapToFile((Serializable) table, q.name() + "Table");
+    }
     /* my old standard used RTSTables as arraylists with the sym value being the index of the raw value. this is slow,
      * so i'm changing it to a HashMap int -> int. */
     public static void arrayListToMap(String filePath) {

@@ -1,5 +1,7 @@
 package c;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.ListIterator;
 /*
@@ -101,5 +103,79 @@ public class Cube implements Cloneable {
 			ep[i] = (p.getPermutation()[24+i*2]-24)/2;
 		}
 		return ep;
+	}
+	/* net drawing of cube */
+	public void visualize() {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(700, 700);
+		byte[] p = getPermutation();
+		for (int i = 0; i < 48; i++) {
+			frame.add(new Facelet(i, p[i]));
+			frame.setVisible(true);
+		}
+		//center pieces
+		frame.add(new Facelet(4, 4, 0));
+		frame.setVisible(true);
+		frame.add(new Facelet(4, 1, 1));
+		frame.setVisible(true);
+		frame.add(new Facelet(7, 4, 2));
+		frame.setVisible(true);
+		frame.add(new Facelet(10, 4, 3));
+		frame.setVisible(true);
+		frame.add(new Facelet(4, 7, 4));
+		frame.setVisible(true);
+		frame.add(new Facelet(1, 4, 5));
+		frame.setVisible(true);
+
+		return;
+	}
+	/* class for visualize */
+	private class Facelet extends JComponent {
+		private int x;
+		private int y;
+		private int color;
+
+		/* indices 0-47 (weird pattern).
+		 * color order is green (F), white (U), red (R), blue (B), yellow (D), orange (L)*/
+		public Facelet(int slot, int piece) {
+			x = getx(slot);
+			y = gety(slot);
+			color = pieceColors(piece);
+//                setSize(50,50);
+//                setLocation(x,y);
+//                setOpaque(false);
+		}
+
+		public Facelet(int x, int y, int color) {
+			this.x = x;
+			this.y = y;
+			this.color = color;
+		}
+
+		public void paint(Graphics g) {
+			g.setColor(getColor(color));
+			g.fillRect(x * 55 + 20, y * 55 + 20, 50, 50);
+		}
+
+		private int getx(int slot) {
+			return new int[]{5, 6, 5, 3, 0, 11, 3, 2, 3, 5, 8, 9, 3, 3, 2, 5, 9, 8, 5, 5, 6, 3, 11,
+					0, 7, 5, 7, 5, 1, 3, 1, 3, 6, 5, 2, 3, 0, 11, 8, 9, 4, 4, 4, 10, 4, 10, 4, 4}[slot];
+		}
+
+		private int gety(int slot) {
+			return new int[]{2, 3, 3, 0, 3, 3, 6, 5, 5, 8, 5, 5, 2, 3, 3, 0, 3, 3, 6, 5, 5,
+					8, 5, 5, 3, 1, 5, 7, 5, 7, 3, 1, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 0, 3, 8, 5, 6, 5,}[slot];
+		}
+
+		private Color getColor(int color) {
+			return new Color[]{Color.GREEN, Color.WHITE, Color.RED, Color.BLUE, Color.YELLOW, Color.ORANGE}[color];
+		}
+
+		//better as a static variable but java doesn't allow it until this is not a inner class
+		private int pieceColors(int piece) {
+			return new int[]{1, 2, 0, 1, 5, 3, 4, 5, 0, 4, 2, 3, 1, 0, 5, 1, 3, 2, 4, 0, 2, 4, 3, 5,
+					2, 1, 2, 4, 5, 4, 5, 1, 2, 0, 5, 0, 5, 3, 2, 3, 1, 0, 1, 3, 4, 3, 4, 0}[piece];
+		}
 	}
 }

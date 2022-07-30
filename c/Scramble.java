@@ -34,9 +34,15 @@ public class Scramble {
 		String[] strScr = strScramble.split(" ");
 		for(String move : strScr) {scramble.addLast(convertMove(move));}
 	}
-	// a helper method of convertString, may be optimizable
+	
 	public int convertMove (String move) {
+		if(move.length() != 1 && move.length() != 2) {
+			throw new RuntimeException("Valid scramble string not given.");
+		}
 		byte rtrn = (byte) (3 * "FURBDL".indexOf(move.charAt(0)));
+		if(rtrn == -3) {
+			throw new RuntimeException("Valid scramble string not given.");
+		}
 		if(move.length() == 1) {return rtrn;}
 		else if(move.charAt(1) == '2') {return (byte) (rtrn + 1);}
 		else {return (byte) (rtrn + 2);}

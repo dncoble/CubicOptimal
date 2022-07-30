@@ -12,11 +12,11 @@ import q.*;
 
 import javax.swing.*;
 import javax.swing.JFrame;
+import java.util.LinkedList;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
 //        generatePermutationMoves();
-        
         System.out.println("CO timing: " + testCoordinateTiming(new CO()));
         System.out.println("CP timing: " + testCoordinateTiming(new CP()));
         System.out.println("EO timing: " + testCoordinateTiming(new EO()));
@@ -181,78 +181,31 @@ public class Reseacher {
 //        System.out.println(count);
 //        writer.close();
     }
-    /* eventually this will have it's own class */
-    public static void visualize(Cube cube) {
-        class Facelet extends JComponent {
-            private int x;
-            private int y;
-            private int color;
 
-            /* indices 0-47 (weird pattern).
-             * color order is green (F), white (U), red (R), blue (B), yellow (D), orange (L)*/
-            public Facelet(int slot, int piece) {
-                x = getx(slot);
-                y = gety(slot);
-                color = pieceColors(piece);
-//                setSize(50,50);
-//                setLocation(x,y);
-//                setOpaque(false);
-            }
-
-            public Facelet(int x, int y, int color) {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-            }
-
-            public void paint(Graphics g) {
-                g.setColor(getColor(color));
-                g.fillRect(x * 55 + 20, y * 55 + 20, 50, 50);
-            }
-
-            private int getx(int slot) {
-                return new int[]{5, 6, 5, 3, 0, 11, 3, 2, 3, 5, 8, 9, 3, 3, 2, 5, 9, 8, 5, 5, 6, 3, 11,
-                        0, 7, 5, 7, 5, 1, 3, 1, 3, 6, 5, 2, 3, 0, 11, 8, 9, 4, 4, 4, 10, 4, 10, 4, 4}[slot];
-            }
-
-            private int gety(int slot) {
-                return new int[]{2, 3, 3, 0, 3, 3, 6, 5, 5, 8, 5, 5, 2, 3, 3, 0, 3, 3, 6, 5, 5,
-                        8, 5, 5, 3, 1, 5, 7, 5, 7, 3, 1, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 0, 3, 8, 5, 6, 5,}[slot];
-            }
-
-            private Color getColor(int color) {
-                return new Color[]{Color.GREEN, Color.WHITE, Color.RED, Color.BLUE, Color.YELLOW, Color.ORANGE}[color];
-            }
-
-            //better as a static variable but java doesn't allow it until this is not a inner class
-            private int pieceColors(int piece) {
-                return new int[]{1, 2, 0, 1, 5, 3, 4, 5, 0, 4, 2, 3, 1, 0, 5, 1, 3, 2, 4, 0, 2, 4, 3, 5,
-                        2, 1, 2, 4, 5, 4, 5, 1, 2, 0, 5, 0, 5, 3, 2, 3, 1, 0, 1, 3, 4, 3, 4, 0}[piece];
-            }
+    public static float testScrambleIteration() {
+        Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
+        long startTime = System.nanoTime();
+        int n = 25000000;
+        for(int i = 0; i < n; i ++) {
+            scr.iterate();
         }
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 700);
-        byte[] p = cube.getPermutation();
-        for (int i = 0; i < 48; i++) {
-            frame.add(new Facelet(i, p[i]));
-            frame.setVisible(true);
+        long stopTime = System.nanoTime();
+        return (float) (stopTime - startTime) / n;
+    }
+    //an iteration is basically 2 moves.
+    public static float testCubeTiming() {
+        long elapsedTime = 0;
+        Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
+        Cube cube = new Cube();
+        int n = 25000000;
+        for(int i = 0; i < n; i ++) {
+            Scramble prt = scr.iterate();
+            long startTime = System.nanoTime();
+            cube.move(prt);
+            long stopTime = System.nanoTime();
+            elapsedTime += stopTime - startTime;
         }
-        //center pieces
-        frame.add(new Facelet(4, 4, 0));
-        frame.setVisible(true);
-        frame.add(new Facelet(4, 1, 1));
-        frame.setVisible(true);
-        frame.add(new Facelet(7, 4, 2));
-        frame.setVisible(true);
-        frame.add(new Facelet(10, 4, 3));
-        frame.setVisible(true);
-        frame.add(new Facelet(4, 7, 4));
-        frame.setVisible(true);
-        frame.add(new Facelet(1, 4, 5));
-        frame.setVisible(true);
-
-        return;
+        return (float) elapsedTime/n;
     }
     
     public static float testCoordinateTiming(Coordinate c) {
@@ -269,7 +222,22 @@ public class Reseacher {
         }
         return (float) elapsedTime/n;
     }
-
+    // must subtract coord timing to get lookup timing
+    public static float testHeuristicTiming(ByteHeuristic h) {
+        long elapsedTime = 0;
+        Scramble scr = new Scramble(Integer.MIN_VALUE, 7);
+        Cube cube = new Cube();
+        int n = 25000000;
+        for(int i = 0; i < n; i ++) {
+            cube.move(scr.iterate());
+            long startTime = System.nanoTime();
+            byte j = h.h(cube);
+            long stopTime = System.nanoTime();
+            elapsedTime += stopTime - startTime;
+        }
+        return (float) elapsedTime/n;
+    }
+    
     /*this code just takes a text file and reads it into a String[]
      * it was taken and modified from journaldev.com */
     public static String[] fileLineByLine(String filepath) {
@@ -334,7 +302,6 @@ public class Reseacher {
     }
     // use old cube class to generate permutations for new cube class
     public static void generatePermutationMoves() {
-
         OldCube cube = new OldCube();
         OldCube testerCube = cube.clone();
         Scramble scr = new Scramble("F");

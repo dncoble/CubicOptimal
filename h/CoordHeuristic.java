@@ -16,9 +16,11 @@ import java.util.Iterator;
 public class CoordHeuristic implements ByteHeuristic {
     Coordinate q;
     private HashMap<Integer, Byte> table;
+    private boolean isSym;
 
-    public CoordHeuristic(Coordinate q) {
+    public CoordHeuristic(Coordinate q, boolean isSym) {
         this.q = q;
+        this.isSym = isSym;
         File[] filesList = new File(".").listFiles();
         boolean makeRawTable = true;
         String tableFile = q.name() + "Table";
@@ -31,7 +33,7 @@ public class CoordHeuristic implements ByteHeuristic {
         if(makeRawTable) {
             System.out.println("A requested table has not been made. It will be made now. \n"
                     + "This may take a while.");
-            makeTable(true);
+            makeTable(isSym);
         }
         table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
     }
@@ -47,7 +49,14 @@ public class CoordHeuristic implements ByteHeuristic {
     /* The below algorithm generates the table in what I believe to be the most efficient algorithm. in experimenting
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */
-    public void makeTable(boolean useSetCoord) {TableBuilder.makeTable(q, 1);}
+    public void makeTable(boolean isSym) {
+        if(!isSym) {
+            TableBuilder.makeTable(q, 1);
+        }
+        else {
+            TableBuilder.makeTable(q, 4);
+        }
+    }
     
     /* the distribution of elements at each distance */
     public int[] getDistribution() {
