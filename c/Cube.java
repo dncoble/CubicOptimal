@@ -9,16 +9,16 @@ import java.util.ListIterator;
  * reworking with permutation-based datatypes that should be faster and easier to work with
  */
 public class Cube implements Cloneable {
-
+	
 	private Permutation p;
-
+	
 	public Cube(Scramble scramble) {
 		p = new Permutation(48, true);
 		move(scramble);
 	}
-
+	
 	public Cube(Permutation p) {this.p = p;}
-
+	
 	public Cube() {p = new Permutation(48, true);}
 	
 	@Override
@@ -61,11 +61,11 @@ public class Cube implements Cloneable {
 			p.multiplyIP(MoveTables.getRotation(r));
 		}
 	}
-
+	
 	public void invert() {
 		p.invertIP();
 	}
-
+	
 	/* corner orientation is defined relative to white/yellow / up/down.
 	 * a corner can be either oriented (0), clockwise (1), or counterclockwise (2)
 	 * the coordinate is a trinary number of the 8 corners stringed together in order
@@ -96,7 +96,7 @@ public class Cube implements Cloneable {
 		}
 		return eo;
 	}
-
+	
 	public int[] getEP() {
 		int[] ep = new int[12];
 		for(int i = 0; i < 12; i++) {
@@ -146,32 +146,32 @@ public class Cube implements Cloneable {
 //                setLocation(x,y);
 //                setOpaque(false);
 		}
-
+		
 		public Facelet(int x, int y, int color) {
 			this.x = x;
 			this.y = y;
 			this.color = color;
 		}
-
+		
 		public void paint(Graphics g) {
 			g.setColor(getColor(color));
 			g.fillRect(x * 55 + 20, y * 55 + 20, 50, 50);
 		}
-
+		
 		private int getx(int slot) {
 			return new int[]{5, 6, 5, 3, 0, 11, 3, 2, 3, 5, 8, 9, 3, 3, 2, 5, 9, 8, 5, 5, 6, 3, 11,
 					0, 7, 5, 7, 5, 1, 3, 1, 3, 6, 5, 2, 3, 0, 11, 8, 9, 4, 4, 4, 10, 4, 10, 4, 4}[slot];
 		}
-
+		
 		private int gety(int slot) {
 			return new int[]{2, 3, 3, 0, 3, 3, 6, 5, 5, 8, 5, 5, 2, 3, 3, 0, 3, 3, 6, 5, 5,
 					8, 5, 5, 3, 1, 5, 7, 5, 7, 3, 1, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 0, 3, 8, 5, 6, 5,}[slot];
 		}
-
+		
 		private Color getColor(int color) {
 			return new Color[]{Color.GREEN, Color.WHITE, Color.RED, Color.BLUE, Color.YELLOW, Color.ORANGE}[color];
 		}
-
+		
 		//better as a static variable but java doesn't allow it until this is not a inner class
 		private int pieceColors(int piece) {
 			return new int[]{1, 2, 0, 1, 5, 3, 4, 5, 0, 4, 2, 3, 1, 0, 5, 1, 3, 2, 4, 0, 2, 4, 3, 5,
