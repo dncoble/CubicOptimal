@@ -40,7 +40,7 @@ PP = Predictive power
 | EO |Yes| - |2048| - | 4.609 | 7 |
 | EP |Too big|   |479001599| |
 |RCO |Yes| Yes |153090|3393| 6.430 | 9 |
-|REO |Too big|Yes|70963199|1482170| 8.247 | 11 |
+|REO |Too big|Yes|70963200|1482170| 8.247 | 11 |
 | Kociemba| not even close
 ** avg. PP is for raw if available, else sym
 
