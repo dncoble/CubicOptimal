@@ -1,4 +1,5 @@
-package s;/* the SMA* graph/tree search algorithm
+package s;
+/* the SMA* graph/tree search algorithm
  * only works with table-generated heuristics (int numbers)
  */
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import c.*;
 import h.*;
 
-public class SMAStar {
+public class SMAStar implements Search {
 
 
     private Cube cube;

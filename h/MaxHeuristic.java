@@ -12,6 +12,9 @@ public class MaxHeuristic implements ByteHeuristic {
     //initialialization just creates an empty ArrayList. use .addHeuristic() to fill out
     public MaxHeuristic() {heuristics = new ArrayList<ByteHeuristic>();}
     public void addHeuristic(ByteHeuristic h) {heuristics.add(h);}
+    public void set(Cube cube){
+        for(ByteHeuristic h : heuristics) {h.set(cube);}
+    }
     public byte h(Cube cube) {
         byte rtrn = 0;
         for(ByteHeuristic h : heuristics) {
@@ -19,5 +22,23 @@ public class MaxHeuristic implements ByteHeuristic {
             if(newH > rtrn) {rtrn = newH;}
         }
         return rtrn;
+    }
+    public byte h() {
+        byte rtrn = 0;
+        for(ByteHeuristic h : heuristics) {
+            byte newH = h.h();
+            if(newH > rtrn) {rtrn = newH;}
+        }
+        return rtrn;
+    }
+    public void move(int move) {
+        for(ByteHeuristic h : heuristics) {
+            h.move(move);
+        }
+    }
+    public void move(Scramble scr) {
+        for(ByteHeuristic h : heuristics) {
+            h.move(scr);
+        }
     }
 }

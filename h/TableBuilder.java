@@ -263,6 +263,27 @@ public class TableBuilder {
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
         writeMapToFile((Serializable) table, q.name() + "Table");
     }
+    /*  function for making the lookup table for coordinate movement under every move. 
+     * Table is indexed as [move][coordinate]. */
+    public static void makeCoordTable(Coordinate q, String name) {
+        int[][] table = new int[18][q.size()];
+        Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
+        Queue<Cube> unexpandedC = new LinkedList<Cube>();
+        unexpandedQ.add(0); // do i need this?
+        unexpandedC.add(new Cube());
+        while(!unexpandedQ.isEmpty()) {
+            int currentQ = unexpandedQ.poll(); unexpandedSize --;
+            Cube cube = unexpandedC.poll();
+            Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+            cube.move(scr);
+            table[0][currentQ] = q.value(cube);
+            for(int i = 1; i < 18; i ++) { // go through all moves and add to table
+                cube.move(scr.iterate());
+                table[i][currentQ] = q.value(cube);
+            }
+        }
+        writeMapToFile((Serializable) table, name);
+    }
     
     /* my old standard used RTSTables as arraylists with the sym value being the index of the raw value. this is slow,
      * so i'm changing it to a HashMap int -> int. */

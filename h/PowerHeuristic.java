@@ -8,7 +8,7 @@ package h;
 import c.*;
 import java.util.ArrayList;
 
-public class PowerHeuristic implements ByteHeuristic {
+public class PowerHeuristic {
     private ArrayList<ByteHeuristic> heuristics;
 
     //initialialization just creates an empty ArrayList. use .addHeuristic() to fill out

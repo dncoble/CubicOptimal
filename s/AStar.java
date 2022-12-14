@@ -1,4 +1,5 @@
-package s;/*
+package s;
+/*
  * implements the A* search algorithm on a cube, hopefully for better performance.
  * this is the first search algorithm i'm making but i plan to put in a bunch more.
  * this implementation of A* only works with table heuristics though, because of assumptions it makes
@@ -11,7 +12,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import c.*;
 
-public class AStar {
+public class AStar implements Search {
 
     private Cube cube;
     private ByteHeuristic h;

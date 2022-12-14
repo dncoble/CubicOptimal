@@ -100,7 +100,7 @@ public class Solver {
         }
         for(String j : rawListScrambles) {
             Scramble identityScr = new Scramble(j);
-            Cube cube = new Cube(identityScr);
+            Cube cube = new Cube(identityScr); h.set(cube);
             IDAStar searcher = new IDAStar(cube, h);
             solvedScrambles.add(searcher.search());
         }

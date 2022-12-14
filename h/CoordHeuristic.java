@@ -6,15 +6,14 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/*
-* this class handles all heuristics from coordinates as created in /q
-* at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
-* here. a coordinate is basically a subset all permutations of a cube. for each coordinate value, there are multiple
-* permutations it corresponds to. the table is a dictionary, (HashMap) that contains the heuristic, and then the distance
-* to solved for the best permutation that has that coordinate. alternatively, you can think of the coordinate as its own
-* puzzle. then the dictionary contains the distance to solved of that subpuzzle in that state. */
+/* this class handles all heuristics from coordinates as created in /q
+ * at this point i don't remember if i have a comment describing how this works, so i'll lay out a brief description
+ * here. a coordinate is technically a quotient group of all permutations of a cube, for each coordinate value, there are multiple
+ * permutations it corresponds to (it's coset). the table is a dictionary, (HashMap) that contains the heuristic, and then the distance
+ * to solved for the best permutation that has that coordinate. alternatively, you can think of the coordinate as its own
+ * puzzle. then the dictionary contains the distance to solved of that subpuzzle in that state. */
 public class CoordHeuristic implements ByteHeuristic {
-    Coordinate q;
+    public Coordinate q;
     private HashMap<Integer, Byte> table;
     private boolean isSym;
 
@@ -37,6 +36,8 @@ public class CoordHeuristic implements ByteHeuristic {
         }
         table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
     }
+    public void set(Cube cube) {q.set(cube);}
+    
     public byte h(Cube cube) {
         try {
             return table.get(q.value(cube));
@@ -46,6 +47,18 @@ public class CoordHeuristic implements ByteHeuristic {
             throw e;
         }
     }
+    public byte h() {
+        try {
+            return table.get(q.value());
+        }
+        catch (NullPointerException e){
+            System.out.println("Cannot find value " + q.value() + " in table.");
+            throw e;
+        }
+    }
+    /* moves the coordinate */
+    public void move(int move) {q.move(move);}
+    public void move(Scramble scr) {q.move(scr);}
     /* The below algorithm generates the table in what I believe to be the most efficient algorithm. in experimenting
      * setCoord is not required but if not included then cubes must be saved while coords are unexpanded. that makes
      * them infeasible for big coordinates. so i basically just have two methods but am putting them both here. */

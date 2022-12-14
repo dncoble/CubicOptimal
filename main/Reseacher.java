@@ -16,6 +16,20 @@ import java.util.LinkedList;
 
 public class Reseacher {
     public static void main(String[] args) throws IOException {
+        Scramble scr = new Scramble("F U R");
+        Cube cube = new Cube(scr);
+        Coordinate q1 = new CP(cube);
+        Coordinate q2 = new CP();
+        q2.move(scr);
+        ByteHeuristic h = new CoordHeuristic(q2, false);
+        h.move(new Scramble("R' U' F'"));
+//        q.move(new Scramble("R'"));
+        System.out.println(h.h());
+        System.out.println(q1.value());
+        System.out.println(q2.value());
+        
+//        System.out.println(h.h());
+        
 //        generatePermutationMoves();
 //        System.out.println("CO timing: " + testCoordinateTiming(new CO()));
 //        System.out.println("CP timing: " + testCoordinateTiming(new CP()));
@@ -28,31 +42,31 @@ public class Reseacher {
 //        System.out.println("Cube iteration timing: " + testCubeTiming());
 //        System.out.println("Total iteration timing: " + testIterationTiming());
         
-        int coord = 12;
-        Coordinate q;
-        boolean isSym;
-        switch(coord) {
-            case 1: q = new CO(); isSym = false; break;
-            case 2: q = new CP(); isSym = false; break;
-            case 3: q = new EO(); isSym = false; break;
-            case 4: q = new EP(); isSym = false; break;
-            case 5: q = new RCO(); isSym = false; break;
-            case 6: q = new REO(); isSym = false; break;
-//                case 7: q = new Sym(new CO()); isSym = true; break;
-            case 8: q = new Sym(new CP()); isSym = true; break;
-//                case 9: q = new Sym(new EO()); isSym = true; break;
-            case 10: q = new Sym(new EP()); isSym = true; break;
-            case 11: q = new Sym(new RCO()); isSym = true; break;
-            case 12: q = new Sym(new REO()); isSym = true; break;
-            default: q = null; isSym = false; break;
-        }
-        CoordHeuristic h = new CoordHeuristic(q, isSym);
+//        int coord = 12;
+//        Coordinate q;
+//        boolean isSym;
+//        switch(coord) {
+//            case 1: q = new CO(); isSym = false; break;
+//            case 2: q = new CP(); isSym = false; break;
+//            case 3: q = new EO(); isSym = false; break;
+//            case 4: q = new EP(); isSym = false; break;
+//            case 5: q = new RCO(); isSym = false; break;
+//            case 6: q = new REO(); isSym = false; break;
+////                case 7: q = new Sym(new CO()); isSym = true; break;
+//            case 8: q = new Sym(new CP()); isSym = true; break;
+////                case 9: q = new Sym(new EO()); isSym = true; break;
+//            case 10: q = new Sym(new EP()); isSym = true; break;
+//            case 11: q = new Sym(new RCO()); isSym = true; break;
+//            case 12: q = new Sym(new REO()); isSym = true; break;
+//            default: q = null; isSym = false; break;
+//        }
+//        CoordHeuristic h = new CoordHeuristic(q, isSym);
 //        int[] data = h.getDistribution();
 //        for(int o = 0; o < 21; o++) {System.out.println("|" + o + "|" + data[o] + "|");}
 //        System.out.println("size: " + h.size());
 //        System.out.println("avg. PP: " + h.avgPredPower());
         
-        System.out.println("Heuristic timing: " + testHeuristicTiming(h));
+//        System.out.println("Heuristic timing: " + testHeuristicTiming(h));
         
 //        generatePermutationRotations();
         

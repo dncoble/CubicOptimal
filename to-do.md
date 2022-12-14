@@ -1,18 +1,15 @@
 working on:
-1. add ability to time:
-   1. cost of a node expansion.
-   2. cost of moves and rotations.
-2. Clean TableBuilder (don't remove it yet)
-3. optimize coordinates, allow longs and heuristics/tables to accept longs
+1. Clean TableBuilder (don't remove it yet)
+2. optimize coordinates, allow longs and heuristics/tables to accept longs, remove constraint that solved = 0
+3. h for sym coordinates can be sped up by checking table after each rotation rather than finding identity first
+4. start developing the move-centric coordinate method which will be much faster.
 
-current bugs:
-1. invert does not work, must add invert + move to TableBuilder?
-
-after 0.3.0:
-2. Clean TableBuilder (don't remove it yet)
-3. optimize: CP and EP use ArrayList.indexOf and .add -- probably what is slowing this down a lot.
 
 future work and notes:
+
+created UDSlice, also create RLSlice and FBSlice
+
+IDAStar checks cube equality at each step, can that be sped up?
 
 make another cube class with simple boolean matrices 
 and boolean multiplication, it may be faster.

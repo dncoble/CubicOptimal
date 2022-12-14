@@ -137,8 +137,16 @@ public class Scramble {
 	}
 	public void addFirst(int move) {scramble.addFirst(move);}
 	public void addLast(int move) {scramble.addLast(move);}
+	// add the first legitimate move to the end of the scramble (either F or U)
+	public void addLast() {
+		if (scramble.size() == 0) {scramble.addLast(0);}
+		else if(scramble.getLast() > 2) {scramble.addLast(0);}
+		else {scramble.addLast(3);}
+	}
 	public void removeFirst() {scramble.removeFirst();}
 	public void removeLast() {scramble.removeLast();}
+	public int getFirst() {return scramble.getFirst();}
+	public int getLast() {return scramble.getLast();}
 	//returns the list iterator of the linked list
 	public ListIterator<Integer> getIterator() {return scramble.listIterator();}
 	public ListIterator<Integer> getIterator(int index) {return scramble.listIterator(index);}
@@ -246,7 +254,7 @@ public class Scramble {
 		return rtrnScramble;
 	}
 	//passed a single base 18 move, it returns its int inverse
-	public int moveInverse(int move) {
+	public static int moveInverse(int move) {
 		int type = move / 3;
 		int dir = move % 3;
 		return type * 3 + 2 - dir;
