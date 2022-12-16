@@ -4,7 +4,7 @@ import c.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class CP implements Coordinate {
+public class CP extends Coordinate {
     public int[] cp;
     private static String NAME;
     private static int SIZE;
@@ -14,6 +14,7 @@ public class CP implements Coordinate {
     }
     public CP(Cube cube) {cp = cube.getCP();}
     public CP() {cp = new int[] {0,1,2,3,4,5,6,7};}
+    public CP(int[] cp) {this.cp = cp;}
     public void set(Cube cube) {cp = cube.getCP();}
     /*the concept of turning an int[] into an int with a base system is also used in
      * since for every index in the permutation, the options are reduced by one, it is effectively
@@ -73,28 +74,7 @@ public class CP implements Coordinate {
             cp[cycle[3]] = saver;
         }
     }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
-    /* a proposed value() which should work much faster by using base-8 numbers and bitshift. 
-     * the result being that all coords are not filled between 0 and max value, and solved is not 0 */
-    
-//    public int value(Cube cube) {
-//        int rtrn = 0;
-//        int[] cp = cube.getCP();
-//        for(int i = 0; i < 8; i ++) {
-//            rtrn += cp[i];
-//            rtrn <<= 3;
-//        }
-//        return rtrn;
-//    }
-    
-    public int[] getArray() {
-        return cp;
-    }
+    public CP clone() {return new CP(cp);}
     
     public String name() {return NAME;}
     public int size() {return SIZE;}

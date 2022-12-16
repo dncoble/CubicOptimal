@@ -3,7 +3,7 @@ import c.*;
 
 import java.util.ListIterator;
 
-public class EO implements Coordinate {
+public class EO extends Coordinate {
     private int[] eo;
     private static String NAME;
     private static int SIZE;
@@ -16,6 +16,7 @@ public class EO implements Coordinate {
      * of edge flip parity, it is an 11 digit base 2 number. */
     public EO(Cube cube) {eo = cube.getEO();}
     public EO() {eo = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};}
+    public EO(int[] eo) {this.eo = eo;}
     public void set(Cube cube) {eo = cube.getEO();}
     public int value(int[] eo){
         int rtrn = eo[0];
@@ -66,13 +67,7 @@ public class EO implements Coordinate {
             eo[cycle[3]] = (eo[cycle[3]] + 1) % 2;
         }
     }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
-    
+    public EO clone() {return new EO(eo);}
     public String name() {return NAME;}
     public int size() {return SIZE;}
 }

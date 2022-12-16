@@ -7,7 +7,7 @@ import java.util.ListIterator;
  * performed. To do that, some information from permutation must be included. RCP and REP contain that amount of 
  * information. Then, RCO and REO can be implemented as multicoordinates with CO, CP and RCP, REP.
  */
-public class RCP implements Coordinate {
+public class RCP extends Coordinate {
     private CP cp;
     private static String NAME;
     private static int SIZE;
@@ -18,6 +18,7 @@ public class RCP implements Coordinate {
     
     public RCP(Cube cube) {cp = new CP(cube);}
     public RCP() {cp = new CP();}
+    public RCP(CP cp) {this.cp = cp;}
     public void set(Cube cube) {cp = new CP(cube);}
     
     /* rotatable corner orientation and rotatable edge orientation takes into account
@@ -44,19 +45,11 @@ public class RCP implements Coordinate {
         }
         return value;
     }
-    public int value(Cube cube) {return value((new CP(cube)).getArray());}
-    public int value() {return value(cp.getArray());}
+    public int value(Cube cube) {return value((new CP(cube)).cp);}
+    public int value() {return value(cp.cp);}
+    public void move(int move) {cp.move(move);}
     
-    public void move(int move) {
-        cp.move(move);
-    }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
-    
+    public Coordinate clone() {return new RCP(cp.clone());}
     public String name() {return NAME;}
     public int size() {return SIZE;}
 }

@@ -8,7 +8,7 @@ import java.util.ListIterator;
  * performed. To do that, some information from permutation must be included. RCP and REP contain that amount of
  * information. Then, RCO and REO can be implemented as multicoordinates with CO, CP and RCP, REP.
  */
-public class REP implements Coordinate {
+public class REP extends Coordinate {
     private EP ep;
     private static String NAME;
     private static int SIZE;
@@ -19,6 +19,7 @@ public class REP implements Coordinate {
     
     public REP(Cube cube) {ep = new EP(cube);}
     public REP() {ep = new EP();}
+    public REP(EP ep) {this.ep = ep;}
     public void set(Cube cube) {ep = new EP(cube);}
     
     /* an edge can be in one of 3 slice layers:
@@ -62,17 +63,9 @@ public class REP implements Coordinate {
     }
     public int value(Cube cube) {return value((new EP(cube)).getArray());}
     public int value() {return value(ep.getArray());}
+    public void move(int move) {ep.move(move);}
     
-    public void move(int move) {
-        ep.move(move);
-    }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
-    
+    public REP clone() {return new REP(ep.clone());}
     public String name() {return NAME;}
     public int size() {return SIZE;}
 }

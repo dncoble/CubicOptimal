@@ -4,7 +4,7 @@ import c.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class EP implements Coordinate {
+public class EP extends Coordinate {
     public int[] ep;
     private static String NAME;
     private static int SIZE;
@@ -14,6 +14,7 @@ public class EP implements Coordinate {
     }
     public EP(Cube cube) {ep = cube.getEP();}
     public EP() {ep = new int[] {0,1,2,3,4,5,6,7,8,9,10,11};}
+    public EP(int[] ep) {this.ep = ep;}
     public void set(Cube cube) {ep = cube.getEP();}
     public int value(int[] ep){
         ArrayList<Integer> eCheckList = new ArrayList<Integer>();
@@ -64,16 +65,8 @@ public class EP implements Coordinate {
             ep[cycle[3]] = saver;
         }
     }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
-    
-    public int[] getArray() {
-        return ep;
-    }
+    public EP clone() {return new EP(ep);}
+    public int[] getArray() {return ep;}
     public String name() {return NAME;}
     public int size() {return SIZE;}
 }

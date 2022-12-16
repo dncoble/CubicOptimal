@@ -1,24 +1,34 @@
 package q;
-import c.*;
+
+import c.Cube;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
-/* Representing a coordinate as a tuple, or Cartesian product, of other coordinates */
-public class MultiCoordinate extends Coordinate {
-    public ArrayList<Coordinate> coords;
+/* class for both tabled and multicoordinates */
+public class TabledMultiCoordinate extends SettableCoordinate {
+    public ArrayList<TableCoordinate> coords;
     public String name;
-    
-    public MultiCoordinate() {
-        coords = new ArrayList<Coordinate>();
+
+    public TabledMultiCoordinate() {
+        coords = new ArrayList<TableCoordinate>();
         name = "";
     }
-    public void addCoordinate(Coordinate coord) {
-        coords.add(coord);
-    }
+    public void addCoordinate(TableCoordinate coord) {coords.add(coord);}
     public void set(Cube cube) {
         for(Coordinate coord : coords) {
             coord.set(cube);
+        }
+    }
+    public void set(int[] qVals) {
+        for(int i = 0; i < coords.size(); i++) {
+            coords.get(i).set(qVals[i]);
+        }
+    }
+    public void set(int qVal) {
+        for(int i = coords.size()-1; i>=0; i--) {
+            int y = qVal % coords.get(i).size();
+            coords.get(i).set(y);
+            qVal /= coords.get(i).size();
         }
     }
     
@@ -27,6 +37,9 @@ public class MultiCoordinate extends Coordinate {
         for(Coordinate coord : coords) {
             value *= coord.size();
             value += coord.value(cube);
+        }
+        if(value > size()) {
+            System.out.println("problem with REO");
         }
         return value;
     }
@@ -38,7 +51,7 @@ public class MultiCoordinate extends Coordinate {
         }
         return value;
     }
-    
+    /* not recommended since this copies all tables */
     public Coordinate clone() {
         MultiCoordinate copy = new MultiCoordinate();
         for(Coordinate coord : coords) {
@@ -66,6 +79,7 @@ public class MultiCoordinate extends Coordinate {
     public int size() {
         int size = 1;
         for(Coordinate coord : coords) {
+            System.out.println(coord.size());
             size *= coord.size();
         }
         return size;

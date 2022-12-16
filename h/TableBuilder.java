@@ -18,6 +18,8 @@ public class TableBuilder {
      *             not yet implemented.
      * flavor = 4: used with x96 expansion.
      * flavor = 5: for raw coords, like flavor = 1, but only saving identity cubes.
+     * flavor = 6: use for new coords (>0.3.1)
+     * flavor = 7: use for SettableCoordinates (TabledCoordinate and TabledMultiCoordinate)
      */
     public static void makeTable(Coordinate q, int flavor) {
         switch(flavor) {
@@ -27,6 +29,8 @@ public class TableBuilder {
 //            case 3: makeTable3(q); break;
             case 4: makeTable4(q); break;
 //            case 5: makeTable5(q); break;
+            case 6 : makeTable6(q); break;
+            case 7 : makeTable7((SettableCoordinate) q); break;
         }
     }
 //    public static void makeTable0(Coordinate q) {
@@ -101,7 +105,7 @@ public class TableBuilder {
                     data[length +1] ++;
                 }
             }
-            if (nodesExpanded % 10000 == 0) {
+            if (nodesExpanded % 50000 == 0) {
                 System.out.println("nodes expanded: " + nodesExpanded);
                 System.out.println("table size: " + tableSize);
                 System.out.println("length: " + length);
@@ -253,7 +257,7 @@ public class TableBuilder {
                     data[length +1] ++;
                 }
             }
-            if (nodesExpanded % 2000 == 0) {
+            if (nodesExpanded % 50000 == 0) {
                 System.out.println("nodes expanded: " + nodesExpanded);
                 System.out.println("table size: " + tableSize);
                 System.out.println("length: " + length);
@@ -263,12 +267,95 @@ public class TableBuilder {
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
         writeMapToFile((Serializable) table, q.name() + "Table");
     }
+    /* problems with creating/using Coordinate.clone */
+    public static void makeTable6(Coordinate q) {
+        Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+        Queue<Coordinate> unexpandedQ = new LinkedList<Coordinate>(); int unexpandedSize = 0;
+        table.put(0,(byte) 0); int tableSize = 1;
+        unexpandedQ.add(q);
+        int nodesExpanded = 0; // only for controlling printing
+        int[] data = new int[21]; data[0] = 1;
+        while(!unexpandedQ.isEmpty()) {
+            nodesExpanded ++;
+            Coordinate currentQ = unexpandedQ.poll(); unexpandedSize --;
+            int length = table.get(currentQ);
+            Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+            currentQ.move(scr);
+            int val = q.value();
+            if(!table.containsKey(val)) { //does run faster with table(q.value)==null?
+                table.put(val, (byte) (length + 1)); tableSize ++;
+//                unexpandedQ.add(q.clone()); unexpandedSize ++;
+                data[length + 1] ++;
+            }
+            else {} // with queue, if it is already in the table, it must have length less or equal to
+            for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                q.move(scr.iterate());
+                val = q.value();
+                if(!table.containsKey(val)) {
+                    table.put(val, (byte) (length + 1)); tableSize ++;
+//                    unexpandedQ.add(q.clone()); unexpandedSize ++;
+                    data[length +1] ++;
+                }
+            }
+            if (nodesExpanded % 50000 == 0) {
+                System.out.println("nodes expanded: " + nodesExpanded);
+                System.out.println("table size: " + tableSize);
+                System.out.println("length: " + length);
+                System.out.println("unexpanded nodes: " + unexpandedSize);
+            }
+        }
+        for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
+        writeMapToFile((Serializable) table, q.name() + "Table");
+    }
+    /* make coordinate with TableCoordinate, requires a lot less space since the cube or long version of the
+     * coordinate does not have to be saved. */
+    public static void makeTable7(SettableCoordinate q) {
+        Map<Integer, Byte> table = new HashMap<Integer, Byte>();
+        Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
+        table.put(0,(byte) 0); int tableSize = 1;
+        unexpandedQ.add(q.value());
+        int nodesExpanded = 0; // only for controlling printing
+        int[] data = new int[21]; data[0] = 1;
+        while(!unexpandedQ.isEmpty()) {
+            nodesExpanded ++;
+            int qVal = unexpandedQ.poll(); q.set(qVal); unexpandedSize --;
+            int length = table.get(qVal);
+            Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+            q.move(scr);
+            int val = q.value();
+            if(!table.containsKey(val)) { //does run faster with table(q.value)==null?
+                table.put(val, (byte) (length + 1)); tableSize ++;
+                unexpandedQ.add(val); unexpandedSize ++;
+                data[length + 1] ++;
+            }
+            else {} // with queue, if it is already in the table, it must have length less or equal to
+            for(int i = 1; i < 18; i ++) { //since we don't have the scramble this comes from, we must check all 18
+                q.move(scr.iterate());
+                val = q.value();
+                if(!table.containsKey(val)) {
+                    table.put(val, (byte) (length + 1)); tableSize ++;
+                    unexpandedQ.add(val); unexpandedSize ++;
+                    data[length +1] ++;
+                }
+            }
+            if (nodesExpanded % 50000 == 0) {
+                System.out.println("nodes expanded: " + nodesExpanded);
+                System.out.println("table size: " + tableSize);
+                System.out.println("length: " + length);
+                System.out.println("unexpanded nodes: " + unexpandedSize);
+            }
+        }
+        for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
+        writeMapToFile((Serializable) table, q.name() + "Table");
+    }
+    
     /*  function for making the lookup table for coordinate movement under every move. 
      * Table is indexed as [move][coordinate]. */
     public static void makeCoordTable(Coordinate q, String name) {
         int[][] table = new int[18][q.size()];
         Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
         Queue<Cube> unexpandedC = new LinkedList<Cube>();
+        TreeSet<Integer> expandedQ = new TreeSet<Integer>();
         unexpandedQ.add(0); // do i need this?
         unexpandedC.add(new Cube());
         while(!unexpandedQ.isEmpty()) {
@@ -279,8 +366,14 @@ public class TableBuilder {
             table[0][currentQ] = q.value(cube);
             for(int i = 1; i < 18; i ++) { // go through all moves and add to table
                 cube.move(scr.iterate());
-                table[i][currentQ] = q.value(cube);
+                int qVal = q.value(cube);
+                table[i][currentQ] = qVal;
+                if(!expandedQ.contains(qVal)) {
+                    unexpandedC.add(cube.clone());
+                    unexpandedQ.add(qVal);
+                }
             }
+            expandedQ.add(currentQ);
         }
         writeMapToFile((Serializable) table, name);
     }

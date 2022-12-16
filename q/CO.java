@@ -3,7 +3,7 @@ import c.*;
 
 import java.util.ListIterator;
 
-public class CO implements Coordinate {
+public class CO extends Coordinate {
     private int[] co;
     private static String NAME;
     private static int SIZE;
@@ -13,6 +13,7 @@ public class CO implements Coordinate {
     }
     public CO(Cube cube) {co = cube.getCO();}
     public CO() {co = new int[] {0,0,0,0,0,0,0,0};}
+    public CO(int[] co) {this.co = co;}
     public void set (Cube cube) {co = cube.getCO();}
     /* the following methods turn each int[] coordinate int a single integer coordinate
      * which is useful is saving tables of scrambles to permutation, since a single integer
@@ -71,12 +72,8 @@ public class CO implements Coordinate {
             co[cycle[3]] = (co[cycle[3]] + 2) % 3;
         }
     }
-    public void move(Scramble scr) {
-        ListIterator<Integer> iter = scr.getIterator();
-        while(iter.hasNext()) {
-            move(iter.next());
-        }
-    }
+    public CO clone() {return new CO(co);}
+    
     public String name() {return NAME;}
     public int size() {return SIZE;}
 }
