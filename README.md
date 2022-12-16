@@ -28,7 +28,8 @@ CO: corner orientation \
 CP: corner permutation \
 EO: edge orientation \
 EP: edge permutation \
-RCO: rotatable corner orientation \REO: rotatable edge orientation \
+RCO: rotatable corner orientation \
+REO: rotatable edge orientation \
 Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 
 PP = Predictive power
