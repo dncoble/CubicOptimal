@@ -41,7 +41,8 @@ PP = Predictive power
 | EP |Too big|   |479001599| |
 |RCO |Yes| Yes |153090|3393| 6.430 | 9 |
 |REO |Too big|Yes|70963200|1482170| 8.247 | 11 |
-| Kociemba| not even close
+| Kociemba| Not even close | No | 2217093120 | | | |
+
 ** avg. PP is for raw if available, else sym
 
 See more in Coordinates Heuristics.md
