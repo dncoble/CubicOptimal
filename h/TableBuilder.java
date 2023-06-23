@@ -113,7 +113,13 @@ public class TableBuilder {
             }
         }
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
-        writeMapToFile((Serializable) table, q.name() + "Table");
+        byte[] byteTable = new byte[table.size()];
+        Iterator<Integer> iter = table.keySet().iterator();
+        while(iter.hasNext()) {
+            int qVal = iter.next();
+            byteTable[qVal] = table.get(qVal);
+        }
+        writeMapToFile(byteTable, q.name() + "Table");
     }
     
 //    public static void makeTable2(Coordinate q) {
@@ -265,7 +271,13 @@ public class TableBuilder {
             }
         }
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
-        writeMapToFile((Serializable) table, q.name() + "Table");
+        byte[] byteTable = new byte[table.size()];
+        Iterator<Integer> iter = table.keySet().iterator();
+        while(iter.hasNext()) {
+            int qVal = iter.next();
+            byteTable[qVal] = table.get(qVal);
+        }
+        writeMapToFile(byteTable, q.name() + "Table");
     }
     /* problems with creating/using Coordinate.clone */
     public static void makeTable6(Coordinate q) {
@@ -305,7 +317,13 @@ public class TableBuilder {
             }
         }
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
-        writeMapToFile((Serializable) table, q.name() + "Table");
+        byte[] byteTable = new byte[table.size()];
+        Iterator<Integer> iter = table.keySet().iterator();
+        while(iter.hasNext()) {
+            int qVal = iter.next();
+            byteTable[qVal] = table.get(qVal);
+        }
+        writeMapToFile(byteTable, q.name() + "Table");
     }
     /* make coordinate with TableCoordinate, requires a lot less space since the cube or long version of the
      * coordinate does not have to be saved. */
@@ -313,7 +331,7 @@ public class TableBuilder {
         Map<Integer, Byte> table = new HashMap<Integer, Byte>();
         Queue<Integer> unexpandedQ = new LinkedList<Integer>(); int unexpandedSize = 0;
         table.put(0,(byte) 0); int tableSize = 1;
-        unexpandedQ.add(q.value());
+        System.out.println(q.value());
         int nodesExpanded = 0; // only for controlling printing
         int[] data = new int[21]; data[0] = 1;
         while(!unexpandedQ.isEmpty()) {
@@ -346,7 +364,13 @@ public class TableBuilder {
             }
         }
         for(int o = 0; o < 21; o++) {System.out.println(o + ": " + data[o]);}
-        writeMapToFile((Serializable) table, q.name() + "Table");
+        byte[] byteTable = new byte[table.size()];
+        Iterator<Integer> iter = table.keySet().iterator();
+        while(iter.hasNext()) {
+            int qVal = iter.next();
+            byteTable[qVal] = table.get(qVal);
+        }
+        writeMapToFile(byteTable, q.name() + "Table");
     }
     
     /*  function for making the lookup table for coordinate movement under every move. 
@@ -363,10 +387,15 @@ public class TableBuilder {
             Cube cube = unexpandedC.poll();
             Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
             cube.move(scr);
-            table[0][currentQ] = q.value(cube);
+            int qVal = q.value(cube);
+            table[0][currentQ] = qVal;
+            if(!expandedQ.contains(qVal)) {
+                unexpandedC.add(cube.clone());
+                unexpandedQ.add(qVal);
+            }
             for(int i = 1; i < 18; i ++) { // go through all moves and add to table
                 cube.move(scr.iterate());
-                int qVal = q.value(cube);
+                qVal = q.value(cube);
                 table[i][currentQ] = qVal;
                 if(!expandedQ.contains(qVal)) {
                     unexpandedC.add(cube.clone());
@@ -375,7 +404,109 @@ public class TableBuilder {
             }
             expandedQ.add(currentQ);
         }
+        System.out.println("Writing table to file.");
         writeMapToFile((Serializable) table, name);
+    }
+    /* function for making sym coord tables. */
+    public static void makeSymCoordTable(Coordinate q, String name, String idsName) {
+        HashMap<Integer, Integer[]> rTable = new HashMap<Integer, Integer[]>(); // hate this data structure
+        TreeMap<Integer, Cube> unexpanded = new TreeMap<Integer, Cube>(); int unexpandedSize = 0;
+        TreeSet<Integer> expandedQ = new TreeSet<Integer>();
+        unexpanded.put(0, new Cube()); // do i need this?
+        while(!unexpanded.isEmpty()) {
+            int currentQ = unexpanded.firstKey(); unexpandedSize --;
+            Cube cube = unexpanded.get(currentQ); unexpanded.pollFirstEntry();
+            Cube cubeinv = cube.clone();
+            cubeinv.invert();
+            Scramble scr = new Scramble(Integer.MIN_VALUE, 1);
+            cube.move(scr);
+            rTable.put(currentQ, new Integer[18]);
+            int qVal = makeIdentityCoord(q, cube);
+            rTable.get(currentQ)[0] = qVal;
+            if(!expandedQ.contains(qVal) && !unexpanded.containsKey(qVal)) {
+                unexpanded.put(qVal, cube.clone());
+                unexpandedSize ++;
+            }
+            for(int i = 1; i < 18; i ++) { // go through all moves and add to table
+                cube.move(scr.iterate());
+                qVal = makeIdentityCoord(q, cube);
+                rTable.get(currentQ)[i] = qVal;
+                if(!expandedQ.contains(qVal) && !unexpanded.containsKey(qVal)) {
+                    unexpanded.put(qVal, cube.clone());
+                    unexpandedSize ++;
+                }
+            }
+            expandedQ.add(currentQ);
+            // do the same for the inverse cube
+            currentQ = makeIdentityCoord(q, cubeinv);
+            scr = new Scramble(Integer.MIN_VALUE, 1);
+            cubeinv.move(scr);
+            rTable.put(currentQ, new Integer[18]);
+            qVal = makeIdentityCoord(q, cubeinv);
+            rTable.get(currentQ)[0] = qVal;
+            if(!expandedQ.contains(qVal) && !unexpanded.containsKey(qVal)) {
+                unexpanded.put(qVal, cubeinv.clone());
+                unexpandedSize ++;
+            }
+            rTable.get(currentQ)[0] = makeIdentityCoord(q, cubeinv);
+            for(int i = 1; i < 18; i ++) { // go through all moves and add to table
+                cubeinv.move(scr.iterate());
+                qVal = makeIdentityCoord(q, cubeinv);
+                rTable.get(currentQ)[i] = qVal;
+                if(!expandedQ.contains(qVal) && !unexpanded.containsKey(qVal)) {
+                    unexpanded.put(qVal, cubeinv.clone());
+                    unexpandedSize ++;
+                }
+            }
+            expandedQ.add(currentQ);
+            if(expandedQ.size() % 200 == 0) {
+                System.out.println("nodes expanded: " + expandedQ.size());
+                System.out.println("unexpanded nodes: " + unexpanded.size());
+            }
+        }
+        System.out.println("Sorting table coordinates.");
+        ArrayList<Integer> ids = new ArrayList<Integer>(rTable.keySet().size());
+        Iterator<Integer> iter = rTable.keySet().iterator();
+        for(int i = 0; i < rTable.keySet().size(); i ++) {ids.add(iter.next());}
+        ids.sort(null);
+        int[] idsTable = new int[ids.size()];
+        for(int i = 0; i < idsTable.length; i ++) {idsTable[i] = ids.get(i);}
+        ids = null;
+        int[][] table = new int[18][idsTable.length];
+        for(int i = 0; i < idsTable.length; i ++) {
+            int r = idsTable[i];
+            for(int j = 0; j < 18; j ++) {
+                int m = rTable.get(r)[j];
+                // binary search for identity coordinate
+                int max = idsTable.length;
+                int min = 0;
+                int index = max/2;
+                int g = idsTable[index];
+                while(g != m) {
+                    if(g > m) {max = index;}
+                    else {min = index;}
+                    index = (min + max) / 2;
+                    g = idsTable[index];
+                }
+                table[j][i] = index;
+            }
+        }
+        System.out.println("Writing table to file.");
+        writeMapToFile((Serializable) table, name);
+        writeMapToFile((Serializable) idsTable, idsName);
+    }
+    public static int makeIdentityCoord(Coordinate q, Cube cube) {
+        Cube testerCube = cube.clone();
+        int sym = q.value(testerCube);
+        for(int i = 1; i < 96; i ++) {
+            testerCube.rotate(i);
+            int coord = q.value(testerCube);
+            if(coord < sym) {
+                sym = coord;
+            }
+            testerCube = cube.clone();
+        }
+        return sym;
     }
     
     /* my old standard used RTSTables as arraylists with the sym value being the index of the raw value. this is slow,

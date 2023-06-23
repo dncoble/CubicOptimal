@@ -10,8 +10,8 @@ future work and notes:
 created UDSlice, also create RLSlice and FBSlice
 
 little things to make it run faster:
-	IDAStar checks cube equality at each step, can that be sped up?i
-	change heuristic table just to be array
+	IDAStar checks cube equality at each step, can that be sped up?
+	TableBuilder produces byte[] but still uses hash map
 
 make another cube class with simple boolean matrices 
 and boolean multiplication, it may be faster.

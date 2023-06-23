@@ -49,7 +49,7 @@ PP = Predictive power
 See more in Coordinates Heuristics.md
 
 # Current version: 0.3.1
-Plan for versions:
+Tentative plan for versions:
 
 0.2.1: Complete structure of how packages c, s, h, and q interact.
 
@@ -69,4 +69,4 @@ Plan for versions:
 
 See to-do.md for an unorganized list of things I plan on doing.
 
-1.0.0 released when it's able to optimally solve cubes up to length 20. Current ability: 11.
+1.0 released when it's able to optimally solve cubes up to length 20. Current ability: 12.

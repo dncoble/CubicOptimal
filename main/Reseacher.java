@@ -17,34 +17,9 @@ import java.util.LinkedList;
 public class Reseacher {
     public static void main(String[] args) throws IOException {
         
-        Coordinate reo = new TabledREO();
-        TableBuilder.makeTable(reo, 7);
         
-//        int i = 0;
-//        while(i < reo.size()) {
-//            reo.set(i);
-//            int j = reo.value();
-//            if(i != j) {
-//                System.out.println("problem on " + i + " produces " + j);
-//            }
-//            if(i % 10000 == 0) {
-//                System.out.println("checked up to " + i);
-//            }
-//            i++;
-//        }
+        Coordinate symRCO = new Sym(new TabledRCO());
         
-        
-//        Scramble scr = new Scramble("F U R");
-//        Cube cube = new Cube(scr);
-//        Coordinate q1 = new CP(cube);
-//        Coordinate q2 = new CP();
-//        q2.move(scr);
-//        ByteHeuristic h = new CoordHeuristic(q2, false);
-//        h.move(new Scramble("R' U' F'"));
-//        q.move(new Scramble("R'"));
-//        System.out.println(h.h());
-//        System.out.println(q1.value());
-//        System.out.println(q2.value());
         
 //        System.out.println(h.h());
         

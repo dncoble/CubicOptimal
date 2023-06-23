@@ -19,6 +19,9 @@ public abstract class Coordinate implements Cloneable {
     public abstract int size();
     public abstract Coordinate clone();
     
+    public boolean isSolved() {
+        return value() == 0;
+    }
     public void move(Scramble scr) {
         ListIterator<Integer> iter = scr.getIterator();
         while(iter.hasNext()) {

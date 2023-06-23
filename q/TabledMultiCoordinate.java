@@ -38,9 +38,6 @@ public class TabledMultiCoordinate extends SettableCoordinate {
             value *= coord.size();
             value += coord.value(cube);
         }
-        if(value > size()) {
-            System.out.println("problem with REO");
-        }
         return value;
     }
     public int value() {
@@ -79,7 +76,6 @@ public class TabledMultiCoordinate extends SettableCoordinate {
     public int size() {
         int size = 1;
         for(Coordinate coord : coords) {
-            System.out.println(coord.size());
             size *= coord.size();
         }
         return size;

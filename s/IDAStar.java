@@ -38,10 +38,12 @@ public class IDAStar implements Search {
      * Assume cube, h.q are in the proper permutation before expand() is called.
      */
     private int expand(Scramble scr, int g, int threshold) {
-        int f = g + h.h();
+        int h_ = h.h();
+        int f = g + h_;
         // strictly in IDA*, checking solved must be after if(f > threshold). However, we can do this and achieve a
-        // speedup since all edges have cost 1.
-        if(cube.equals(solved)) {return -1;} // this might be slow, should look into speeding it up.
+        // speedup since all edges have cost 1. note h_ == 0 is checked first, if false cube.equals(solved) is not
+        // checked, that is faster.
+        if(h_ == 0 && cube.equals(solved)) {return -1;}
         if(f > threshold) {return f;}
         scr.addLast();
         cube.singleMove(scr.getLast()); h.move(scr.getLast());

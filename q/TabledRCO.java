@@ -14,7 +14,7 @@ public class TabledRCO extends TabledMultiCoordinate {
         addCoordinate(new TableCoordinate(new RCP(cube)));
         addCoordinate(new TableCoordinate(new CO(cube)));
     }
-    public TabledRCO(boolean tabled) {
+    public TabledRCO() {
         super();
         super.name = NAME;
         addCoordinate(new TableCoordinate(new RCP()));

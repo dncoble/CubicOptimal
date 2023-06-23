@@ -12,7 +12,6 @@ public class TableCoordinate extends SettableCoordinate {
     public int[][] table;
     private Coordinate q;
     private int qVal;
-    
     public TableCoordinate(Coordinate q) {
         this.q = q;
         File[] filesList = new File(".").listFiles();

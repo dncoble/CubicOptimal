@@ -4,7 +4,7 @@ import c.*;
 import java.util.ListIterator;
 
 public class CO extends Coordinate {
-    private int[] co;
+    public int[] co;
     private static String NAME;
     private static int SIZE;
     static{
@@ -34,6 +34,7 @@ public class CO extends Coordinate {
     
     public void move(int move) {
         int type = move / 3;
+        int dir = move % 3;
         int[] cycle;
         if(type == 0) {cycle = new int[]{0, 6, 2, 4};}
         else if(type == 1) {cycle = new int[]{0, 4, 1, 5};}
@@ -42,14 +43,14 @@ public class CO extends Coordinate {
         else if(type == 4) {cycle = new int[]{6, 3, 7, 2};}
         else {cycle = new int[]{4, 2, 7, 1};}
 
-        if(move % 3 == 0) {
+        if(dir == 0) {
             int saver = co[cycle[0]];
             co[cycle[0]] = co[cycle[3]];
             co[cycle[3]] = co[cycle[2]];
             co[cycle[2]] = co[cycle[1]];
             co[cycle[1]] = saver;
         }
-        else if(move % 3 == 1) {
+        else if(dir == 1) {
             int saver0 = co[cycle[0]];
             int saver1 = co[cycle[1]];
             co[cycle[0]] = co[cycle[2]];
@@ -65,7 +66,7 @@ public class CO extends Coordinate {
             co[cycle[3]] = saver;
         }
 
-        if(move % 3 != 1 && !(move / 3 == 1 || move / 3 == 4)) {
+        if(dir != 1 && !(type == 1 || type == 4)) {
             co[cycle[0]] = (co[cycle[0]] + 1) % 3;
             co[cycle[1]] = (co[cycle[1]] + 2) % 3;
             co[cycle[2]] = (co[cycle[2]] + 1) % 3;

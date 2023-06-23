@@ -17,7 +17,7 @@ public class RCO extends MultiCoordinate {
         addCoordinate(new RCP(cube));
         addCoordinate(new CO(cube));
     }
-    public RCO(boolean tabled) {
+    public RCO() {
         super();
         super.name = NAME;
         addCoordinate(new RCP());

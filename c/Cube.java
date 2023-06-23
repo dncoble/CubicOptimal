@@ -73,7 +73,10 @@ public class Cube implements Cloneable {
 	public int[] getCO() {
 		int[] co = new int[8];
 		for(int i =0; i < 8; i++) {
-			co[i] = p.getPermutation()[i*3]%3;
+			int y = p.getPermutation()[i*3]%3;
+			if(y == 0) {co[i] = 0;}
+			else if(y == 1) {co[i] = 2;}
+			else {co[i] = 1;}
 		}
 		return co;
 	}

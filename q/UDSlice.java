@@ -24,8 +24,12 @@ public class UDSlice extends Coordinate {
         int value = 0;
         int k = 3;
         int n = 11;
+        boolean[] occupied = new boolean[12];
+        // must reorder ep so that ud slice comes last, to preserve 0=solved
+        for(int i = 0; i < 8; i ++) {occupied[i] = epArr[i+4] >= 4 && epArr[i+4] <= 7;}
+        for(int i = 8; i < 12; i ++) {occupied[i] = epArr[i-8] >= 4 && epArr[i-8] <= 7;}
         while(k >= 0) {
-            if(epArr[n] >=4 && epArr[n] <= 7) {
+            if(occupied[n]) {
                 k -= 1;
             }
             else {
@@ -33,6 +37,7 @@ public class UDSlice extends Coordinate {
                 for(int i = 1, m = n; i <= k; i++, m--) {binoCoef = binoCoef * m / i;}
                 value += binoCoef;
             }
+            n -= 1;
         }
         return value;
     }

@@ -14,7 +14,7 @@ import java.util.Iterator;
  * puzzle. then the dictionary contains the distance to solved of that subpuzzle in that state. */
 public class CoordHeuristic implements ByteHeuristic {
     public Coordinate q;
-    private HashMap<Integer, Byte> table;
+    private byte[] table;
     private boolean isSym;
 
     public CoordHeuristic(Coordinate q, boolean isSym) {
@@ -34,13 +34,13 @@ public class CoordHeuristic implements ByteHeuristic {
                     + "This may take a while.");
             makeTable(isSym);
         }
-        table = (HashMap<Integer, Byte>) readMapFromFile(tableFile);
+        table = (byte[]) readTableFromFile(tableFile);
     }
     public void set(Cube cube) {q.set(cube);}
     
     public byte h(Cube cube) {
         try {
-            return table.get(q.value(cube));
+            return table[q.value(cube)];
         }
         catch (NullPointerException e){
             System.out.println("Cannot find value " + q.value(cube) + " in table.");
@@ -49,7 +49,7 @@ public class CoordHeuristic implements ByteHeuristic {
     }
     public byte h() {
         try {
-            return table.get(q.value());
+            return table[q.value()];
         }
         catch (NullPointerException e){
             System.out.println("Cannot find value " + q.value() + " in table.");
@@ -71,13 +71,14 @@ public class CoordHeuristic implements ByteHeuristic {
         }
     }
     /* size of the coordinate set */
-    public int size() {return table.size();}
+    public int size() {return table.length;}
     
     /* the distribution of elements at each distance */
     public int[] getDistribution() {
         int[] rtrn = new int[21];
-        Iterator<Byte> iter = table.values().iterator();
-        while(iter.hasNext()) {rtrn[iter.next()] ++;}
+        for(int i = 0; i < table.length; i ++) {
+            rtrn[table[i]] ++;
+        }
         return rtrn;
     }
     
@@ -105,7 +106,7 @@ public class CoordHeuristic implements ByteHeuristic {
             ex.printStackTrace();
         }
     }
-    public static Object readMapFromFile(String filePath) {
+    public static Object readTableFromFile(String filePath) {
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
