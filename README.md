@@ -30,6 +30,8 @@ EO: edge orientation \
 EP: edge permutation \
 RCO: rotatable corner orientation \
 REO: rotatable edge orientation \
+RCP: restricted corner permutation \
+REP: restricted edge permutation \
 Kociemba: coordinate used in Kociemba algorithm and Kociemba optimal solver.
 
 PP = Predictive power
@@ -40,8 +42,11 @@ PP = Predictive power
 | CP |Yes|Yes|40321| 984 | 4.723 | 7 |
 | EO |Yes| - |2048| - | 4.609 | 7 |
 | EP |Too big|   |479001599| |
-|RCO |Yes| Yes |153090|3393| 6.430 | 9 |
-|REO |Yes|Yes|70963200|1482170| 8.246 | 11 |
+| RCO |Yes| Yes |153090|3393| 6.430 | 9 |
+| REO |Yes|Yes|70963200|1482170| 8.246 | 11 |
+| RCP | Yes | Yes | 70 |  | | |
+| REP | Yes | Yes | 34650 |  | | |
+| UDSlice | Yes | No | 495 | | | |
 | Kociemba| Not even close | No | 2217093120 | | | |
 
 ** avg. PP is for raw if available, else sym
